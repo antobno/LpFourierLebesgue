@@ -1,0 +1,152 @@
+\chapter{UNA INTRODUCCIÓN: GRUPOS, ANILLOS Y CAMPOS}
+\printchaptertableofcontents
+
+Los grupos, anillos y campos son estructuras algebraicas fundamentales que permiten definir operaciones y relaciones en conjuntos. En particular, los campos son esenciales para construir espacios vectoriales (que veremos en el siguiente capítulo), donde los escalares provienen de un campo como $\RR$ o $\CC$.
+
+En el Análisis Matemático, los espacios normados y de Hilbert son ejemplos clave de espacios vectoriales con estructura adicional. Estos permiten definir normas, productos internos y conceptos como proyecciones ortogonales y bases ortonormales, esenciales en la teoría de aproximación y optimización.
+
+La relación entre álgebra y análisis es profunda: los campos permiten definir estructuras vectoriales, y estas, a su vez, son la base de herramientas avanzadas en matemáticas aplicadas.
+
+\section{Grupos}
+
+Los conjuntos con una sola operación algebraica son, en cierto sentido, los más simples y, por lo tanto, es natural comenzar nuestros estudios con tales conjuntos. Supondremos las propiedades de una operación como axiomas y luego deduciremos sus consecuencias. Esto nos permitirá, más adelante, aplicar inmediatamente los resultados de nuestros estudios a todos los conjuntos donde las operaciones tengan propiedades similares, sin importar características específicas.
+
+\begin{definicion}{}{}
+    Un \emph{grupo} es un conjunto $G$ con una operación algebraica, asociativa (aunque no necesariamente conmutativa), para la cual debe existir un inverso.
+\end{definicion}
+
+Nótese que el inverso de una operación no puede considerarse como una segunda operación independiente en un grupo, ya que está definido en términos de la operación básica. Como es habitual en la teoría de grupos, llamamos \textit{multiplicación} a la operación dada en $G$ y usamos la notación correspondiente. Antes de considerar los diversos ejemplos de grupos, deducimos las consecuencias más simples que se derivan de la definición.
+
+Tomemos un elemento $a$ de un grupo $G$. La existencia de un inverso en el grupo implica la existencia de un único elemento $e_a$ tal que $ae_a = a$. En consecuencia, este elemento desempeña el mismo papel en la multiplicación por la derecha con el elemento $a$ que la unidad en la multiplicación de números. Supongamos además que $b$ es otro elemento del grupo. Es evidente que existe un elemento $y$ que satisface $ya = b$. Obtenemos entonces,
+$$b = ya = y (ae_a) = (ya) e_a = be_a.$$
+Así, $e_a$ cumple el papel de la unidad derecha con respecto a todos los elementos de $G$, no solo con respecto a $a$. Un elemento con esta propiedad debe ser único. De hecho, todos estos elementos satisfacen $ax = a$, pero por la definición del inverso de una operación, esta ecuación tiene una única solución. Denotemos el elemento resultante por $e'$.
+
+De manera similar, podemos demostrar la existencia y unicidad en $G$ de un $e''$ que satisfaga $e''b = b$ para todo $b$ en $G$. En efecto, $e'$ y $e''$ coinciden, lo cual se deduce de $e'e'' = e''$ y $e''e' = e'$.
+
+Así, hemos obtenido una primera consecuencia importante: en cualquier grupo $G$ existe un \textit{único elemento} $e$ que satisface
+$$ae = ea = a$$
+para todo $a$ en $G$. Este elemento se llama la \emph{identidad} (o \emph{elemento identidad}) de un grupo $G$.
+
+La definición del inverso también implica la existencia y unicidad para cualquier elemento $a$ de otros elementos $a'$ y $a''$ tales que
+$$aa' = e, \qquad a''a = e.$$
+Estos se denominan el \emph{inverso derecho} y el \emph{inverso izquierdo}, respectivamente. Es fácil demostrar que, en este caso, ambos coinciden. En efecto, consideremos un elemento $a''aa'$ y calculemos su valor de dos maneras diferentes:
+\begin{align*}
+    a''aa' & = a'' (aa') = a''e = a'', \\
+    a''aa' & = (a''a) a' = ea' = a'.
+\end{align*}
+En consecuencia, $a'' = a'$. Este elemento es el \emph{inverso} de $a$ y se denota por $a^{-1}$.
+
+Ahora hemos obtenido otra consecuencia importante: en cualquier grupo $G$, cada elemento $a$ tiene un \emph{único inverso} $a^{-1}$ para el cual
+\begin{equation}
+    aa^{-1} = a^{-1}a = e. \label{ecuacionG1}
+\end{equation}
+Debido a la asociatividad de la operación del grupo, podemos hablar de la unicidad del producto de cualquier número finito de elementos de un grupo dado (en vista de la posible no conmutatividad de la operación del grupo) en un orden definido. Teniendo en cuenta \eqref{ecuacionG1}, no es difícil indicar la fórmula general para el elemento inverso del producto. Específicamente,
+\begin{equation}
+    (a_1 a_2 \dots a_n)^{-1} = a_n^{-1} a_{n-1}^{-1} \dots a_1^{-1}. \label{ecuacionG2}
+\end{equation}
+De \eqref{ecuacionG1} se deduce que el elemento inverso de $a^{-1}$ es el elemento $a$ y que el inverso del elemento identidad es el propio elemento identidad, es decir,
+\begin{equation}
+    \left(a^{-1}\right)^{-1} = a, \qquad e^{-1} = e. \label{ecuacionG3}
+\end{equation}
+
+Verificar que un conjunto con una operación asociativa es un grupo se facilita enormemente por el hecho de que en la definición de un grupo, el requisito de que la operación de inverso deba mantenerse puede ser reemplazado por el supuesto de la existencia de un elemento identidad y de elementos inversos en un solo lado (por ejemplo, el derecho) y sin la suposición de que son únicos. Más precisamente, tenemos lo siguiente:
+
+\begin{theorem}{}{}
+    Un conjunto $G$ con una operación asociativa es un grupo si $G$ tiene al menos un elemento $e$ con la propiedad $ae = a$ para todo $a$ en $G$, y con respecto a ese elemento, cualquier elemento $a$ en $G$ tiene al menos un elemento inverso derecho $a^{-1}$, es decir, $aa^{-1} = e$.
+
+    \tcblower
+    \demostracion Sea $a^{-1}$ uno de los inversos derechos de $a$. Tenemos que
+    $$aa^{-1} = e = ee = eaa^{-1}.$$
+    Multiplicamos ambos lados de esta ecuación por la derecha con uno de los inversos derechos de $a^{-1}$. Entonces $ae = aea$, de donde se sigue que $a = ea$, ya que $e$ es la identidad derecha para $G$. Así, el elemento $e$ también es la identidad izquierda para $G$. Si ahora $e'$ es una identidad derecha arbitraria y $e''$ es una identidad izquierda arbitraria, entonces se sigue de $e'e' = e'$ y $e''e'' = e''$ que $e' = e''$, es decir, cualquier identidad derecha es igual a cualquier identidad izquierda. Esto prueba la existencia y unicidad en $G$ de un elemento identidad, al cual nuevamente denotamos por $e$. Además, para cualquier elemento inverso derecho $a^{-1}$,
+    $$a^{-1} = a^{-1}e = a^{-1}aa^{-1}.$$
+    Multiplicamos ambos lados de esta ecuación por la derecha con un inverso derecho de $a^{-1}$. Entonces $e = a^{-1}a$, es decir, $a^{-1}$ es simultáneamente un inverso izquierdo de $a$. Si ahora $a^{-1\prime}$ es un inverso derecho arbitrario de $a$ y $a^{-1\prime\prime}$ es un inverso izquierdo arbitrario, entonces se sigue que
+    \begin{align*}
+        a^{-1\prime}aa^{-1\prime\prime} & = \left(a^{-1\prime}a\right) a^{-1\prime\prime} = ea^{-1\prime\prime} = a^{-1\prime\prime}, \\
+        a^{-1\prime\prime}aa^{-1\prime} & = a^{-1\prime\prime} \left(aa^{-1\prime}\right) = a^{-1\prime\prime}e = a^{-1\prime\prime}.
+    \end{align*}
+    Se concluye que $a^{-1\prime} = a^{-1\prime\prime}$, lo que implica la existencia y unicidad de un inverso para cualquier elemento $a$ en $G$.
+\end{theorem}
+
+Ahora es fácil demostrar que el conjunto $G$ es un grupo. De hecho, las ecuaciones $ax = b$ y $ya = b$ tienen soluciones dadas por los elementos
+$$x = a^{-1}b, \qquad y = ba^{-1}.$$
+Supongamos que existen otras soluciones, por ejemplo, un elemento $z$ para la primera ecuación. Entonces $ax = b$ y $az = b$ implican $ax = az$. Multiplicando ambos lados por la izquierda con $a^{-1}$, obtenemos que $x = z$. Por lo tanto, el conjunto $G$ es un grupo.
+
+Un grupo se dice \emph{conmutativo} o \emph{abeliano} si la operación del grupo es conmutativa. En ese caso, la operación se denomina usualmente \emph{adición}, y el símbolo de suma $a + b$ se usa en lugar de la notación de producto $ab$. La identidad en un grupo abeliano se denomina \emph{elemento cero} y se representa por $0$. El inverso de la operación se llama \emph{sustracción}, y el elemento inverso se llama \emph{elemento negativo}. Se denota por $-a$. Asumiremos que, por definición, la diferencia $a - b$ representa la suma $a + (-b)$.
+
+Si, por alguna razón, llamamos a la operación en un grupo conmutativo \emph{multiplicación}, entonces su inverso se interpretará como \emph{división}. Los productos ahora equivalentes $a^{-1}b$ y $ba^{-1}$ serán representados como $b / a$ y llamados el \emph{cociente} de $b$ por $a$.
+
+\section{Anillos y campos}
+
+Consideremos un conjunto $K$ en el cual se introducen dos operaciones. Llamemos a una de ellas \emph{adición} y a la otra \emph{multiplicación}, y usemos la notación correspondiente. Supongamos que ambas están relacionadas por la \emph{ley distributiva}, es decir, para cualesquiera tres elementos $a$, $b$ y $c$ de $K$, se cumple que:
+$$(a + b) c = ac + bc, \qquad a (b + c) = ab + ac.$$
+
+\begin{definicion}{}{}
+    El conjunto $K$ se dice que es un \emph{anillo} si en él están definidas dos operaciones, la adición y la multiplicación, ambas asociativas y relacionadas por la ley distributiva, además de que la adición es conmutativa y posee un inverso aditivo. Un anillo se dice \emph{conmutativo} si la multiplicación es conmutativa, y \emph{no conmutativo} en caso contrario.
+\end{definicion}
+
+Notemos que cualquier anillo es un grupo abeliano aditivo. En consecuencia, existe un único \textit{elemento cero} $0$ en él. Este elemento posee la propiedad de que para cualquier elemento $a$ del anillo se cumple:
+$$a + 0 = a.$$
+Hemos dado la definición del elemento cero únicamente con respecto a la operación de adición. Sin embargo, este elemento juega un papel particular en la multiplicación también. En cualquier anillo, el producto de cualquier elemento por el elemento cero es el elemento cero. En efecto, sea $a$ un elemento arbitrario de $K$, entonces:
+$$a \cdot 0 = a (0 + 0) = a \cdot 0 + a \cdot 0.$$
+Sumando en ambos lados el elemento $- a \cdot 0$, obtenemos que $a \cdot 0 = 0$. De manera similar, se puede demostrar que $0 \cdot a = 0$.
+
+Usando esta propiedad del elemento cero, se puede establecer que en cualquier anillo, para cualesquiera elementos $a$ y $b$, se cumple que:
+$$(-a) b = -(ab).$$
+En efecto,
+$$ab + (-a) b = (a + (-a)) b = 0 \cdot b = 0,$$
+es decir, el elemento $(-a) b$ es el negativo de $ab$. De acuerdo con nuestra notación, podemos escribirlo simplemente como $-(ab)$.
+
+Ahora, es fácil demostrar que la ley distributiva también es válida para la diferencia de elementos. Tenemos:
+\begin{align*}
+    (a - b) c & = (a + (-b)) c = ac + (-b)c = ac + (-(bc)) = ac - bc, \\
+    a (b - c) & = a (b + (-c)) = ab + a (-c) = ab + (-(ac)) = ab - ac.
+\end{align*}
+La ley distributiva, es decir, la regla usual de eliminación de paréntesis, es el único requisito en la definición de un anillo que relaciona la adición y la multiplicación. Solo gracias a esta ley, el estudio simultáneo de ambas operaciones proporciona más información de la que se obtendría si se estudiaran por separado.
+
+\newpage
+
+Hemos demostrado que las operaciones algebraicas en un anillo poseen muchas de las propiedades usuales de las operaciones con números. Sin embargo, no se debe suponer que cualquier propiedad de la adición y la multiplicación de números se preserva en cualquier anillo, incluso si es conmutativo. De hecho, la multiplicación de números tiene una propiedad opuesta a la multiplicación por un elemento cero. Es decir, si el producto de dos números es igual a cero, entonces al menos uno de los factores es cero. En un anillo conmutativo arbitrario, esta propiedad no necesariamente se cumple; es decir, un producto de elementos distinto del elemento cero aún puede ser cero.
+
+Los elementos distintos de cero cuyo producto es un elemento cero se llaman \emph{divisores de cero}. Su existencia en un anillo dificulta considerablemente su estudio e impide establecer una analogía profunda entre los números y los elementos de un anillo conmutativo. Sin embargo, esta analogía puede establecerse para anillos que no tienen divisores de cero.
+
+Supongamos que en un anillo conmutativo con respecto a la operación de multiplicación existe un elemento identidad $e$ y que cada elemento distinto de cero $a$ tiene un elemento inverso $a^{-1}$. No es difícil demostrar que tanto el elemento identidad como el elemento inverso son únicos, pero lo más importante es el hecho de que ahora el anillo no tiene divisores de cero. En efecto, supongamos que $ab = 0$, pero $a \neq 0$. Multiplicando ambos lados de esta ecuación por la izquierda por $a^{-1}$, obtenemos
+$$a^{-1}ab = \left(a^{-1}a\right) b = eb = b$$
+y ciertamente $a^{-1} 0 = 0$. Por lo tanto, $b = 0$.
+
+De la ausencia de divisores de cero, se deduce que en cualquier ecuación podemos cancelar el factor común distinto de cero. Si $ca = cb$ y $c \neq 0$, entonces $c(a - b) = 0$, de donde concluimos que $a - b = 0$, es decir, $a = b$.
+
+\begin{definicion}{}{}
+    Un anillo conmutativo $P$ en el cual existe un elemento identidad y cada elemento distinto de cero tiene un inverso se llama un \emph{campo}.
+\end{definicion}
+
+Escribiendo el cociente $a / b$ como el producto $a b^{-1}$, es fácil demostrar que 
+\emph{cualquier campo preserva todas las reglas usuales para manejar fracciones, en términos de suma, resta, división y multiplicación}. Es decir, 
+$$\frac{a}{b} \pm \frac{c}{d} = \frac{ad \pm bc}{bd}, \qquad \frac{a}{b} \cdot \frac{c}{d} = \frac{ac}{bd}, \qquad \frac{-a}{b} = -\frac{a}{b}.$$
+Además, se cumple que
+$$\dfrac{a}{b} = \dfrac{c}{d} ~\text{ si y solo si }~ ad = bc,$$
+siempre que $b \neq 0$ y $d \neq 0$. Se deja como ejercicio para el lector verificar que estas afirmaciones son verdaderas.
+
+En términos de las reglas usuales para manejar fracciones, todos los campos son indistinguibles del conjunto de los números. Por esta razón, los elementos de \emph{cualquier} campo se llamarán números si esto no lleva a ninguna ambigüedad. Como regla general, el elemento cero de cualquier campo se denotará como $0$ y el elemento identidad como $1$.
+
+A continuación, listaremos todos los hechos generales que necesitamos sobre los elementos de cualquier campo en lo que sigue.
+\begin{enumerate}[label=\Alph*.]
+    \item Para cada par de elementos $a$ y $b$, existe un elemento $a + b$, llamado la suma de $a$ y $b$, y se cumple que:
+    \begin{enumerate}[label=\arabic*.]
+        \item La suma es conmutativa: $a + b = b + a$.
+        \item La suma es asociativa: $a + (b + c) = (a + b) + c$.
+        \item Existe un único elemento cero $0$ tal que $a + 0 = a$ para cualquier elemento $a$.
+        \item Para cada elemento $a$ existe un único elemento negativo $-a$ tal que $a + (-a) = 0$.
+    \end{enumerate}
+    \item Para cada par de elementos $a$ y $b$, existe un elemento $ab$, llamado el producto de $a$ y $b$, y se cumple que:
+    \begin{enumerate}[label=\arabic*.]
+        \item La multiplicación es conmutativa: $ab = ba$.
+        \item La multiplicación es asociativa: $a (bc) = (ab) c$.
+        \item Existe un único elemento identidad $1$ tal que $a \cdot 1 = 1 \cdot a = a$ para cualquier elemento $a$.
+        \item Para cada elemento $a \neq 0$, existe un único elemento inverso $a^{-1}$ tal que $aa^{-1} = a^{-1}a = 1$.
+    \end{enumerate}
+    \item Las operaciones de suma y multiplicación están conectadas por la siguiente relación: la multiplicación es distributiva sobre la suma,
+    $$(a + b) c = ac + bc.$$
+\end{enumerate}
+Estos hechos no reclaman independencia lógica, sino que proporcionan una forma conveniente de caracterizar los elementos.
+
+Las propiedades A describen el campo en términos de la operación de suma y establecen que, con respecto a esta operación, el campo es un grupo abeliano. Las propiedades B describen el campo en términos de la operación de multiplicación y afirman que, respecto a esta operación, el campo se convierte en un grupo abeliano si eliminamos el elemento cero. La propiedad C describe la relación entre ambas operaciones.

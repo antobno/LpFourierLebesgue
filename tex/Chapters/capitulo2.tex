@@ -1,0 +1,81 @@
+\chapter{ESPACIOS LINEALES}
+\printchaptertableofcontents
+
+%\section{Introducción}
+
+Las primeras secciones de este capítulo introducen el concepto de espacio vectorial y exploran las propiedades elementales que resultan de su definición básica. Se desarrollan e ilustran con ejemplos las nociones de subespacio, independencia lineal, convexidad y dimensión. Este material es en gran parte una revisión para la mayoría de los lectores, ya que duplica la primera parte de los cursos estándar de álgebra lineal.
+
+La segunda parte del capítulo analiza las propiedades básicas de los espacios lineales normados. Un espacio lineal normado es un espacio vectorial en el que se define una medida de distancia o longitud. Con la introducción de una norma, es posible definir propiedades analíticas o topológicas como la convergencia y los conjuntos abiertos y cerrados. Por lo tanto, esta parte del capítulo introduce y explora estos conceptos básicos que distinguen el análisis funcional del álgebra lineal.
+
+\section{Espacios vectoriales}
+
+\subsection{Definición y ejemplos}
+
+Asociado a cada espacio vectorial hay un conjunto de escalares utilizados para definir la multiplicación escalar en el espacio. En el entorno más abstracto, estos escalares solo deben ser elementos de un cuerpo algebraico. Sin embargo, en este libro los escalares se toman siempre como el conjunto de los números reales o de los números complejos. A veces distinguimos entre estas posibilidades refiriéndonos a un espacio vectorial como un espacio vectorial real o complejo. No obstante, en este libro se enfatiza principalmente en los espacios vectoriales reales y, aunque ocasionalmente se hace referencia a los espacios complejos, muchos resultados se derivan solo para los espacios reales. En caso de ambigüedad, el lector debe suponer que los escalares son reales.
+
+\begin{definicion}{}{espvec}
+    Un \emph{espacio vectorial} $V$ es un conjunto de elementos llamados \emph{vectores} junto con dos operaciones. La primera operación es la \emph{suma}, la cual asocia a cualquier par de vectores $\mathbf{u}, \mathbf{v} \in V$ un vector suma $\mathbf{u} + \mathbf{v} \in V$. La segunda operación es la \emph{multiplicación escalar} o \emph{producto escalar}, la cual asocia a cualquier vector $\mathbf{u} \in V$ y cualquier escalar $\alpha \in K$ (donde $K$ es un \emph{campo}), un vector $\alpha \cdot \mathbf{u} \in V$. Dichas operaciones se pueden establecer como:
+    \begin{alignat*}{2}
+        + &: & \quad V \times V & \longrightarrow V \\
+        & & (\mathbf{u}, \mathbf{v}) & \longmapsto \mathbf{u} + \mathbf{v} \\
+        & \\
+        \cdot &: & \quad K \times V & \longrightarrow V \\
+        & & (\alpha, \mathbf{u}) & \longmapsto \alpha \cdot \mathbf{u}
+    \end{alignat*}
+    Decimos que $V$ junto con las operaciones de suma y multiplicación escalar, es un espacio vectorial sobre $K$, si cumple con los siguientes axiomas: Para toda $\mathbf{u}$, $\mathbf{v}$, $\mathbf{w} \in V$ y $\alpha$, $\beta \in K$
+    \begin{enumerate}[label=\roman*), topsep=6pt, itemsep=0pt]
+        %\item Cerradura: $\mathbf{u} + \mathbf{v} \in V$.
+        \item Conmutatividad: $\mathbf{u} + \mathbf{v} = \mathbf{v} + \mathbf{u}$.
+        \item Asociatividad: $\mathbf{u} + (\mathbf{v} + \mathbf{w}) = (\mathbf{u} + \mathbf{v}) + \mathbf{w}$.
+        \item Neutro aditivo: Existe un elemento $\mathbf{0} \in V$, que llamaremos el \emph{vector cero}, tal que $\mathbf{u} + \mathbf{0} = \mathbf{0} + \mathbf{u} = \mathbf{u}$.
+        \item Inverso aditivo: Para cada vector $\mathbf{u} \in V$ existe un elemento $-\mathbf{u} \in V$, tal que $\mathbf{u} + (-\mathbf{u}) = \mathbf{0}$. A $-\mathbf{u}$ se le llama \emph{negativo} o \emph{inverso aditivo} de $\mathbf{u}$.
+        %\item Cerradura: $\alpha \cdot \mathbf{u} \in V$.
+        \item Distributividad sobre la suma de vectores: $\alpha \cdot (\mathbf{u} + \mathbf{v}) = \alpha \cdot \mathbf{u} + \alpha \cdot \mathbf{v}$.
+        \item Distributividad sobre la suma de escalares: $(\alpha + \beta) \cdot \mathbf{u} = \alpha \cdot \mathbf{u} + \beta \cdot \mathbf{u}$.
+        \item Asociatividad: $\alpha \cdot (\beta \cdot \mathbf{u}) = (\alpha \cdot \beta) \cdot \mathbf{u}$.
+        \item Identidad multiplicativa: $1 \cdot \mathbf{u} = \mathbf{u}$.
+    \end{enumerate}
+\end{definicion}
+
+\begin{theorem}{}{}
+    Sea $V$ un espacio vectorial sobre $K$, entonces
+    \begin{enumerate}[label=\roman*), topsep=6pt, itemsep=0pt]
+        \item $\alpha \cdot \mathbf{0} = \mathbf{0}$, $\forall \alpha \in K$.
+        \item $0 \cdot \mathbf{u} = \mathbf{0}$, $\forall \mathbf{u} \in V$.
+        \item Si $\alpha \cdot \mathbf{u} = \mathbf{0}$, entonces $\alpha = 0$ o $\mathbf{u} = \mathbf{0}$.
+        \item $(-1) \cdot \mathbf{u} = - \mathbf{u}$.
+    \end{enumerate}
+
+    \tcblower
+    \demostracion Solo demostraremos (i), los demás se dejan como ejercicio.
+    \begin{enumerate}[label=\roman*), topsep=6pt, itemsep=0pt]
+        \item Sea $\alpha \in K$, tenemos que
+        \begin{align}
+            \mathbf{0} & = \mathbf{0} + \mathbf{0} && \text{por axioma iii)} \label{ec7} \\
+            & = \alpha \cdot \mathbf{0} + (-\alpha \cdot \mathbf{0}) && \text{por axioma iv)} \label{ec8}
+        \intertext{A partir de \eqref{ec7},}
+            \alpha \cdot \mathbf{0} & = \alpha \cdot (\mathbf{0} + \mathbf{0}) && \text{por def. de producto escalar} \label{ec9} \\
+            & = \alpha \cdot \mathbf{0} + \alpha \cdot \mathbf{0} && \text{por axioma v)} \label{ec10}
+        \intertext{Ahora, sustituyendo \eqref{ec10} en \eqref{ec8}, se sigue que}
+            \mathbf{0} & = (\alpha \cdot \mathbf{0} + \alpha \cdot \mathbf{0}) + (-\alpha \cdot \mathbf{0}) \notag \\
+            & = \alpha \cdot \mathbf{0} + \big( \alpha \cdot \mathbf{0} + (-\alpha \cdot \mathbf{0}) \big) && \text{por axioma ii)} \notag \\
+            & = \alpha \cdot \mathbf{0} + \mathbf{0} && \text{por axioma iii)} \notag \\
+            & = \alpha \cdot \mathbf{0} && \text{por axioma iii)} \notag
+        \end{align}
+        Por lo tanto, se concluye que
+        $$\alpha \cdot \mathbf{0} = \mathbf{0}.$$
+    \end{enumerate}
+\end{theorem}
+
+\newpage
+
+\begin{prop}{}{}
+    En cualquier espacio vectorial:
+    \begin{enumerate}[label=\roman*), topsep=6pt, itemsep=0pt]
+        \item Si $\mathbf{u} + \mathbf{v} = \mathbf{u} + \mathbf{w}$, entonces $\mathbf{v} = \mathbf{w}$.
+        \item Si $\alpha \cdot \mathbf{u} = \alpha \cdot \mathbf{v}$ y $\alpha \neq 0$, entonces $\mathbf{u} = \mathbf{v}$.
+        \item Si $\alpha \cdot \mathbf{u} = \beta \cdot \mathbf{u}$ y $\mathbf{u} \neq \mathbf{0}$, entonces $\alpha = \beta$.
+        \item $(\alpha - \beta) \cdot \mathbf{u} = \alpha \cdot \mathbf{u} - \beta \cdot \mathbf{u}$.
+        \item $\alpha \cdot (\mathbf{u} - \mathbf{v}) = \alpha \cdot \mathbf{u} - \alpha \cdot \mathbf{v}$.
+    \end{enumerate}
+\end{prop}
