@@ -36,7 +36,7 @@
  
 
 \RequirePackage[bbgreekl]{mathbbol}
-\RequirePackage{amsmath, amsfonts, amssymb, amsthm}
+\RequirePackage{amsmath, amsfonts, amssymb, amsthm,mathtools}
 \RequirePackage{bm}
 \RequirePackage{stmaryrd}
 \RequirePackage{thmtools}
@@ -385,6 +385,7 @@ BoldItalicFont = *-BoldItalic,]{Sansation}
 
 \newfontfamily\rodondo[Path=fonts/, BoldFont = *,]{Rodondo.otf}
 
+\newcommand{\TituloBox}[1]{\textbf{\color{cw0}\fontencoding{T1}\fontfamily{phv}\selectfont#1}}
 
 
 %------------------------------------------------------------------------------
@@ -711,7 +712,7 @@ BoldItalicFont = *-BoldItalic,]{Sansation}
 		\fi%
 		\@afterindentfalse\@afterheading%
 		#2%
-		\captionsetup*[figure]{font={footnotesize},hypcap=false}%
+		\captionsetup*[figure]{font={normalsize},hypcap=false}%
 		\IfValueT{#1}{\vspace*{-2mm}\captionof{figure}{#1}}
 	}
 }
@@ -778,7 +779,7 @@ BoldItalicFont = *-BoldItalic,]{Sansation}
 
 \DeclareFloatVCode{parskip}{{\vspace{\parskip}}}
 \newlength{\twoparskip}
-\setlength{\twoparskip}{1.5\parskip}
+\setlength{\twoparskip}{-1.2\parskip}
 \DeclareFloatVCode{twoparskip}{{\vspace\twoparskip}}
 \DeclareFloatSeparators{marginparsep}{\hspace\marginparsep}
 
@@ -795,7 +796,7 @@ BoldItalicFont = *-BoldItalic,]{Sansation}
     footposition=caption,
     footskip=0.5\baselineskip,
     footfont={small},
-	%postcode=twoparskip,
+	postcode=twoparskip,
 }
 
 \floatsetup[table]{
@@ -811,7 +812,7 @@ BoldItalicFont = *-BoldItalic,]{Sansation}
     footposition=caption,
     footskip=0.5\baselineskip,
     footfont={small},
-	%postcode=twoparskip,
+	postcode=twoparskip,
 }
 
 \floatsetup[widefloat]{%
@@ -1007,6 +1008,9 @@ BoldItalicFont = *-BoldItalic,]{Sansation}
 \newcommand{\HH}[1][]{\ensuremath{\ifstrempty{#1}{\mathbbm{H}}{\mathbbm{H}^{#1}}}}
 % valor esperado
 \newcommand{\EE}{\ensuremath{\mathbbm{E}}}
+
+\newcommand{\Gen}{\mathcalm{L}} % Generador
+\DeclareMathOperator{\Dim}{dim} % Dimension
 
 \newcommand{\demostracion}{\noindent\textbf{\fontencoding{T1}\fontfamily{phv}\selectfont\color{cw0}Demostración:\hspace{5pt plus 1pt minus 1pt}}}
 
