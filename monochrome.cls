@@ -321,6 +321,46 @@
     overlay last={}
 }{corollary}
 
+\newtcbtheorem[number within=section]{lemma}{}{
+    % Estilo del teorema
+    theorem style=change apart,
+    enhanced,
+    lower separated=false,
+    breakable,
+    % Bordes
+    boxrule=0pt,
+    frame hidden,
+    borderline east={1.5pt}{0pt}{cw0},
+    % Colores
+    colback=cw1!30!white,
+    coltitle=cw0,
+    % Título
+    detach title,
+    before title={Lema~},
+    after title={:},
+    fonttitle=\bfseries\fontencoding{T1}\fontfamily{phv}\selectfont,
+    boxed title style={colframe=white, colback=white, boxrule=0pt},
+    % Texto
+    fontupper=\normalsize,
+    before upper={\abovedisplayskip=8pt\belowdisplayskip=8pt},
+    % Márgenes
+    left=1mm,
+    right=1mm,
+    top=1mm,
+    bottom=1mm,
+    % Esquinas
+    sharp corners,
+    % Superposición
+    overlay unbroken={
+        \node[left, minimum width=2cm, anchor=east, xshift=-0.5\marginparsep, yshift=-0.348cm] at (frame.north west) {\tcbtitle};
+    },
+    overlay first={
+        \node[left, minimum width=2cm, anchor=east, xshift=-0.5\marginparsep, yshift=-0.348cm] at (frame.north west) {\tcbtitle};
+    },
+    overlay middle={},
+    overlay last={}
+}{lemma}
+
 
 \RequirePackage{lipsum} % Genera texto aleatorio, esto sirve para hacer pruebas a la plantilla
 
@@ -713,7 +753,7 @@ BoldItalicFont = *-BoldItalic,]{Sansation}
 		\@afterindentfalse\@afterheading%
 		#2%
 		\captionsetup*[figure]{font={normalsize},hypcap=false}%
-		\IfValueT{#1}{\vspace*{-2mm}\captionof{figure}{#1}}
+		\IfValueT{#1}{\vspace*{-4mm}\captionof{figure}{#1}}
 	}
 }
 
