@@ -1,0 +1,260 @@
+\chapter{RESPUESTAS}
+
+\sectionbox{Capítulo 1}
+a
+
+\sectionbox{Capítulo 2}
+
+b
+
+\sectionbox{Capítulo 3}
+
+c
+
+\respuestasPage
+\twocolumn
+%\begin{multicols}{2}
+
+\sectionbox{Capítulo 4}
+
+\begin{enumerate}
+    \item Sea $\mathbf{x} = (x_1, x_2, \dots, x_n) \in \RR[n]$.
+    \begin{enumerate}
+        \item Como cada sumando es no negativo, en particular se cumple que
+        $$x_i^2 \leq x_1^2 + x_2^2 + \dots + x_n^2.$$
+        Tomando raíz cuadrada en ambos lados
+        $$|x_i| = \sqrt{x_i^2} \leq \sqrt{x_1^2 + x_2^2 + \dots + x_n^2} = \| \mathbf{x} \|.$$
+        Ahora bien, sea $M = \max \{|x_1|, |x_2|, \dots, |x_n|\}$. Como $|x_i| \leq M$ para todo $i$, se sigue que
+        $$x_j^2 \leq M^2.$$
+        Sumando sobre todas las componentes,
+        $$x_1^2 + x_2^2 + \cdots + x_n^2 \leq n \cdot M^2.$$
+        Tomando raíz cuadrada,
+        \begin{align*}
+            \| \mathbf{x} \| & = \sqrt{x_1^2 + x_2^2 + \cdots + x_n^2} \\
+            & \leq \sqrt{n \cdot M^2} \\
+            & = \sqrt{n} \cdot M
+        \end{align*}
+        De esta forma,
+        $$|x_i| \leq \| \mathbf{x} \| \leq \sqrt{n} \max \{ |x_1|, |x_2|, \dots, |x_n|\}.$$
+        \item Ya demostramos que $|x_i| \leq \| \mathbf{x} \|$ para todo $i$. Como la norma infinito es el máximo de todos los $|x_i|$, se sigue que
+        $$\max \{ |x_1|, |x_2|, \dots, |x_n| \} \leq \| \mathbf{x} \|.$$
+        Es decir,
+        $$\| \mathbf{x} \|_{\infty} \leq \| \mathbf{x} \|.$$
+        Ya demostramos que
+        $$\| \mathbf{x} \| \leq \sqrt{n} \max \{ |x_1|, |x_2|, \dots, |x_n|\},$$
+        pero recordemos que
+        $$\max \{|x_1|, |x_2|, \dots, |x_n|\} = \| \mathbf{x} \|_{\infty},$$
+        así que simplemente reemplazamos
+        $$\| \mathbf{x} \| \leq \sqrt{n} \| \mathbf{x} \|_{\infty}.$$
+        De esta forma,
+        $$\| \mathbf{x} \|_{\infty} \leq \| \mathbf{x} \| \leq \sqrt{n} \| \mathbf{x} \|_{\infty}.$$
+    \end{enumerate}
+    \item \begin{enumerate}
+        \item Para graficar la bola, es necesario observar que
+        \begin{align*}
+            (x, y) \in B(\mathbf{0}, 1) & \Longleftrightarrow \| (x, y) - (0, 0) \|_1 \leq 1 \\
+            & \Longleftrightarrow \| (x, y) \|_1 \leq 1 \\
+            & \Longleftrightarrow |x| + |y| \leq 1
+        \end{align*}
+        La desigualdad $|x| + |y| < 1$ describe un rombo (o diamante) centrado en el origen $(0, 0)$ con vértices en los puntos: $(1, 0)$, $(-1, 0)$, $(0, 1)$, $(0, -1)$. Cada arista del rombo corresponde a una ecuación lineal: $x + y = 1$, $-x + y = 1$, $-x - y = 1$, $x - y = 1$ para cada cuadrante respectivamente. Por lo tanto, la representación gráfica de esta bola es:
+        \begin{center}
+            \begin{tikzpicture}
+                \draw[-stealth] (-2.5,0) -- (2.5,0) node[below left] {$x$};
+                \draw[-stealth] (0,-2.5) -- (0,2.5) node[below left] {$y$};
+                \filldraw[cw2,opacity=0.1] (0,1) -- (-1,0) -- (0,-1) -- (1,0) -- cycle;
+                \draw[cw0] (0,1) -- (-1,0) -- (0,-1) -- (1,0) -- cycle;
+                \draw[latex-] (0.55,0.55) -- (1,1) node[above,xshift=0.7cm] {$x + y = 1$};
+                \draw[latex-] (-0.55,0.55) -- (-1,1) node[above,xshift=-0.7cm] {$- x + y = 1$};
+                \draw[latex-] (-0.55,-0.55) -- (-1,-1) node[below,xshift=-0.7cm] {$- x - y = 1$};
+                \draw[latex-] (0.55,-0.55) -- (1,-1) node[below,xshift=0.7cm] {$x - y = 1$};
+            \end{tikzpicture}
+        \end{center}
+        \item Para graficar la bola, es necesario observar que
+        \begin{align*}
+            (x, y) \in B(\mathbf{0}, 1) & \Longleftrightarrow \| (x, y) - (0, 0) \|_2 \leq 1 \\
+            & \Longleftrightarrow \| (x, y) \|_2 \leq 1 \\
+            & \Longleftrightarrow \sqrt{x^2 + y^2} \leq 1
+        \end{align*}
+        Esta desigualdad describe un círculo de radio $1$ centrado en el origen $(0, 0)$. Por lo tanto, la representación gráfica de esta bola es:
+        \begin{center}
+            \begin{tikzpicture}
+                \draw[-stealth] (-2.5,0) -- (2.5,0) node[below left] {$x$};
+                \draw[-stealth] (0,-2.5) -- (0,2.5) node[below left] {$y$};
+                \filldraw[cw2,opacity=0.1] (0,0) circle (1cm);
+                \draw[cw0] (0,0) circle (1cm);
+                \draw[latex-] (0.6,0.9) -- (1.3,1.5) node[above] {$x^2 + y^2 = 1$};
+            \end{tikzpicture}
+        \end{center}
+        \item Para graficar la bola, es necesario observar que
+        \begin{align*}
+            (x, y) \in B(\mathbf{0}, 1) & \Longleftrightarrow \| (x, y) - (0, 0) \|_{\infty} \leq 1 \\
+            & \Longleftrightarrow \| (x, y) \|_{\infty} \leq 1 \\
+            & \Longleftrightarrow \max \left\{ |x| + |y| \right\} \leq 1
+       \end{align*}
+       Esta desigualdad describe un cuadrado centrado en el origen $(0, 0)$, con lados paralelos a los ejes coordenados y longitud de lado $2$. Por lo tanto, la representación gráfica de esta bola es:
+       \begin{center}
+           \begin{tikzpicture}
+               \draw[-stealth] (-2.5,0) -- (2.5,0) node[below left] {$x$};
+               \draw[-stealth] (0,-2.5) -- (0,2.5) node[below left] {$y$};
+               \filldraw[cw2,opacity=0.1] (-1,-1) rectangle (1,1);
+               \draw[cw0] (-1,-1) rectangle (1,1);
+               \draw[latex-] (0.5,1.05) -- (0.75,1.75) node[right] {$y = 1$};
+               \draw[latex-] (-0.5,-1.05) -- (-0.75,-1.75) node[left] {$y = - 1$};
+               \draw[latex-] (1.05,-0.5) -- (1.75,-0.75) node[below] {$x = 1$};
+               \draw[latex-] (-1.05,0.5) -- (-1.75,0.75) node[above] {$x = - 1$};
+            \end{tikzpicture}
+       \end{center}
+    \end{enumerate}
+    \item Sea $\mathbf{x} \in \RR[n]$ y consideremos la función $\| \phantom{x} \|$. Queremos probar que $\| \phantom{x} \|$ es continua en cualquier punto $\mathbf{x}$, es decir, que si $\mathbf{y} \to \mathbf{x}$, entonces $\| \mathbf{y} \| \to \| \mathbf{x} \|$. Dado $\varepsilon > 0$, tomemos $\delta = \varepsilon$. Si $\| \mathbf{x} - \mathbf{y} \| < \delta$, entonces, por la desigualdad del corolario \ref{corollary:desigualdad_vabsoluto},
+    $$\big| \| \mathbf{x} \| - \| \mathbf{y} \| \big| \leq \| \mathbf{x} - \mathbf{y} \| < \delta = \varepsilon.$$
+    Esto implica que $\| \mathbf{y} \| \to \| \mathbf{x} \|$ cuando $\mathbf{y} \to \mathbf{x}$, lo que prueba que $\| \phantom{x} \|$ es continua en cualquier punto $\mathbf{x}$.
+    \item Sabemos que la sucesión $(\mathbf{x}_n)$ converge a $\mathbf{x}$, es decir,
+    $$\lim_{n \to \infty} \mathbf{x}_n = \mathbf{x}.$$
+    Por definición de convergencia, para todo $\varepsilon > 0$, existe $N \in \NN$ tal que
+    $$\| \mathbf{x}_n - \mathbf{x} \|, \quad \text{ para todo } n \geq N.$$
+    En cualquier espacio normado se cumple que
+    $$\big| \| \mathbf{x}_n \| - \| \mathbf{x} \| \big| \leq \| \mathbf{x}_n - \mathbf{x} \|.$$
+    Dado $\varepsilon > 0$, para todo $n \geq N$,
+    $$\big| \| \mathbf{x}_n \| - \| \mathbf{x} \| \big| \leq \| \mathbf{x}_n - \mathbf{x} \| < \varepsilon.$$
+    Como $\|\mathbf{x}_n - \mathbf{x}\| \to 0$ por la convergencia de $\mathbf{x}_n$ a $\mathbf{x}$, se sigue que $\big| \|\mathbf{x}_n\| - \|\mathbf{x}\| \big| \to 0$, lo que demuestra que $\|\mathbf{x}_n\| \to \|\mathbf{x}\|$, es decir,
+    $$\lim_{n \to \infty} \|\mathbf{x}_n\| = \|\mathbf{x}\|.$$
+    \item Supongamos que $\mathbf{x}_n \to \mathbf{x}_0$ en $\RR[k]$. Por definición, para todo $\varepsilon > 0$, existe $N \in \NN$ tal que para $n \geq N$,
+    $$\|\mathbf{x}_n - \mathbf{x}_0\| = \sqrt{\sum_{r=1}^k \left(x_n^r - x_0^r\right)^2} < \varepsilon.$$
+    Para cada componente $r \in \{1, 2, \dots, k\}$, se cumple
+    $$\left|x_n^r - x_0^r\right| \leq \sqrt{\sum_{r=1}^k \left(x_n^r - x_0^r\right)^2} = \|\mathbf{x}_n - \mathbf{x}_0\| < \varepsilon.$$
+    Por lo tanto, para todo $r$, $x_n^r \to x_0^r$ en $\RR$. Recíprocamente, supongamos que para cada $r \in \{1, 2, \dots, k\}$, $x_n^r \to x_0^r$ en $\RR$. Dado $\varepsilon > 0$, para cada componente $r$, existe $N_r \in \NN$ tal que para $n \geq N_r$,
+    $$\left|x_n^r - x_0^r\right| < \frac{\varepsilon}{\sqrt{k}}.$$
+    Sea $N = \max \{N_1, N_2, \dots, N_k\}$. Para $n \geq N$,
+    \begin{align*}
+        \|\mathbf{x}_n - \mathbf{x}_0\|^2 & = \sum_{r=1}^k \left|x_n^r - x_0^r\right|^2 \\
+        & < \sum_{r=1}^k \left(\frac{\varepsilon}{\sqrt{k}}\right)^2 \\
+        & = k \cdot \frac{\varepsilon^2}{k} \\
+        & = \varepsilon^2
+    \end{align*}
+    Tomando raíz cuadrada
+    $$\|\mathbf{x}_n - \mathbf{x}_0\| < \varepsilon.$$
+    Por lo tanto, $\mathbf{x}_n \to \mathbf{x}_0$ en $\RR[k]$.
+    \item Supongamos que $(\mathbf{x}_n)$ converge a algún punto $\mathbf{x} \in \RR[k]$. Esto significa que, dado $\varepsilon > 0$, existe $N \in \NN$ tal que para todo $n \geq N$,
+    $$\|\mathbf{x}_n - \mathbf{x}\| < \frac{\varepsilon}{2}.$$
+    De manera similar, para todo $m \geq N$,
+    $$\|\mathbf{x}_m - \mathbf{x}\| < \frac{\varepsilon}{2}.$$
+    Aplicando la desigualdad triangular,
+    \begin{align*}
+        \|\mathbf{x}_n - \mathbf{x}_m\| & = \|\mathbf{x}_n - \mathbf{x} - \mathbf{x}_m + \mathbf{x}\| \\
+        & \leq \|\mathbf{x}_n - \mathbf{x}\| + \|\mathbf{x}_m - \mathbf{x}\| \\
+        & < \frac{\varepsilon}{2} + \frac{\varepsilon}{2} = \varepsilon
+    \end{align*}
+    Esto muestra que $(\mathbf{x}_n)$ es una sucesión de Cauchy, pues para todo $\varepsilon > 0$ podemos encontrar un $N$ tal que para $m$, $n \geq N$, se cumple $\|\mathbf{x}_n - \mathbf{x}_m\| < \varepsilon$.
+    \item Dada una sucesión de Cauchy $(\mathbf{x}_n)$ en $\RR[k]$, escribimos cada término como
+    $$\mathbf{x}_n = \left(x_n^1, x_n^2, \dots, x_n^k\right) \in \RR[k].$$
+    Dado que $\|\mathbf{x}_n - \mathbf{x}_m\|$, es decir,
+    $$\|\mathbf{x}_n - \mathbf{x}_m\| = \sqrt{\sum_{r = 1}^{k} \left(x_n^r - x_m^r\right)^2}.$$
+    La condición de Cauchy implica que cada coordenada $x_n^i$ es una sucesión de Cauchy en $\RR$. Es decir,
+    $$\forall \varepsilon > 0, \exists N \text{ tal que } \forall m, n \geq N, \quad \left|x_n^i - x_m^i\right| < \frac{\varepsilon}{\sqrt{k}}.$$
+    Pero como $\RR$ es completo, cada sucesión $(x_n^i)$ converge a algún número real $x^i$. Es decir, existe un vector
+    $$\mathbf{x} = \left(x^1, x^2, \dots, x^k\right) \in \RR[k]$$
+    tal que para cada $i = 1, 2, \dots, k$, $x_n^i \to x^i$ cuando $n \to \infty$. Ahora, probamos que $\mathbf{x}_n \to \mathbf{x}$. Para cualquier $\varepsilon > 0$, dado que cada coordenada converge, existe un $N$ tal que para todo $n \geq N$,
+    $$\left|x_n^i - x^i\right| < \frac{\varepsilon}{\sqrt{k}}, \quad \text{ para } i = 1, 2,  \dots, k.$$
+    Entonces,
+    \begin{align*}
+        \|\mathbf{x}_n - \mathbf{x}\| & = \sum_{r = 1}^{k} \left|x_n^r - x^r\right|^2 \\
+        & < \sum_{r = 1}^{k} \left( \frac{\varepsilon}{\sqrt{k}} \right)^2 \\
+        & = k \cdot \frac{\varepsilon^2}{k} \\
+        & = \varepsilon^2
+    \end{align*}
+    Tomando raíz cuadrada
+    $$\|\mathbf{x}_n - \mathbf{x}\| < \varepsilon.$$
+    Esto prueba que $\mathbf{x}_n \to \mathbf{x}$, por consiguiente, la sucesión de Cauchy converge en $\RR[k]$. Por lo tanto, hemos demostrado que toda sucesión de Cauchy en $\RR[k]$ converge en $\RR[k]$, lo que significa que $\RR[k]$ es un espacio normado completo. Esto nos permite concluir que $\RR[k]$ es un espacio de Banach.
+    \item Sea $\mathbf{x} = (x_1, x_2, \dots, x_n) \in \RR[n]$.
+    \begin{enumerate}
+        \item Como cada sumando es no negativo, en particular se cumple que
+        $$x_i^2 \leq x_1^2 + x_2^2 + \dots + x_n^2.$$
+        Tomando raíz cuadrada en ambos lados
+        $$|x_i| = \sqrt{x_i^2} \leq \sqrt{x_1^2 + x_2^2 + \dots + x_n^2} = \| \mathbf{x} \|.$$
+        Ahora bien, sea $M = \sup \{|x_1|, |x_2|, \dots, |x_n|\}$. Como $|x_i| \leq M$ para todo $i$, se sigue que
+        $$x_j^2 \leq M^2.$$
+        Sumando sobre todas las componentes,
+        $$x_1^2 + x_2^2 + \cdots + x_n^2 \leq n \cdot M^2.$$
+        Tomando raíz cuadrada,
+        \begin{align*}
+            \| \mathbf{x} \| & = \sqrt{x_1^2 + x_2^2 + \cdots + x_n^2} \\
+            & \leq \sqrt{n \cdot M^2} \\
+            & = \sqrt{n} \cdot M
+        \end{align*}
+        De esta forma,
+        $$|x_i| \leq \| \mathbf{x} \| \leq \sqrt{n} \sup \{ |x_1|, |x_2|, \dots, |x_n|\}.$$
+        \item Es el mismo ejercicio que 1b).
+    \end{enumerate}
+    \item Sea $\mathbf{x} = (x_1, x_2, \dots, x_n) \in \RR[n]$.
+    \begin{enumerate}
+        \item Es el mismo ejercicio que 1b).
+        \item Recordemos que
+        $$\|\mathbf{x}\|_1 = |x_1| + |x_2| + \dots + |x_n|.$$
+        Como la norma infinito es el máximo de estos valores, tenemos que
+        $$\|\mathbf{x}\|_{\infty} \leq \|\mathbf{x}\|_1.$$
+        Dado que $|\mathbf{x}|_{\infty} = \max {|x_1|, |x_2|, \dots, |x_n|}$, entonces para todo $i$,
+        $$|x_i| \leq \|\mathbf{x}\|_{\infty}.$$
+        Sumando sobre todas las componentes,
+        $$|x_1| + |x_2| + \dots + |x_n| \leq n \|\mathbf{x}\|_{\infty}.$$
+        De esta forma,
+        $$\| \mathbf{x} \|_{\infty} \leq \| \mathbf{x} \|_1 \leq n \| \mathbf{x} \|_{\infty}.$$
+        \item A partir de los resultados anteriores, tenemos las desigualdades:
+        $$\|\mathbf{x}\|_{\infty} \leq \|\mathbf{x}\| \leq \sqrt{n} \|\mathbf{x}\|_{\infty}$$
+        y
+        $$\|\mathbf{x}\|_{\infty} \leq \|\mathbf{x}\|_1 \leq n \|\mathbf{x}\|_{\infty}.$$
+        Para acotar $\|\mathbf{x}\|_1$ en términos de $\|\mathbf{x}\|$, combinemos las desigualdades. Usando $\| \mathbf{x} \| \leq \sqrt{n} \| \mathbf{x} \|_\infty$  y $\| \mathbf{x} \|_\infty \leq \| \mathbf{x} \|_1$,
+        $$\| \mathbf{x} \| \leq \sqrt{n} \| \mathbf{x} \|_\infty \leq \sqrt{n} \| \mathbf{x} \|_1.$$
+        Usando $\| \mathbf{x} \|_1 \leq n \| \mathbf{x} \|_\infty$ y $\| \mathbf{x} \|_\infty \leq \| \mathbf{x} \|$,
+        $$\| \mathbf{x} \|_1 \leq n \| \mathbf{x} \|_\infty \leq n \| \mathbf{x} \| \Longrightarrow \frac{1}{n} \| \mathbf{x} \|_1 \leq \| \mathbf{x} \|.$$
+        Uniendo ambas desigualdades,
+        $$\frac{1}{n} \| \mathbf{x} \|_1 \leq \| \mathbf{x} \| \leq \sqrt{n} \| \mathbf{x} \|_1, \quad \forall \mathbf{x} \in \RR[n].$$
+        Esto muestra que $\|\mathbf{x}\|_1$ y $\|\mathbf{x}\|$ son normas equivalentes.
+    \end{enumerate}
+    \item \begin{enumerate}
+        \item Sea $M = \|\mathbf{x}\|_\infty$. Como $|x_i| \leq M$ para toda $i$, se cumple
+        $$\|\mathbf{x}\|_p^p = \sum_{i=1}^n |x_i|^p \geq |x_k|^p = M^p.$$
+        Por lo tanto,
+        $$\|\mathbf{x}\|_{\infty}^p \leq \|\mathbf{x}\|_p^p.$$
+        \item Sea $M = \|\mathbf{x}\|_{\infty}$. Como $|x_i|^p \leq M^p$ para toda $i$, sumando sobre todas las componentes,
+        $$\sum_{i=1}^n |x_i|^p \leq n \cdot M^p.$$
+        Tomando la raíz $p$-ésima en ambos lados,
+        $$\| \mathbf{x} \|_p \leq n^{1/p} \| \mathbf{x} \|_{\infty}.$$
+        \item De la desigualdad en a), tomando la raíz $p$-ésima,
+        $$\|\mathbf{x}\|_{\infty} \leq \|\mathbf{x}\|_p.$$
+        Así,
+        $$\|\mathbf{x}\|_{\infty} \leq \|\mathbf{x}\|_p \leq n^{1/p} \|\mathbf{x}\|_{\infty}.$$
+        Esto muestra que $\|\mathbf{x}\|_{\infty}$ y $\|\mathbf{x}\|_p$ son normas equivalentes.
+    \end{enumerate}
+    \item Sea $\mathbf{x} = (-1, -2, 5, -9) \in \RR[4]$.
+    \begin{enumerate}
+        \item[i)] 9a) Sean $\| \mathbf{x} \|_{\infty} = 9$ y $\| \mathbf{x} \| = \sqrt{111} \approx 10.535$. Entonces,
+        $$9 \leq \underbrace{\sqrt{111}}_{10.535} \leq \sqrt{4} \cdot \sqrt{111} \approx 21.071.$$
+        9b) Sean $\| \mathbf{x} \|_1 = 17$ y $\| \mathbf{x} \|_{\infty} = 9$. Entonces,
+        $$9 \leq 17 \leq 4 \cdot 17 = 68.$$
+        9c) Sean $\| \mathbf{x} \| = \sqrt{111} \approx 10.535$ y $\| \mathbf{x} \|_1 = 17$. Entonces,
+        $$4.25 = \frac{1}{4} \cdot 17 \leq \underbrace{\sqrt{111}}_{10.535} \leq \sqrt{4} \cdot 17 = 34.$$
+        10a) Sea $p = 3$. Sean $\| \mathbf{x} \|_{\infty} = 9$ y $\| \mathbf{x} \|_p = 863^{1/3}$. Entonces,
+        $$729 = 9^3 \leq \left(863^{1/3}\right)^3 = 863.$$
+        10b) Sea $p = 3$. Sean $\| \mathbf{x} \|_{\infty} = 9$ y $\| \mathbf{x} \|_p = 863^{1/3}$. Entonces,
+        $$863 = \left(863^{1/3}\right)^3 \leq 4^{1/3} \cdot 9^3 \approx 1157.215.$$
+        10c) Sea $p = 3$. Sean $\| \mathbf{x} \|_{\infty} = 9$ y $\| \mathbf{x} \|_p = 863^{1/3}$. Entonces,
+        $$9 \leq \underbrace{863^{1/3}}_{9.520} \leq 4^{1/3} \cdot 9 = 14.286.$$
+    \end{enumerate}
+    Sea $\mathbf{x} = (15, -2, 4) \in \RR[3]$.
+    \begin{enumerate}
+        \item[ii)] 9a) Sean $\| \mathbf{x} \|_{\infty} = 15$ y $\| \mathbf{x} \| = 7\sqrt{5} \approx 15.652$. Entonces,
+        $$15 \leq \underbrace{7\sqrt{5}}_{15.652} \leq \sqrt{3} \cdot 15 \approx 25.980.$$
+        9b) Sean $\| \mathbf{x} \|_1 = 21$ y $\| \mathbf{x} \|_{\infty} = 15$. Entonces,
+        $$15 \leq 21 \leq 3 \cdot 15 = 45.$$
+        9c) Sean $\| \mathbf{x} \| = 7\sqrt{5} \approx 15.652$ y $\| \mathbf{x} \|_1 = 21$. Entonces,
+        $$7 = \frac{1}{3} \cdot 21 \leq \underbrace{7\sqrt{5}}_{15.652} \leq \sqrt{3} \cdot 21 \approx 36.373.$$
+        10a) Consideremos $p = 3$. Sean $\| \mathbf{x} \|_{\infty} = 15$ y $\| \mathbf{x} \|_p = 3447^{1/3}$. Entonces,
+        $$3375 = 15^3 \leq \left(3447^{1/3}\right)^3 = 3447.$$
+        10b) Consideremos $p = 3$. Sean $\| \mathbf{x} \|_{\infty} = 15$ y $\| \mathbf{x} \|_p = 3447^{1/3}$. Entonces,
+        $$3447 = \left(3447^{1/3}\right)^3 \leq 3^{1/3} \cdot 15^3 \approx 4867.592.$$
+        10c) Consideremos $p = 3$. Sean $\| \mathbf{x} \|_{\infty} = 15$ y $\| \mathbf{x} \|_p = 3447^{1/3}$. Entonces,
+        $$15 \leq \underbrace{3447^{1/3}}_{15.105} \leq 3^{1/3} \cdot 15 = 21.633.$$
+    \end{enumerate}
+\end{enumerate}
+
+%\end{multicols}

@@ -495,6 +495,19 @@ BoldItalicFont = *-BoldItalic,]{Sansation}
 		marginparsep=0mm
 	}
 }
+\newcommand{\respuestasPage}{
+	\fancyhfoffset[L]{0mm}
+	\newgeometry{
+		ignorefoot,
+		ignorehead,
+		left=2cm,
+		right=2cm,
+		top=2cm,
+		bottom=2cm,
+		marginparwidth=5cm,
+	    marginparsep=7mm,
+	}
+}
 \newcommand{\asymmetricalPage}{
 	\restoregeometry
 }
@@ -1141,3 +1154,22 @@ BoldItalicFont = *-BoldItalic,]{Sansation}
 \AfterEndEnvironment{listing}{
 \end{adjustwidth}
 }
+
+\newcommand{\sectionbox}[1] {
+\begin{tcolorbox}[
+    colback=cw0,
+    colframe=cw0,
+    coltext=white,
+    width=\linewidth + 0.1\marginparsep,
+    height=0.8cm, 
+    %halign=center,
+    valign=center,
+    fontupper=\fontencoding{T1}\fontfamily{phv}\selectfont\Large\bfseries,
+    sharp corners,
+    arc=0mm,
+    left=2mm,
+    right=2mm,
+    ]
+{#1}
+\end{tcolorbox} 
+} %

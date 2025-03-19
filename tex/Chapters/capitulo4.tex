@@ -212,7 +212,7 @@ La siguiente desigualdad útil es una consecuencia directa de la desigualdad tri
     $$\| \mathbf{x} \| - \| \mathbf{y} \| \leq \| \mathbf{x} - \mathbf{y} \|.$$
 \end{theorem}
 
-\begin{corollary}{}{}
+\begin{corollary}{}{desigualdad_vabsoluto}
     En particular, en un espacio normado $V$, se cumple que para cualesquiera $\mathbf{x}$, $\mathbf{y} \in V$,
     $$\big| \| \mathbf{x} \| - \| \mathbf{y} \| \big| \leq \| \mathbf{x} - \mathbf{y} \|.$$
 
@@ -730,18 +730,18 @@ En esta sección vamos a estudiar el concepto de sucesión en un espacio métric
     Sea $(X, d)$ un espacio métrico. Una \emph{sucesión} en $X$ es un subconjunto de $X$ definido mediante una función, de tal modo que
     \begin{alignat*}{2}
         x &: & \quad \NN & \longrightarrow X \\
-        & & n & \longmapsto x_n
+        & & n & \longmapsto \mathbf{x}_n
     \end{alignat*}
-    Denotaremos a la sucesión mediante $(x_n)_{n \in \NN}$, o $\{x_n\}_{n = 1}^{\infty}$ o simplemente $(x_n)_{n}$; y a los elementos de la sucesión les llamaremos \emph{términos}.
+    Denotaremos a la sucesión mediante $(\mathbf{x}_n)_{n \in \NN}$, o $\{\mathbf{x}_n\}_{n = 1}^{\infty}$ o simplemente $(\mathbf{x}_n)$; y a los elementos de la sucesión les llamaremos \emph{términos}.
 \end{definicion}
 
 La función que define la sucesión no ha de ser necesariamente inyectiva, lo que significa que puede haber términos repetidos en una sucesión; por ejemplo $\left\{(-1)^n\right\}_{n = 1}^{\infty}$ es la sucesión $\{-1, 1, -1, 1, \dots \}$.
 
 \begin{definicion}{}{}
-    Sea $(X, d)$ un espacio métrico y $\{x_n\}_{n = 1}^{\infty}$ una sucesión de puntos de $X$. Diremos que $\{x_n\}_{n = 1}^{\infty}$ converge a $x$ en $(X, d)$, y lo denotaremos por $x_n \to x$ o $\displaystyle \lim_{n \to \infty} x_n = x$, si para todo $\varepsilon > 0$, existe $n_0 \in \NN$, tal que si $n \geq n_0$, entonces $d(x_n, x) < \varepsilon$.
+    Sea $(X, d)$ un espacio métrico y $\{\mathbf{x}_n\}_{n = 1}^{\infty}$ una sucesión de puntos de $X$. Diremos que $\{\mathbf{x}_n\}_{n = 1}^{\infty}$ converge a $\mathbf{x}$ en $(X, d)$, y lo denotaremos por $\mathbf{x}_n \to \mathbf{x}$ o $\displaystyle \lim_{n \to \infty} \mathbf{x}_n = \mathbf{x}$, si para todo $\varepsilon > 0$, existe $n_0 \in \NN$, tal que si $n \geq n_0$, entonces $d(\mathbf{x}_n, \mathbf{x}) < \varepsilon$.
 \end{definicion}
 
-En otras palabras si para toda bola $B(x, \varepsilon)$, existe $n_0 \in \NN$, tal que si $n \geq n_0$, entonces $x_n \in B(x, \varepsilon)$. En este caso se dice que la sucesión es convergente hacia el punto $x$, o que $x$ es el límite de la sucesión.
+En otras palabras si para toda bola $B(\mathbf{x}, \varepsilon)$, existe $n_0 \in \NN$, tal que si $n \geq n_0$, entonces $\mathbf{x}_n \in B(\mathbf{x}, \varepsilon)$. En este caso se dice que la sucesión es convergente hacia el punto $\mathbf{x}$, o que $\mathbf{x}$ es el límite de la sucesión.
 
 \begin{examplebox}{}{}
     El concepto de convergencia que acabamos de definir coincide con el ya conocido de convergencia en $\RR$ con el valor absoluto, es decir, en la topología usual. Recordemos que una sucesión $\{x_n\}_{n = 1}^{\infty}$ converge a $x \in \RR$ si para todo $\varepsilon > 0$, existe $n_0$ tal que si $n > n_0$, entonces $|x_n - x| < \varepsilon$. Fijémonos que si $|x_n - x| < \varepsilon$, entonces
@@ -750,15 +750,62 @@ En otras palabras si para toda bola $B(x, \varepsilon)$, existe $n_0 \in \NN$, t
 \end{examplebox}
 
 \begin{examplebox}{}{}
-    Si $(X, d)$ es un espacio discreto una sucesión $\{x_n\}_{n = 1}^{\infty}$ converge a un punto $x$ si, y sólo si es constante igual a $x$ a partir de un término (a estas sucesiones se les llama de cola constante), ya que las bolas de centro $x$ y radio menor que $1$ coinciden con el conjunto unipuntual $\{x\}$.
+    Si $(X, d)$ es un espacio discreto una sucesión $\{\mathbf{x}_n\}_{n = 1}^{\infty}$ converge a un punto $\mathbf{x}$ si, y sólo si es constante igual a $\mathbf{x}$ a partir de un término (a estas sucesiones se les llama de cola constante), ya que las bolas de centro $\mathbf{x}$ y radio menor que $1$ coinciden con el conjunto unipuntual $\{\mathbf{x}\}$.
 \end{examplebox}
 
 \begin{theorem}{}{}
-    Si $\{x_n\}_{n = 1}^{\infty}$ es una sucesión convergente en un espacio métrico $(X, d)$, su límite es único.
+    Si $\{\mathbf{x}_n\}_{n = 1}^{\infty}$ es una sucesión convergente en un espacio métrico $(X, d)$, su límite es único.
 
     \tcblower
-    \demostracion Supongamos que $\{x_n\}_{n = 1}^{\infty}$ tiene dos límites distintos $x$ e $y$, tal que $x \neq y$. Según la proposición \ref{prop:Hausdorff}, $X$ es un espacio de Hausdorff y, por tanto existe $r > 0$ tal que $B(x, r) \cap B(y, r) = \varnothing$. Por otro lado, como $\{x_n\}_{n = 1}^{\infty}$ converge a $x$, tenemos que dado $r > 0$, existe $n_1$ tal que si $n \geq n_1$, entonces $x_n \in B(x, r)$; además como $\{x_n\}_{n = 1}^{\infty}$ converge a $y$, dado $r > 0$, existe $n_2$ tal que si $n \geq n_2$, entonces $x_n \in B(y, r)$; si tomamos $n \geq n_1$ y a la vez $n \geq n_2$ se verifican ambas condiciones a la vez y $x_n \in B(x, r)$ y $x_n \in B(y, r)$, lo que contradice que la intersección de estas dos bolas es vacía.
+    \demostracion Supongamos que $\{\mathbf{x}_n\}_{n = 1}^{\infty}$ tiene dos límites distintos $\mathbf{x}$ e $\mathbf{y}$, tal que $\mathbf{x} \neq \mathbf{y}$. Según la proposición \ref{prop:Hausdorff}, $X$ es un espacio de Hausdorff y, por tanto existe $r > 0$ tal que $B(\mathbf{x}, r) \cap B(\mathbf{y}, r) = \varnothing$. Por otro lado, como $\{\mathbf{x}_n\}_{n = 1}^{\infty}$ converge a $\mathbf{x}$, tenemos que dado $r > 0$, existe $n_1$ tal que si $n \geq n_1$, entonces $\mathbf{x}_n \in B(\mathbf{x}, r)$; además como $\{\mathbf{x}_n\}_{n = 1}^{\infty}$ converge a $\mathbf{y}$, dado $r > 0$, existe $n_2$ tal que si $n \geq n_2$, entonces $\mathbf{x}_n \in B(\mathbf{y}, r)$; si tomamos $n \geq n_1$ y a la vez $n \geq n_2$ se verifican ambas condiciones a la vez y $\mathbf{x}_n \in B(\mathbf{x}, r)$ y $\mathbf{x}_n \in B(\mathbf{y}, r)$, lo que contradice que la intersección de estas dos bolas es vacía.
 \end{theorem}
+
+\newpage
+
+\section{Ejercicios del Capítulo 4}
+
+\begin{enumerate}
+    \item Si $\mathbf{x} = (x_1, x_2, \dots, x_n)$, demostrar:
+    \begin{enumerate}
+        \item $|x_i| \leq \| \mathbf{x} \| \leq \sqrt{n} \max \{ |x_1|, |x_2|, \dots, |x_n|\}$,
+        \item $\| \mathbf{x} \|_{\infty} \leq \| \mathbf{x} \| \leq \sqrt{n} \| \mathbf{x} \|_{\infty}$.
+    \end{enumerate}
+    En donde: $\| \mathbf{x} \| = \sqrt{x_1^2 + x_2^2 + \cdots + x_n^2}$.
+    \item Graficar los siguientes conjuntos:
+    \begin{enumerate}
+        \item $B_{d_1}(\mathbf{0}, 1) = \{ \mathbf{x} \in \RR[2] : \| \mathbf{x} \|_1 \leq 1 \}$,
+        \item $B_{d_2}(\mathbf{0}, 1) = \{ \mathbf{x} \in \RR[2] : \| \mathbf{x} \|_2 \leq 1 \}$,
+        \item $B_{d_{\infty}}(\mathbf{0}, 1) = \{ \mathbf{x} \in \RR[2] : \| \mathbf{x} \|_{\infty} \leq 1 \}$,
+    \end{enumerate}
+    \item Usando el corolario \ref{corollary:desigualdad_vabsoluto}, demuestre que la función $\| \phantom{x} \|: \RR[n] \longrightarrow \RR$ es una función continua en $\RR[n]$.
+    \item Demostrar que si la sucesión $\{ \mathbf{x}_n \}_{n = 1}^{\infty}$ converge a $\mathbf{x}$, entonces la sucesión $\| \mathbf{x}_n \|$ converge a $\| \mathbf{x} \|$. Es decir,
+    $$\lim_{n \to \infty} \mathbf{x}_n = \mathbf{x}, \text{ entonces } \lim_{n \to \infty} \| \mathbf{x}_n \| = \| \mathbf{x} \|.$$
+    \item Dada una sucesión $(\mathbf{x}_n)_{n \in \NN} \subset \RR[k]$, donde $\mathbf{x}_n = \left(x_n^1, x_n^2, \dots, x_n^k\right)$, y un vector fijo $\mathbf{x}_0 = \left(x_0^1, x_0^2, \dots, x_0^k\right)$, entonces la sucesión $(\mathbf{x}_n)_{n \in \NN}$ converge a $\mathbf{x}_0$ en $\RR[k]$ si y solo si para cada $r \in \{ 1, 2, \dots, k \}$, la sucesión de componentes $(x_n^r)_{n \in \NN}$ converge a $x_0^r$ en $\RR$.
+    \item Demostrar que toda sucesión convergente en $\RR[k]$ es una sucesión de Cauchy.
+    \item Demostrar que toda sucesión de Cauchy en $\RR[k]$ es una sucesión que converge en $\RR[k]$, es decir: $\RR[k]$ es un espacio de Banach.
+    \item Sea $\mathbf{x} = (x_1, x_2, \dots, x_n) \in \RR[n]$, entonces
+    \begin{enumerate}
+        \item $|x_i| \leq \| \mathbf{x} \| \leq \sqrt{n} \sup \{ |x_1|, |x_2|, \dots, |x_n| \}$,
+        \item $\| \mathbf{x} \|_{\infty} \leq \| \mathbf{x} \| \leq \sqrt{n} \| \mathbf{x} \|_{\infty}$.
+    \end{enumerate}
+    \item Dado $\mathbf{x} = (x_1, x_2, \dots, x_n) \in \RR[n]$. Demostrar que \label{ej:equivalencianormas}
+    \begin{enumerate}
+        \item $\| \mathbf{x} \|_{\infty} \leq \| \mathbf{x} \| \leq \sqrt{n} \| \mathbf{x} \|_{\infty}$ (esto demuestra que $\| \phantom{x} \|$ y $\| \phantom{x} \|_{\infty}$ son equivalentes),
+        \item $\| \mathbf{x} \|_{\infty} \leq \| \mathbf{x} \|_1 \leq n \| \mathbf{x} \|_{\infty}$ (esto demuestra que $\| \phantom{x} \|_1$ y $\| \phantom{x} \|_{\infty}$ son equivalentes).
+        \item Deducir que $\| \phantom{x} \|_1$ y $\| \phantom{x} \|$ son equivalentes.
+    \end{enumerate}
+    \item Si se define $\displaystyle \| \mathbf{x} \|_p = \left( \sum_{i=1}^n |x_i|^p \right)^{1/p}$, demuestre que \label{ej:normap}
+    \begin{enumerate}
+        \item $\| \mathbf{x} \|_{\infty}^p \leq \| \mathbf{x} \|_p^p$,
+        \item $\| \mathbf{x} \|_p \leq n^{1/p} \| \mathbf{x} \|_{\infty}$.
+        \item Deducir que $\| \phantom{x} \|_{\infty}$ y $\| \phantom{x} \|_p$ son equivalentes.
+    \end{enumerate}
+    \item Con los vectores de los siguientes incisos, comprobar los problemas \ref{ej:equivalencianormas} y \ref{ej:normap}.
+    \begin{tasks}[label=\roman*)](2)
+        \task $\mathbf{x} = (-1, -2, 5, -9) \in \RR[4]$
+        \task $\mathbf{x} = (15, -2, 4) \in \RR[3]$
+    \end{tasks}
+\end{enumerate}
 
 
 \begin{comment}
