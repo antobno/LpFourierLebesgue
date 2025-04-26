@@ -1415,7 +1415,7 @@ Por lo tanto, estos deben ser verificados para probar que $W$ es un subespacio d
     Si $\mathbf{u}$ y $\mathbf{v}$ son vectores en un plano $W$ que pasa por el origen en $\RR[3]$, entonces es evidente geométricamente que $\mathbf{u} + \mathbf{v}$ y $\alpha \cdot \mathbf{u}$ también pertenecen al mismo plano $W$ para cualquier escalar $\alpha$ (figura \ref{fig:planoEV}). Por lo tanto, $W$ está cerrado bajo la suma y el producto escalar.
     \begin{center}
         \begin{tikzpicture}
-            \filldraw[cw2,opacity=0.1] (4.25,3) -- (0.75,3) -- (-0.25,-1) -- (3.25,-1) -- cycle;
+            \filldraw[cw2] (4.25,3) -- (0.75,3) -- (-0.25,-1) -- (3.25,-1) -- cycle;
             \draw[dashed] (1,2) -- (3,2.5) -- (2,0.5);
             \draw[-latex,draw={cw0},thick] (0,0) -- (2,0.5) node[below] {$\mathbf{u}$};
             \draw[-latex,draw={cw0},thick] (0,0) -- (3,0.75) node[below] {~~$\alpha \cdot \mathbf{u}$};
@@ -1710,7 +1710,7 @@ Tres vectores en $\RR[3]$ son linealmente independientes si y solo si no están 
     \centering
     \subfloat[Linealmente dependientes]{
         \begin{tikzpicture}
-            \filldraw[cw2,opacity=0.1] (3.75,2.5) -- (0.75,2.5) -- (-0.25,-1) -- (2.75,-1) -- cycle;
+            \filldraw[cw2] (3.75,2.5) -- (0.75,2.5) -- (-0.25,-1) -- (2.75,-1) -- cycle;
             \draw[-latex,draw={cw0},thick] (0,0) -- (1,-0.6) node[above right] {$\mathbf{v}_1$};
             \draw[-latex,draw={cw0},thick] (0,0) -- (1.5,0.75) node[above] {$\mathbf{v}_2$};
             \draw[-latex,draw={cw0},thick] (0,0) -- (2,2.25) node[left,xshift=-4pt] {$\mathbf{v}_3$};
@@ -1721,7 +1721,7 @@ Tres vectores en $\RR[3]$ son linealmente independientes si y solo si no están 
     } \hfill
     \subfloat[Linealmente dependientes]{
         \begin{tikzpicture}
-            \filldraw[cw2,opacity=0.1] (3.75,2.5) -- (0.75,2.5) -- (-0.25,-1) -- (2.75,-1) -- cycle;
+            \filldraw[cw2] (3.75,2.5) -- (0.75,2.5) -- (-0.25,-1) -- (2.75,-1) -- cycle;
             \draw[-latex,draw={cw0},thick] (0,0) -- (1,-0.6) node[above right] {$\mathbf{v}_1$};
             \draw[-latex,draw={cw0},thick] (0,0) -- (1,1.125) node[left,xshift=-4pt] {$\mathbf{v}_2$};
             \draw[-latex,draw={cw0},thick] (0,0) -- (2,2.25) node[left,xshift=-4pt] {$\mathbf{v}_3$};
@@ -1732,7 +1732,7 @@ Tres vectores en $\RR[3]$ son linealmente independientes si y solo si no están 
     } \hfill
     \subfloat[Linealmente independientes]{
         \begin{tikzpicture}
-            \filldraw[cw2,opacity=0.1] (3.75,2.5) -- (0.75,2.5) -- (-0.25,-1) -- (2.75,-1) -- cycle;
+            \filldraw[cw2] (3.75,2.5) -- (0.75,2.5) -- (-0.25,-1) -- (2.75,-1) -- cycle;
             \draw[-latex,draw={cw0},thick] (0,0) -- (1,-0.6) node[above right] {$\mathbf{v}_3$};
             \draw[-latex,draw={cw0},thick] (0,0) -- (1.5,0.75) node[above] {$\mathbf{v}_2$};
             \draw[-latex,draw={cw0},thick] (0,0) -- (1.5,2.8) node[left,xshift=-4pt] {$\mathbf{v}_1$};
@@ -1889,7 +1889,7 @@ El siguiente teorema trata sobre la independencia y dependencia lineal de conjun
                 \mathbf{g} & = (0, 1, 0) && (\text{verde puro}), \\
                 \mathbf{b} & = (0, 0, 1) && (\text{azul puro}),
             \end{align*}
-            en $\RR[3]$, y crear todos los demás colores formando combinaciones lineales de $\mathbf{r}$, $\mathbf{g}$ y $\mathbf{b}$ usando coeficientes entre 0 y 1, inclusive; estos coeficientes representan el porcentaje de cada color puro en la mezcla. El conjunto de todos estos vectores de color se llama el espacio RGB o el cubo RGB (figura \ref{fig:cuboRGB}). Así, cada vector de color $c$ en este cubo se puede expresar como una combinación lineal de la forma
+            en $\RR[3]$, y crear todos los demás colores formando combinaciones lineales de $\mathbf{r}$, $\mathbf{g}$ y $\mathbf{b}$ usando coeficientes entre 0 y 1, inclusive; estos coeficientes representan el porcentaje de cada color puro en la mezcla. El conjunto de todos estos vectores de color se llama el espacio RGB o el cubo RGB (figura \ref{fig:cuboRGB}). Así, cada vector de color $\mathbf{c}$ en este cubo se puede expresar como una combinación lineal de la forma
             \begin{align*}
                 \mathbf{c} & = k_1\mathbf{r} + k_2\mathbf{g} + k_3\mathbf{b} \\
                 & = k_1(1, 0, 0) + k_2(0, 1, 0) + k_3(0, 0, 1) \\
