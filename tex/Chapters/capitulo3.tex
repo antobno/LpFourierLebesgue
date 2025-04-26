@@ -1,1112 +1,867 @@
-\chapter{ESPACIOS VECTORIALES}
+\chapter{ESPACIOS MÉTRICOS}
 \printchaptertableofcontents
 
-%\section{Introducción}
+Al notar que los espacios vectoriales requieren más estructura para abordar conceptos topológicos, los espacios métricos surgen como una herramienta clave al introducir una medida de distancia. Esto permite explorar nociones como apertura, clausura, convergencia y completitud en un marco más general, facilitando un análisis más profundo de sus propiedades geométricas y analíticas. Los espacios métricos, al generalizar la idea intuitiva de distancia que conocemos en contextos como la recta real o el plano euclidiano, nos ofrecen un entorno versátil para estudiar fenómenos matemáticos que trascienden las limitaciones de las estructuras puramente algebraicas. En este capítulo, estudiaremos los espacios métricos como un pilar fundamental que establece conexiones profundas con otras áreas de las matemáticas, como la topología y el análisis funcional.
 
-Las primeras secciones de este capítulo introducen el concepto de espacio vectorial y exploran las propiedades elementales que resultan de su definición básica. Se desarrollan e ilustran con ejemplos las nociones de subespacio, independencia lineal, convexidad y dimensión. Este material es en gran parte una revisión para la mayoría de los lectores, ya que duplica la primera parte de los cursos estándar de álgebra lineal.
+Comenzaremos definiendo los espacios métricos y examinando propiedades básicas como las bolas abiertas, que servirán como una herramienta clave para entender la topología en este contexto. Seguiremos con el estudio de los conjuntos abiertos y cerrados, fundamentales para comprender la estructura de estos espacios. Posteriormente, abordaremos la continuidad, un concepto que extiende las ideas del cálculo a espacios más generales, y presentaremos los espacios topológicos, que nos introducirán a ideas más avanzadas.
 
-El siguiente capítulo analiza las propiedades básicas de los espacios lineales normados. Un espacio lineal normado es un espacio vectorial en el que se define una medida de distancia o longitud. Con la introducción de una norma, es posible definir propiedades analíticas o topológicas como la convergencia y los conjuntos abiertos y cerrados. Por lo tanto, esta parte del capítulo introduce y explora estos conceptos básicos que distinguen el análisis funcional del álgebra lineal.
+Continuaremos explorando la convergencia y la completitud, analizando cómo las sucesiones se comportan y qué implica que un espacio sea completo. Luego, investigaremos la completación de espacios métricos, un proceso que permite construir espacios completos a partir de otros, y estudiaremos la compacidad, una propiedad que caracteriza espacios con un comportamiento de “finitud” topológica. También abordaremos la compacidad sucesional, que ofrece una perspectiva adicional sobre esta noción. Seguidamente, nos detendremos en los teoremas de Heine-Borel y Arzelà-Ascoli, resultados clásicos con aplicaciones importantes en análisis, y concluiremos con la conexidad, un concepto que nos ayuda a entender la continuidad estructural de los espacios.
 
-\section{Definición y ejemplos}
+\newpage
 
-Asociado a cada espacio vectorial hay un conjunto de escalares utilizados para definir la multiplicación escalar en el espacio. En el entorno más abstracto, estos escalares solo deben ser elementos de un campo algebraico. Sin embargo, en este libro los escalares se toman siempre como el conjunto de los números reales o de los números complejos. A veces distinguimos entre estas posibilidades refiriéndonos a un espacio vectorial como un espacio vectorial real o complejo. No obstante, en este libro se enfatiza principalmente en los espacios vectoriales reales y, aunque ocasionalmente se hace referencia a los espacios complejos, muchos resultados se derivan solo para los espacios reales, ya sea por simplicidad o por su relevancia en aplicaciones matemáticas y científicas. En particular, la intuición geométrica y la conexión con problemas físicos hacen que los espacios reales sean el foco principal del desarrollo teórico. En caso de ambigüedad, el lector debe suponer que los escalares son reales, salvo que se indique explícitamente lo contrario.
+\section{Espacios vectoriales normados}
 
-\begin{definicion}{}{espvec}
-    Un \emph{espacio vectorial} $V$ es un conjunto de elementos llamados \emph{vectores} junto con dos operaciones. La primera operación es la \emph{suma}, la cual asocia a cualquier par de vectores $\mathbf{u}, \mathbf{v} \in V$ un vector suma $\mathbf{u} + \mathbf{v} \in V$. La segunda operación es la \emph{multiplicación escalar} o \emph{producto escalar}, la cual asocia a cualquier vector $\mathbf{u} \in V$ y cualquier escalar $\alpha \in K$ (donde $K$ es un \emph{campo}), un vector $\alpha \cdot \mathbf{u} \in V$. Dichas operaciones se pueden establecer como:
-    \begin{alignat*}{2}
-        + &: & \quad V \times V & \longrightarrow V \\
-        & & (\mathbf{u}, \mathbf{v}) & \longmapsto \mathbf{u} + \mathbf{v} \\
-        & \\
-        \cdot &: & \quad K \times V & \longrightarrow V \\
-        & & (\alpha, \mathbf{u}) & \longmapsto \alpha \cdot \mathbf{u}
-    \end{alignat*}
-    Decimos que $V$ junto con las operaciones de suma y multiplicación escalar, es un espacio vectorial sobre $K$, si cumple con los siguientes axiomas: Para toda $\mathbf{u}$, $\mathbf{v}$, $\mathbf{w} \in V$ y $\alpha$, $\beta \in K$
+Los espacios vectoriales de interés en el análisis abstracto y en aplicaciones tienen una estructura mucho más rica que la descrita únicamente por los ocho axiomas principales. Los axiomas de espacio vectorial solo describen las propiedades algebraicas de los elementos del espacio: suma, multiplicación por escalares y combinaciones de estas. Sin embargo, faltan los conceptos topológicos como apertura, clausura, convergencia y completitud. Estos conceptos pueden introducirse mediante una medida de distancia en el espacio.
+
+\begin{definicion}{}{normaV}
+    Sea $V$ un espacio vectorial sobre $K$. Se define la \emph{norma} en $V$ como una función $\| \phantom{x} \| : V \longrightarrow \RR$ que satisface las siguientes propiedades:
     \begin{enumerate}[label=\roman*), topsep=6pt, itemsep=0pt]
-        %\item Cerradura: $\mathbf{u} + \mathbf{v} \in V$.
-        \item Conmutatividad: $\mathbf{u} + \mathbf{v} = \mathbf{v} + \mathbf{u}$.
-        \item Asociatividad sobre la suma de vectores: $\mathbf{u} + (\mathbf{v} + \mathbf{w}) = (\mathbf{u} + \mathbf{v}) + \mathbf{w}$.
-        \item Neutro aditivo: Existe un elemento $\mathbf{0} \in V$, que llamaremos el \emph{vector cero}, tal que $\mathbf{u} + \mathbf{0} = \mathbf{0} + \mathbf{u} = \mathbf{u}$.
-        \item Inverso aditivo: Para cada vector $\mathbf{u} \in V$ existe un elemento $-\mathbf{u} \in V$, tal que $\mathbf{u} + (-\mathbf{u}) = \mathbf{0}$. A $-\mathbf{u}$ se le llama \emph{negativo} o \emph{inverso aditivo} de $\mathbf{u}$.
-        %\item Cerradura: $\alpha \cdot \mathbf{u} \in V$.
-        \item Distributividad sobre la suma de vectores: $\alpha \cdot (\mathbf{u} + \mathbf{v}) = \alpha \cdot \mathbf{u} + \alpha \cdot \mathbf{v}$.
-        \item Distributividad sobre la suma de escalares: $(\alpha + \beta) \cdot \mathbf{u} = \alpha \cdot \mathbf{u} + \beta \cdot \mathbf{u}$.
-        \item Asociatividad sobre el producto escalar: $\alpha \cdot (\beta \cdot \mathbf{u}) = (\alpha \beta) \cdot \mathbf{u}$.
-        \item Identidad multiplicativa: $1 \cdot \mathbf{u} = \mathbf{u}$.
+        \item $\| \mathbf{x} \| \geq 0$, para todo $\mathbf{x} \in V$.
+        \item $\| \mathbf{x} \| = 0$ si y solo si $\mathbf{x} = \mathbf{0}$.
+        \item $\| \alpha \mathbf{x} \| = |\alpha| \| \mathbf{x} \|$, para todo escalar $\alpha$ y $\mathbf{x} \in V$.
+        \item $\| \mathbf{x} + \mathbf{y} \| \leq \| \mathbf{x} \| + \| \mathbf{y} \|$, para todo $\mathbf{x}$, $\mathbf{y} \in V$. \hfill (desigualdad del triángulo)
     \end{enumerate}
 \end{definicion}
 
-\begin{theorem}{}{}
-    Sea $V$ un espacio vectorial sobre $K$, entonces
-    \begin{enumerate}[label=\roman*), topsep=6pt, itemsep=0pt]
-        \item $\alpha \cdot \mathbf{0} = \mathbf{0}$, $\forall \alpha \in K$.
-        \item $0 \cdot \mathbf{u} = \mathbf{0}$, $\forall \mathbf{u} \in V$.
-        \item Si $\alpha \cdot \mathbf{u} = \mathbf{0}$, entonces $\alpha = 0$ o $\mathbf{u} = \mathbf{0}$.
-        \item $(-1) \cdot \mathbf{u} = - \mathbf{u}$.
-    \end{enumerate}
-
-    \tcblower
-    \demostracion Solo demostraremos (i), los demás se dejan como ejercicio.
-    \begin{enumerate}[label=\roman*), topsep=6pt, itemsep=0pt]
-        \item Sea $\alpha \in K$, tenemos que
-        \begin{align}
-            \mathbf{0} & = \mathbf{0} + \mathbf{0} && \text{por axioma iii)} \label{ec7} \\
-            & = \alpha \cdot \mathbf{0} + (-\alpha \cdot \mathbf{0}) && \text{por axioma iv)} \label{ec8}
-        \intertext{A partir de \eqref{ec7},}
-            \alpha \cdot \mathbf{0} & = \alpha \cdot (\mathbf{0} + \mathbf{0}) && \text{por def. de producto escalar} \label{ec9} \\
-            & = \alpha \cdot \mathbf{0} + \alpha \cdot \mathbf{0} && \text{por axioma v)} \label{ec10}
-        \intertext{Ahora, sustituyendo \eqref{ec10} en \eqref{ec8}, se sigue que}
-            \mathbf{0} & = (\alpha \cdot \mathbf{0} + \alpha \cdot \mathbf{0}) + (-\alpha \cdot \mathbf{0}) \notag \\
-            & = \alpha \cdot \mathbf{0} + \big( \alpha \cdot \mathbf{0} + (-\alpha \cdot \mathbf{0}) \big) && \text{por axioma ii)} \notag \\
-            & = \alpha \cdot \mathbf{0} + \mathbf{0} && \text{por axioma iii)} \notag \\
-            & = \alpha \cdot \mathbf{0} && \text{por axioma iii)} \notag
-        \end{align}
-        Por lo tanto, se concluye que
-        $$\alpha \cdot \mathbf{0} = \mathbf{0}.$$
-    \end{enumerate}
-\end{theorem}
-
-\newpage
-
-\begin{prop}{}{}
-    En cualquier espacio vectorial:
-    \begin{enumerate}[label=\roman*), topsep=6pt, itemsep=0pt]
-        %\item Si $\mathbf{u} + \mathbf{v} = \mathbf{u} + \mathbf{w}$, entonces $\mathbf{v} = \mathbf{w}$.
-        \item Si $\alpha \cdot \mathbf{u} = \alpha \cdot \mathbf{v}$ y $\alpha \neq 0$, entonces $\mathbf{u} = \mathbf{v}$.
-        \item Si $\alpha \cdot \mathbf{u} = \beta \cdot \mathbf{u}$ y $\mathbf{u} \neq \mathbf{0}$, entonces $\alpha = \beta$.
-        \item $(\alpha - \beta) \cdot \mathbf{u} = \alpha \cdot \mathbf{u} - \beta \cdot \mathbf{u}$.
-        \item $\alpha \cdot (\mathbf{u} - \mathbf{v}) = \alpha \cdot \mathbf{u} - \alpha \cdot \mathbf{v}$.
-    \end{enumerate}
-
-    \tcblower
-    \demostracion Se proponen como ejercicio.
-\end{prop}
-
-Nuestro primer ejemplo es el más simple de todos los espacios vectoriales, ya que contiene solo un objeto. Dado que el axioma 3 requiere que todo espacio vectorial contenga un vector cero, dicho objeto deberá ser precisamente ese vector.
-
 \begin{examplebox}{}{}
-    Sea $V$ un conjunto que consta de un único elemento, $\mathbf{0}$, y definimos
-    $$\mathbf{0} + \mathbf{0} = \mathbf{0} \quad \text{ y } \quad \alpha \cdot \mathbf{0} = \mathbf{0}$$
-    para todo escalar $\alpha$. A esto lo llamamos el \emph{espacio vectorial cero}. Este conjunto es particularmente interesante porque representa el caso más sencillo de un espacio vectorial, donde todas las operaciones de suma y multiplicación escalar son trivialmente definidas.
-\end{examplebox}
-
-Nuestro segundo ejemplo es uno de los más importantes de todos los espacios vectoriales: el familiar espacio $\RR[n]$. No debería sorprender que las operaciones en $\RR[n]$ satisfagan los axiomas de espacio vectorial, ya que dichos axiomas se basan en propiedades conocidas de las operaciones en $\RR$.
-
-\begin{examplebox}{}{}
-    Sea $V = \RR[n]$ y definamos las operaciones de espacio vectorial en $V$ como las operaciones usuales de suma y multiplicación escalar de $n$-tuplas; es decir, si
-    $$\mathbf{u} = (u_1, u_2, \dots, u_n) \quad \text{ y } \quad \mathbf{v} = (v_1, v_2, \dots, v_n)$$
-    entonces
-    $$\mathbf{u} + \mathbf{v} = (u_1 + v_1, u_2 + v_2, \dots, u_n + v_n)$$
-    y para $\alpha \in \RR$,
-    $$\alpha \cdot \mathbf{u} = (\alpha u_1, \alpha u_2, \dots, \alpha u_n)$$
-    El conjunto $V = \RR[n]$ está cerrado bajo la suma y la multiplicación escalar porque las operaciones anteriores producen $n$-tuplas como resultado final, y estas operaciones satisfacen los siguientes axiomas:
+    En $\RR$, sea $\| \mathbf{x} \| = |x|$, probemos entonces que $\| \phantom{x} \|$ cumple las cuatro propiedades establecidas en la definición \ref{definicion:normaV}.
     \begin{enumerate}[label=\roman*), topsep=6pt, itemsep=0pt]
-        \item Sea $\mathbf{u}$, $\mathbf{v} \in V$ con $\mathbf{u} = (u_1, u_2, \dots, u_n)$, $\mathbf{v} = (v_1, v_2, \dots, v_n)$,
-        \begin{align*}
-            \mathbf{u} + \mathbf{v} & = (u_1, u_2, \dots, u_n) + (v_1, v_2, \dots, v_n) \\
-            & = (u_1 + v_1, u_2 + v_2, \dots, u_n + v_n) \\
-            & = (v_1 + u_1, v_2 + u_2, \dots, v_n + u_n) \\
-            & = (v_1, v_2, \dots, v_n) + (u_1, u_2, \dots, u_n) \\
-            & = \mathbf{v} + \mathbf{u}
-        \end{align*}
-        Por tanto, se cumple la propiedad de conmutatividad.
-        \item Se deja como ejercicio al lector.
-        \item Sea $\mathbf{u}$, $\mathbf{0} \in V$ con $\mathbf{u} = (u_1, u_2, \dots, u_n)$, $\mathbf{0} = (0, 0, \dots, 0)$,
-        \begin{align*}
-            \mathbf{u} + \mathbf{0} & = (u_1, u_2, \dots, u_n) + (0, 0, \dots, 0) \\
-            & = (u_1 + 0, u_2 + 0, \dots, u_n + 0) \\
-            & = (u_1, u_2, \dots, u_n) \\
-            & = \mathbf{u}
-        \end{align*}
-        %\newpage
-        Por tanto, se cumple la propiedad de neutro aditivo.
-        \newpage
-        \item Dado $\mathbf{u} = (u_1, u_2, \dots, u_n)$, existe $-\mathbf{u} = (-u_1, -u_2, \dots, -u_n)$ que cumple
-        \begin{align*}
-            \mathbf{u} + (-\mathbf{u}) & = (u_1, u_2, \dots, u_n) + (-u_1, -u_2, \dots, -u_n) \\
-            & = \big(u_1 + (-u_1), u_2 + (-u_2), \dots, u_n + (-u_n) \big) \\
-            & = (u_1 - u_1, u_2 - u_2, \dots, u_n - u_n) \\
-            & = (0, 0, \dots, 0) \\
-            & = \mathbf{0}
-        \end{align*}
-        Por tanto, se cumple la propiedad de inverso aditivo.
-        \item Sea $\mathbf{u}$, $\mathbf{v} \in V$ con $\mathbf{u} = (u_1, u_2, \dots, u_n)$, $\mathbf{v} = (v_1, v_2, \dots, v_n)$ y sea $\alpha \in \RR$,
-        \begin{align*}
-            \alpha \cdot (\mathbf{u} + \mathbf{v}) & = \alpha \cdot [(u_1, u_2, \dots, u_n) + (v_1, v_2, \dots, v_n)] \\
-            & = \alpha \cdot (u_1 + v_1, u_2 + v_2, \dots, u_n + v_n) \\
-            & = \big( \alpha(u_1 + v_1), \alpha(u_2 + v_2), \dots, \alpha(u_n + v_n) \big) \\
-            & = (\alpha u_1 + \alpha v_1, \alpha u_2 + \alpha v_2, \dots, \alpha u_n + \alpha u_n) \\
-            & = (\alpha u_1, \alpha u_2, \dots, \alpha u_n) + (\alpha v_1, \alpha v_2, \dots, \alpha v_n) \\
-            & = \alpha \cdot (u_1, u_2, \dots, u_n) + \alpha \cdot (v_1, v_2, \dots, v_n) \\
-            & = \alpha \cdot \mathbf{u} + \alpha \cdot \mathbf{v}
-        \end{align*}
-        Por tanto, se cumple la distributividad sobre la suma de vectores.
-        \item Sea $\mathbf{u} \in V$ con $\mathbf{u} = (u_1, u_2, \dots, u_n)$ y sea $\alpha$, $\beta \in \RR$,
-        \begin{align*}
-            (\alpha + \beta) \cdot \mathbf{u} & = (\alpha + \beta) \cdot (u_1, u_2, \dots, u_n) \\
-            & = \big( (\alpha + \beta)u_1, (\alpha + \beta)u_2, \dots, (\alpha + \beta)u_n \big) \\
-            & = (\alpha u_1 + \beta u_1, \alpha u_2 + \beta u_2, \dots, \alpha u_n + \beta u_n) \\
-            & = (\alpha u_1, \alpha u_2, \dots, \alpha u_n) + (\beta u_1, \beta u_2, \dots, \beta u_n) \\
-            & = \alpha \cdot (u_1, u_2, \dots, u_n) + \beta \cdot (u_1, u_2, \dots, u_n) \\
-            & = \alpha \cdot \mathbf{u} + \beta \cdot \mathbf{u}
-        \end{align*}
-        Por tanto, se cumple la distributividad sobre la suma de escalares.
-        \item Sea $\mathbf{u} \in V$ con $\mathbf{u} = (u_1, u_2, \dots, u_n)$ y sea $\alpha$, $\beta \in \RR$,
-        \begin{align*}
-            \alpha \cdot (\beta \cdot \mathbf{u}) & = \alpha \cdot \big(\beta \cdot (u_1, u_2, \dots, u_n) \big) \\
-            & = \alpha \cdot (\beta u_1, \beta u_2, \dots, \beta u_n) \\
-            & = \big( \alpha (\beta u_1), \alpha (\beta u_2), \dots, \alpha (\beta u_n) \big) \\
-            & = \big( (\alpha\beta) u_1, (\alpha\beta) u_2, \dots, (\alpha\beta) u_n \big) \\
-            & = (\alpha\beta) \cdot (u_1, u_2, \dots, u_n) \\
-            & = (\alpha\beta) \cdot \mathbf{u}
-        \end{align*}
-        Por tanto, se cumple la asociatividad sobre el producto escalar.
-        \item Sea $\mathbf{u} \in V$ con $\mathbf{u} = (u_1, u_2, \dots, u_n)$ y sea $1 \in \RR$,
-        \begin{align*}
-            1 \cdot \mathbf{u} & = 1 \cdot (u_1, u_2, \dots, u_n) \\
-            & = (1 u_1, 1 u_2, \dots, 1 u_n) \\
-            & = (u_1, u_2, \dots, u_n) \\
-            & = \mathbf{u}
-        \end{align*}
-        Por tanto, se cumple la propiedad de identidad multiplicativa.
+        \item Procedamos por casos.
+        \begin{enumerate}
+            \item Si $x \geq 0$, se define $|x| = x$. Como $x \geq 0$, se tiene $|x| \geq 0$.
+            \item Si $x < 0$, se define $|x| = -x$. Como $x$ es negativo, $-x$ es positivo, es decir, $|x| \geq 0$.
+        \end{enumerate}
+        En ambos casos se concluye que $|x| \geq 0$ para todo $x \in \RR$.
+        \item Del inciso anterior, $|x| = 0$ no puede ocurrir a menos que $x = 0$.
+        \item Consideremos dos casos respecto a $\alpha$.
+        \begin{enumerate}
+            \item Sea $\alpha \geq 0$, entonces $|\alpha| = \alpha$. Si $x \geq 0$, entonces $\alpha x \geq 0$ y
+            $$|\alpha x| = \alpha x = \alpha |x|.$$
+            Si $x < 0$, entonces $\alpha x \leq 0$ y
+            $$|\alpha x| = -(\alpha x) = \alpha (-x) = \alpha |x|.$$
+            \item Sea $\alpha < 0$, entonces $|\alpha| = -\alpha$. Si $x \geq 0$, entonces $\alpha x \leq 0$ y
+            $$|\alpha x| = -(\alpha x) = (-\alpha) x = |\alpha| |x|.$$
+            Si $x < 0$, entonces $\alpha x \geq 0$ y
+            $$|\alpha x| = \alpha x = (-\alpha)(-x) = |\alpha| |x|.$$
+        \end{enumerate}
+        En todos los casos se obtiene que $|\alpha x| = |\alpha| |x|$.
+        \item Consideremos que
+        $$(|x| + |y|)^2 = x^2 + 2|x||y| + y^2,$$
+        y
+        $$|x + y|^2 = (x + y)^2 = x^2 + 2xy + y^2.$$
+        Dado que $2xy \leq 2|x||y|$, se tiene $|x + y|^2 \leq (|x| + |y|)^2$. Al tomar la raíz cuadrada de ambos lados se concluye que
+        $$|x + y| \leq |x| + |y|.$$
     \end{enumerate}
-    Dado que hemos verificado que $\RR[n]$ satisface todas las propiedades requeridas para ser un espacio vectorial, concluimos que $\RR[n]$ es un espacio vectorial sobre $\RR$.
-\end{examplebox}
-
-Nuestro siguiente ejemplo es una generalización de $\RR[n]$ en la que permitimos que los vectores tengan infinitas componentes.
-
-\newpage
-
-\begin{examplebox}{}{}
-    Sea $V$ el conjunto de objetos de la forma
-    $$\mathbf{u} = (u_1, u_2, \dots, u_n, \dots)$$
-    donde $u_1, u_2, \dots, u_n, \dots$ es una sucesión infinita de números reales. Definimos que dos sucesiones infinitas son \emph{iguales} si sus componentes correspondientes son iguales, y definimos la suma y la multiplicación escalar como
-    $$\mathbf{u} + \mathbf{v} = (u_1 + v_1, u_2 + v_2, \dots, u_n + v_n, \dots)$$
-    y para $\alpha \in \RR$,
-    $$\alpha \cdot \mathbf{u} = (\alpha u_1, \alpha u_2, \dots, \alpha u_n, \dots).$$
-    Denotaremos este espacio vectorial con el símbolo $\RR[\infty]$. El conjunto $V = \RR[\infty]$ está cerrado bajo la suma y la multiplicación escalar porque las operaciones anteriores producen sucesiones infinitas de números reales como resultado final, y estas operaciones satisfacen los siguientes axiomas:
-    \begin{enumerate}[label=\roman*), topsep=6pt, itemsep=0pt]
-        \item Sea $\mathbf{u}$, $\mathbf{v} \in V$ con $\mathbf{u} = (u_1, u_2, \dots, u_n, \dots)$, $\mathbf{v} = (v_1, v_2, \dots, v_n, \dots)$,
-        \begin{align*}
-            \mathbf{u} + \mathbf{v} & = (u_1, u_2, \dots, u_n, \dots) + (v_1, v_2, \dots, v_n, \dots) \\
-            & = (u_1 + v_1, u_2 + v_2, \dots, u_n + v_n, \dots) \\
-            & = (v_1 + u_1, v_2 + u_2, \dots, v_n + u_n, \dots) \\
-            & = (v_1, v_2, \dots, v_n, \dots) + (u_1, u_2, \dots, u_n, \dots) \\
-            & = \mathbf{v} + \mathbf{u}
-        \end{align*}
-        Por tanto, se cumple la propiedad de conmutatividad.
-        \item Se deja como ejercicio al lector.
-        \item Sea $\mathbf{u}$, $\mathbf{0} \in V$ con $\mathbf{u} = (u_1, u_2, \dots, u_n, \dots)$, $\mathbf{0} = (0, 0, \dots, 0, \dots)$,
-        \begin{align*}
-            \mathbf{u} + \mathbf{0} & = (u_1, u_2, \dots, u_n, \dots) + (0, 0, \dots, 0, \dots) \\
-            & = (u_1 + 0, u_2 + 0, \dots, u_n + 0, \dots) \\
-            & = (u_1, u_2, \dots, u_n, \dots) \\
-            & = \mathbf{u}
-        \end{align*}
-        Por tanto, se cumple la propiedad de neutro aditivo.
-        \item Dado $\mathbf{u} = (u_1, u_2, \dots, u_n, \dots)$, existe $-\mathbf{u} = (-u_1, -u_2, \dots, -u_n, \dots)$ que cumple
-        \begin{align*}
-            \mathbf{u} + (-\mathbf{u}) & = (u_1, u_2, \dots, u_n, \dots) + (-u_1, -u_2, \dots, -u_n, \dots) \\
-            & = \big(u_1 + (-u_1), u_2 + (-u_2), \dots, u_n + (-u_n), \dots \big) \\
-            & = (u_1 - u_1, u_2 - u_2, \dots, u_n - u_n, \dots) \\
-            & = (0, 0, \dots, 0, \dots) \\
-            & = \mathbf{0}
-        \end{align*}
-        Por tanto, se cumple la propiedad de inverso aditivo.
-        \item Sea $\mathbf{u}$, $\mathbf{v} \in V$ con $\mathbf{u} = (u_1, u_2, \dots, u_n, \dots)$, $\mathbf{v} = (v_1, v_2, \dots, v_n, \dots)$ y sea $\alpha \in \RR$,
-        \begin{align*}
-            \alpha \cdot (\mathbf{u} + \mathbf{v}) & = \alpha \cdot [(u_1, u_2, \dots, u_n, \dots) + (v_1, v_2, \dots, v_n, \dots)] \\
-            & = \alpha \cdot (u_1 + v_1, u_2 + v_2, \dots, u_n + v_n, \dots) \\
-            & = \big( \alpha(u_1 + v_1), \alpha(u_2 + v_2), \dots, \alpha(u_n + v_n), \dots \big) \\
-            & = (\alpha u_1 + \alpha v_1, \alpha u_2 + \alpha v_2, \dots, \alpha u_n + \alpha u_n, \dots) \\
-            & = (\alpha u_1, \alpha u_2, \dots, \alpha u_n, \dots) + (\alpha v_1, \alpha v_2, \dots, \alpha v_n, \dots) \\
-            & = \alpha \cdot (u_1, u_2, \dots, u_n, \dots) + \alpha \cdot (v_1, v_2, \dots, v_n, \dots) \\
-            & = \alpha \cdot \mathbf{u} + \alpha \cdot \mathbf{v}
-        \end{align*}
-        \newpage
-        Por tanto, se cumple la distributividad sobre la suma de vectores.
-        \item Sea $\mathbf{u} \in V$ con $\mathbf{u} = (u_1, u_2, \dots, u_n, \dots)$ y sea $\alpha$, $\beta \in \RR$,
-        \begin{align*}
-            (\alpha + \beta) \cdot \mathbf{u} & = (\alpha + \beta) \cdot (u_1, u_2, \dots, u_n, \dots) \\
-            & = \big( (\alpha + \beta)u_1, (\alpha + \beta)u_2, \dots, (\alpha + \beta)u_n, \dots \big) \\
-            & = (\alpha u_1 + \beta u_1, \alpha u_2 + \beta u_2, \dots, \alpha u_n + \beta u_n, \dots) \\
-            & = (\alpha u_1, \alpha u_2, \dots, \alpha u_n, \dots) + (\beta u_1, \beta u_2, \dots, \beta u_n, \dots) \\
-            & = \alpha \cdot (u_1, u_2, \dots, u_n, \dots) + \beta \cdot (u_1, u_2, \dots, u_n, \dots) \\
-            & = \alpha \cdot \mathbf{u} + \beta \cdot \mathbf{u}
-        \end{align*}
-        Por tanto, se cumple la distributividad sobre la suma de escalares.
-        \item Sea $\mathbf{u} \in V$ con $\mathbf{u} = (u_1, u_2, \dots, u_n, \dots)$ y sea $\alpha$, $\beta \in \RR$,
-        \begin{align*}
-            \alpha \cdot (\beta \cdot \mathbf{u}) & = \alpha \cdot \big(\beta \cdot (u_1, u_2, \dots, u_n, \dots) \big) \\
-            & = \alpha \cdot (\beta u_1, \beta u_2, \dots, \beta u_n, \dots) \\
-            & = \big( \alpha (\beta u_1), \alpha (\beta u_2), \dots, \alpha (\beta u_n), \dots \big) \\
-            & = \big( (\alpha\beta) u_1, (\alpha\beta) u_2, \dots, (\alpha\beta) u_n, \dots \big) \\
-            & = (\alpha\beta) \cdot (u_1, u_2, \dots, u_n, \dots) \\
-            & = (\alpha\beta) \cdot \mathbf{u}
-        \end{align*}
-        Por tanto, se cumple la asociatividad sobre el producto escalar.
-        \item Sea $\mathbf{u} \in V$ con $\mathbf{u} = (u_1, u_2, \dots, u_n, \dots)$ y sea $1 \in \RR$,
-        \begin{align*}
-            1 \cdot \mathbf{u} & = 1 \cdot (u_1, u_2, \dots, u_n, \dots) \\
-            & = (1 u_1, 1 u_2, \dots, 1 u_n, \dots) \\
-            & = (u_1, u_2, \dots, u_n, \dots) \\
-            & = \mathbf{u}
-        \end{align*}
-        Por tanto, se cumple la propiedad de identidad multiplicativa.
-    \end{enumerate}
-    Dado que hemos verificado que $\RR[\infty]$ satisface todas las propiedades requeridas para ser un espacio vectorial, concluimos que $\RR[\infty]$ es un espacio vectorial sobre $\RR$.
-\end{examplebox}
-
-\sideFigure[\label{fig:voltajet}]{
-\vspace{-4.5cm}\begin{tikzpicture}
-    \draw[gray, ultra thick, domain=0.1:4.25, samples=20] plot[ycomb] (\x,{cos(1.745*\x r)});
-    \draw[cw0, ultra thick, domain=0.1:4.25, samples=20] plot[only marks, mark=*, mark options={scale=0.7}] (\x,{cos(1.745*\x r)});
-    \draw[-Stealth,thick] (0,-1.5) -- (0,2.25) node[below right] {\makecell[l]{$E(t)$ \\ Voltaje}};
-    \draw[-Stealth,thick] (-0.5,0) -- (4.5,0) node[below left] {Tiempo};
-    \node[above] at (4.5,0) {$t$};
-    \draw (0,1) -- (-0.2,1) node[left] {$1$};
-    \draw (0,-1) -- (-0.2,-1) node[left] {$-1$};
-\end{tikzpicture}
-}
-Los espacios vectoriales del tipo en el ejemplo anterior surgen cuando una señal transmitida de duración indefinida es digitalizada al muestrear sus valores en intervalos de tiempo discretos (figura \ref{fig:voltajet}).
-
-En el siguiente ejemplo, nuestros vectores serán matrices. Esto puede ser algo confuso al inicio, ya que las matrices están formadas por filas y columnas, que también son vectores. Sin embargo, desde la perspectiva del espacio vectorial, nos enfocamos en las propiedades de las operaciones matriciales en relación con la matriz en su totalidad, no en sus filas y columnas individuales.
-
-\begin{examplebox}{}{}
-    Sea $V$ el conjunto de matrices $2 \times 2$ con entradas reales, y consideremos en $V$ las operaciones de espacio vectorial dadas por la suma usual de matrices y la multiplicación por un escalar; es decir,
-    \begin{equation}
-        \mathbf{u} + \mathbf{v} = \begin{bmatrix}
-            u_{11} & u_{12} \\
-            u_{21} & u_{22}
-        \end{bmatrix} + \begin{bmatrix}
-            v_{11} & v_{12} \\
-            v_{21} & v_{22}
-        \end{bmatrix} = \begin{bmatrix}
-            u_{11} + v_{11} & u_{12} + v_{12} \\
-            u_{21} + v_{21} & u_{22} + v_{22}
-        \end{bmatrix} \label{eq:suma_matriz22}
-    \end{equation}
-    y para $\alpha \in \RR$,
-    $$\alpha \cdot \mathbf{u} = \alpha \cdot \begin{bmatrix}
-        u_{11} & u_{12} \\
-        u_{21} & u_{22}
-    \end{bmatrix} = \begin{bmatrix}
-        \alpha u_{11} & \alpha u_{12} \\
-        \alpha u_{21} & \alpha u_{22}
-    \end{bmatrix}.$$
-    El conjunto $V$ es cerrado bajo la suma y el producto escalar, ya que estas operaciones producen matrices $2 \times 2$ como resultado final. Se deja como ejercicio al lector verificar que se cumplen los axiomas (i), (ii), (iii), (iv), (v), (vi), (vii), (vii).
-\end{examplebox}
-\infoBulle{Tenga en cuenta que la ecuación \eqref{eq:suma_matriz22} implica tres operaciones de suma diferentes: la operación de suma de vectores, la operación de suma de matrices y la operación de suma de números reales.}
-
-\newpage
-
-\begin{examplebox}{}{}
-    El ejemplo anterior es un caso particular de una clase más general de espacios vectoriales. No debería ser difícil adaptar el argumento utilizado en ese ejemplo para demostrar que el conjunto $V$ de todas las matrices $m \times n$ con las operaciones usuales de suma y producto escalar es un espacio vectorial. Denotaremos este espacio vectorial con el símbolo $\mathcalm{M}_{m \times n}$. Así, por ejemplo, el espacio vectorial en el ejemplo anterior se denota como $\mathcalm{M}_{2 \times 2}$.
-\end{examplebox}
-
-\sideFigure[\label{fig:propfunc}]{
-    \begin{flushleft}
-        \begin{tikzpicture}
-            \tikzmath{
-                \c = 1.25;
-                \a = \c - 1.5;
-                \b = \c + 1.5;
-                function f(\x) {
-                    return -0.1*(\x-\c)^2 + 0.7;
-			    };
-                function g(\x) {
-                    return 0.3*(\x-\c)^2 + 1.7;
-			    };
-                function h(\x) {
-                    return f(\x) + g(\x);
-			    };
-		    };
-            \draw[cw0,thick] plot[domain = \a:\b, samples = 120] (\x,{f(\x)});
-            \draw[cw2,thick] plot[domain = \a:\b, samples = 120] (\x,{g(\x)});
-            \draw[cw0!50,thick] plot[domain = \a:\b, samples = 120] (\x,{h(\x)});
-            \draw (\c,0) -- (\c,-0.2) node[below] {$x$};
-            %
-            \draw[-Stealth,thick] (0,-0.5) -- (0,3.5) node[below right] {$y$};
-            \draw[-Stealth,thick] (-1,0) -- (3.5,0) node[below left] {$x$};
-            %
-            \node[left] at (\a,{f(\a)}) {$\mathbf{f}$};
-            \node[left] at (\a,{g(\a)}) {$\mathbf{g}$};
-            \node[left] at (\a,{h(\a)}) {$\mathbf{f} + \mathbf{g}$};
-            %
-            \filldraw[cw0] (\c,{f(\c)}) circle (2pt);
-            \filldraw[cw2] (\c,{g(\c)}) circle (2pt);
-            \filldraw[cw0!50] (\c,{h(\c)}) circle (2pt);
-            %
-            \draw[black, decorate, decoration={brace,raise=5pt}, transform shape] (\c,0.05) -- node[midway, left, xshift=-7pt] {$f(x)$} (\c,{f(\c)});
-            \draw[black, decorate, decoration={brace,mirror,raise=5pt}, transform shape] (\c,0.05) -- node[midway, right, xshift=7pt, yshift=3pt] {$g(x)$} (\c,{g(\c)});
-            \draw[black, decorate, decoration={brace,mirror,raise=5pt}, transform shape] (2.1,0.05) -- node[midway, right, xshift=7pt] {$f(x) + g(x)$} (2.1,{h(\c)});
-            \node at (0,5) {~};
-        \end{tikzpicture}
-        \TituloBox{\normalsize(a)}\\[3mm]
-        \begin{tikzpicture}
-            \tikzmath{
-                \c = 1.25;
-                \a = \c - 1.5;
-                \b = \c + 1.5;
-                function f(\x) {
-                    return -0.1*(\x-\c)^2 + 0.7;
-			    };
-                function h(\x) {
-                    return 2.5*f(\x);
-			    };
-		    };
-            \draw[cw0,thick] plot[domain = \a:\b, samples = 120] (\x,{f(\x)});
-            \draw[cw2,thick] plot[domain = \a:\b, samples = 120] (\x,{h(\x)});
-            \draw (\c,0) -- (\c,-0.2) node[below] {$x$};
-            %
-            \draw[-Stealth,thick] (0,-0.5) -- (0,3.5) node[below right] {$y$};
-            \draw[-Stealth,thick] (-1,0) -- (3.5,0) node[below left] {$x$};
-            %
-            \node[left] at (\a,{f(\a)}) {$\mathbf{f}$};
-            \node[left] at (\a,{h(\a)}) {$\alpha \cdot \mathbf{f}$};
-            %
-            \filldraw[cw0] (\c,{f(\c)}) circle (2pt);
-            \filldraw[cw0!50] (\c,{h(\c)}) circle (2pt);
-            %
-            \draw[black, decorate, decoration={brace,raise=5pt}, transform shape] (\c,0.05) -- node[midway, left, xshift=-7pt] {$f(x)$} (\c,{f(\c)});
-            \draw[black, decorate, decoration={brace,mirror,raise=5pt}, transform shape] (\c,0.05) -- node[midway, right, xshift=7pt, yshift=3pt] {$\alpha f(x)$} (\c,{h(\c)});
-        \end{tikzpicture}
-        \,\\
-        \TituloBox{\normalsize(b)}\\[3mm]
-        \begin{tikzpicture}
-            \tikzmath{
-                \c = 1.25;
-                \a = \c - 1.5;
-                \b = \c + 1.5;
-                function f(\x) {
-                    return -0.1*(\x-\c)^2 + 0.7;
-			    };
-                function h(\x) {
-                    return -1*f(\x);
-			    };
-		    };
-            \draw[cw0,thick] plot[domain = \a:\b, samples = 120] (\x,{f(\x)});
-            \draw[cw2,thick] plot[domain = \a:\b, samples = 120] (\x,{h(\x)});
-            \draw (\c,0) -- (\c,-0.2);
-            %
-            \draw[cw0!50,thick] (\a,0) -- (3.4,0);
-            \draw[-Stealth,thick] (0,-1.5) -- (0,2.5) node[below right] {$y$};
-            \draw[-Stealth,thick] (3.45,0) -- (3.5,0) node[below left] {$x$};
-            \draw[white] (-1,0) -- (-0.99,0);
-            %
-            \node[left] at (\a,{f(\a)}) {$\mathbf{f}$};
-            \node[left] at (\a,{h(\a)}) {$-\mathbf{f}$};
-            \node[left] at (\a,0) {$\mathbf{0}$};
-            %
-            \filldraw[cw0] (\c,{f(\c)}) circle (2pt);
-            \filldraw[cw0!50] (\c,{h(\c)}) circle (2pt);
-            %
-            \draw[black, decorate, decoration={brace,raise=5pt}, transform shape] (\c,0.05) -- node[midway, left, xshift=-7pt] {$f(x)$} (\c,{f(\c)});
-            \draw[black, decorate, decoration={brace,raise=5pt}, transform shape] (\c,{h(\c)}) -- node[midway, left, xshift=-7pt] {$-f(x)$} (\c,-0.05);
-        \end{tikzpicture}
-        \,\\
-        \TituloBox{\normalsize(c)}
-    \end{flushleft}
-}
-
-\begin{examplebox}{}{ejemplo5.1.8}
-    Sea $V$ el conjunto de funciones de valor real que están definidas en cada $x$ en el intervalo $(-\infty, \infty)$. Si $\mathbf{f} = f(x)$ y $\mathbf{g} = g(x)$ son dos funciones en $V$ y si $\alpha$ es un escalar cualquiera, entonces definimos las operaciones de suma y producto escalar como
-    \begin{equation}
-        (\mathbf{f} + \mathbf{g})(x) = f(x) + g(x) \label{eq:sumafuncii}
-    \end{equation}
-    y para $\alpha$,
-    \begin{equation}
-        (\alpha \cdot \mathbf{f})(x) = \alpha f(x). \label{eq:prodfuncii}
-    \end{equation}
-    Una forma de interpretar estas operaciones es ver los valores $f(x)$ y $g(x)$ como las “componentes” de $\mathbf{f}$ y $\mathbf{g}$ en el punto $x$. En este caso, las ecuaciones \eqref{eq:sumafuncii} y \eqref{eq:prodfuncii} establecen que dos funciones se suman agregando sus componentes correspondientes, y que una función se multiplica por un escalar multiplicando cada componente por dicho escalar, exactamente como en $\RR[n]$ y $\RR[\infty]$. Esta idea se ilustra en las partes (a) y (b) de la figura \ref{fig:propfunc}. El conjunto $V$ con estas operaciones se denota por el símbolo $F(-\infty, \infty)$. Podemos demostrar que este es un espacio vectorial de la siguiente manera:
-    \begin{enumerate}[label=\roman*), topsep=6pt, itemsep=0pt]
-        \item Sea $\mathbf{f}$, $\mathbf{g} \in V$ con $\mathbf{f} = f(x)$, $\mathbf{g} = g(x)$,
-        \begin{align*}
-            (\mathbf{f} + \mathbf{g})(x) & = f(x) + g(x) \\
-            & = g(x) + f(x) \\
-            & = (\mathbf{g} + \mathbf{f})(x)
-        \end{align*}
-        Por tanto, se cumple la propiedad de conmutatividad.
-        \item Sea $\mathbf{f}$, $\mathbf{g}$, $\mathbf{h} \in V$ con $\mathbf{f} = f(x)$, $\mathbf{g} = g(x)$, $\mathbf{h} = h(x)$,
-        \begin{align*}
-            [\mathbf{f} + (\mathbf{g} + \mathbf{h})](x) & = f(x) + (g(x) + h(x)) \\
-            & = (f(x) + g(x)) + h(x) \\
-            & = [(\mathbf{f} + \mathbf{g}) + \mathbf{h}](x)
-        \end{align*}
-        Por tanto, se cumple la asociatividad sobre la suma de vectores.
-        \item Existe una función $\mathbf{0}$ en $F(-\infty, \infty)$, la cual, al sumarse con cualquier otra función $\mathbf{f}$ en $F(-\infty, \infty)$, devuelve $\mathbf{f}$ como resultado. La función cuyo valor en cada punto $x$ del intervalo $(-\infty, \infty)$ es cero cumple con esta propiedad. Geométricamente, el gráfico de la función $\mathbf{0}$ es la línea que coincide con el eje $x$. De esta forma, $\mathbf{f}$, $\mathbf{0} \in V$ con $\mathbf{f} = f(x)$, $\mathbf{0} = 0$,
-        \begin{align*}
-            (\mathbf{f} + \mathbf{0})(x) & = f(x) + 0 \\
-            & = f(x) \\
-            & = \mathbf{f}
-        \end{align*}
-        Por tanto, se cumple la propiedad de neutro aditivo.
-        \item Para cada función $\mathbf{f}$ en $F(-\infty, \infty)$ existe una función $-\mathbf{f}$ en $F(-\infty, \infty)$, la cual, al sumarse con $\mathbf{f}$, produce la función $\mathbf{0}$. La función definida por $-\mathbf{f}(x) = -f(x)$ cumple con esta propiedad. Geométricamente, el gráfico de $-\mathbf{f}$ se obtiene reflejando el de $\mathbf{f}$ con respecto al eje $x$ (figura \ref{fig:propfunc}c). Así,
-        \begin{align*}
-            [\mathbf{f} + (-\mathbf{f})](x) & = f(x) + (-f(x)) \\
-            & = f(x) - f(x) \\
-            & = 0 \\
-            & = \mathbf{0}
-        \end{align*}
-        Por tanto, se cumple la propiedad de inverso aditivo.
-        \item Sea $\mathbf{f}$, $\mathbf{g} \in V$ con $\mathbf{f} = f(x)$, $\mathbf{g} = g(x)$ y sea $\alpha \in \RR$,
-        \begin{align*}
-            [\alpha \cdot (\mathbf{f} + \mathbf{g})](x) & = \alpha (f(x) + g(x)) \\
-            & = \alpha f(x) + \alpha g(x) \\
-            & = (\alpha \cdot \mathbf{f})(x) + (\alpha \cdot \mathbf{g})(x) \\
-            & = (\alpha \cdot \mathbf{f} + \alpha \cdot \mathbf{g})(x)
-        \end{align*}
-        Por tanto, se cumple la distributividad sobre la suma de vectores.
-        \item Sea $\mathbf{f} \in V$ con $\mathbf{f} = f(x)$ y sea $\alpha$, $\beta \in \RR$,
-        \begin{align*}
-            [(\alpha + \beta) \cdot \mathbf{f}](x) & = (\alpha + \beta) f(x) \\
-            & = \alpha f(x) + \beta f(x) \\
-            & = (\alpha \cdot \mathbf{f})(x) + (\beta \cdot \mathbf{f})(x) \\
-            & = (\alpha \cdot \mathbf{f} + \beta \cdot \mathbf{f})(x)
-        \end{align*}
-        Por tanto, se cumple la distributividad sobre la suma de escalares.
-        \item Se deja como ejercicio al lector.
-        \item Sea $\mathbf{f} \in V$ con $\mathbf{f} = f(x)$ y sea $1 \in \RR$,
-        \begin{align*}
-            (1 \cdot \mathbf{f})(x) & = 1 f(x) \\
-            & = f(x) \\
-            & = \mathbf{f}
-        \end{align*}
-        Por tanto, se cumple la propiedad de identidad multiplicativa.
-    \end{enumerate}
-    Dado que hemos verificado que $F(-\infty, \infty)$ satisface todas las propiedades requeridas para ser un espacio vectorial, concluimos que $F(-\infty, \infty)$ es un espacio vectorial sobre $\RR$.
-\end{examplebox}
-
-Es importante reconocer que no se pueden imponer arbitrariamente dos operaciones en un conjunto $V$ y esperar que se cumplan los axiomas de espacio vectorial. Por ejemplo, si $V$ es el conjunto de $n$-tuplas con componentes \emph{positivas}, y si se utilizan las operaciones estándar de $\RR[n]$, entonces $V$ no es cerrado bajo la multiplicación por escalares. Esto se debe a que, si $\mathbf{u}$ es una $n$-tupla no nula en $V$, entonces $(-1) \cdot \mathbf{u}$ tiene al menos un componente negativo y, por lo tanto, no pertenece a $V$.
-
-El siguiente es un ejemplo menos evidente en el que solo uno de los ocho axiomas de espacio vectorial deja de cumplirse.
-
-\begin{examplebox}{}{}
-    Sea $V = \RR[2]$ y definamos las operaciones de suma y producto escalar en $V$ de la siguiente manera: Si $\mathbf{u} = (u_1, u_2)$, $\mathbf{v} = (v_1, v_2)$ y si $\alpha$ es un número real cualquiera, definimos
-    $$\mathbf{u} + \mathbf{v} = (u_1 + v_1, u_2 + v_2) \quad \text{ y } \quad \alpha \cdot \mathbf{u} = (\alpha u_1, 0).$$
-    Por ejemplo, si $\mathbf{u} = (2, 4)$, $\mathbf{v} = (-3, 5)$ y $\alpha = 7$, entonces
-    $$\mathbf{u} + \mathbf{v} = \big(2 + (-3), 4 + 5\big) = (-1, 9)$$
-    y
-    $$\alpha \cdot \mathbf{u} = 7 \cdot \mathbf{u} = (7 \cdot 2, 0) = (14, 0).$$
-    La operación de suma es la estándar en $\RR[2]$, pero el producto escalar no lo es. Los primeros siete axiomas de espacio vectorial se cumplen, sin embargo, el axioma (viii) no se cumple para ciertos vectores. Por ejemplo, si $\mathbf{u} = (u_1, u_2)$ es tal que $u_2 \neq 0$, entonces
-    $$1 \cdot \mathbf{u} = 1 \cdot (u_1, u_2) = (1 \cdot u_1, 0) = (u_1, 0) \neq \mathbf{u}.$$
-    Por lo tanto, $V$ no es un espacio vectorial con las operaciones establecidas.
+    Dado que el valor absoluto en $\RR$ cumple las cuatro propiedades anteriores, concluimos que $|\phantom{x}|$ es una norma en $\RR$.
 \end{examplebox}
 
 \newpage
 
-Nuestro último ejemplo será un espacio vectorial inusual que hemos incluido para ilustrar la variedad de espacios vectoriales.
+Hemos demostrado que el valor absoluto en $\RR$ cumple con las propiedades fundamentales de una norma. A partir de esta propiedad, se puede extender la idea de norma a espacios de mayor dimensión, como $\RR[n]$, y demostrar que ciertas definiciones, como la norma $\| \phantom{x} \|_1$, también cumplen con los requisitos necesarios para ser consideradas normas en este contexto.
 
 \begin{examplebox}{}{}
-    Sea $V$ el conjunto de los números reales positivos, y sean $\mathbf{u} = u$ y $\mathbf{v} = v$ cualesquiera vectores (es decir, números reales positivos) en $V$. Sea $\alpha$ un escalar cualquiera. Definimos las operaciones en $V$ como
-    $$\mathbf{u} + \mathbf{v} = uv \quad \text{ y } \quad \alpha \cdot \mathbf{u} = u^{\alpha}.$$
-    Por ejemplo, $1 + 1 = 1$ y $(2)(1) = 1^2 = 1$, lo cual resulta extraño, pero, no obstante, el conjunto $V$ con estas operaciones satisface los ocho axiomas de los espacios vectoriales y, por lo tanto, es un espacio vectorial. Verificaremos algunos axiomas, y dejaremos los demás como ejercicio al lector.
+    Sea $\| \phantom{x} \|_1$ la función definida en $\RR[n]$ por
+    $$\| \mathbf{x} \|_1 = |x_1| + |x_2| + \cdots + |x_n|,$$
+    para cada $\mathbf{x} = (x_1, x_2, \dots, x_n)$. Utilizando las propiedades del valor absoluto como base, demostremos que $\| \phantom{x} \|_1$ cumple las cuatro propiedades establecidas en la definición \ref{definicion:normaV}.
     \begin{enumerate}[label=\roman*), topsep=6pt, itemsep=0pt]
-        \item Sea $\mathbf{u}$, $\mathbf{v} \in V$ con $\mathbf{u} = u$, $\mathbf{v} = v$,
+        \item Como el valor absoluto es siempre no negativo, se tiene que $|x_i| \geq 0$ para cada $i \in \{ 1, 2, \dots, n \}$. Al sumar estos valores, se obtiene
+        $$\| \mathbf{x} \|_1 = |x_1| + |x_2| + \cdots + |x_n| \geq 0.$$
+        \item Si $\| \mathbf{x} \|_1 = 0$, entonces
+        $$|x_1| + |x_2| + \cdots + |x_n| = 0.$$
+        Como cada término $|x_i| \geq 0$, esto solo es posible si $|x_i| = 0$, es decir, $x_i = 0$ para cada $i \in \{ 1, 2, \dots, n \}$. Por lo tanto, $\mathbf{x} = \mathbf{0}$. Recíprocamente, si $\mathbf{x} = \mathbf{0}$, entonces $x_i = 0$ para cada $i \in \{ 1, 2, \dots, n \}$, lo que implica que $\| \mathbf{x} \|_1 = 0$.
+        \item Sea $\mathbf{x} = (x_1, x_2, \dots, x_n)$, entonces $\alpha \mathbf{x} = (\alpha x_1, \alpha x_2, \dots, \alpha x_n)$. Por la propiedad del valor absoluto, se tiene que $|\alpha x_i| = |\alpha| |x_i|$, por lo que
         \begin{align*}
-            \mathbf{u} + \mathbf{v} & = uv \\
-            & = vu \\
-            & = \mathbf{v} + \mathbf{u}
+            \| \alpha \mathbf{x} \|_1 & = |\alpha x_1| + |\alpha x_2| + \cdots + |\alpha x_n| \\
+            & = |\alpha| |x_1| + |\alpha| |x_2| + \cdots + |\alpha| |x_n| \\
+            & = |\alpha| (|x_1| + |x_2| + \cdots + |x_n|) \\
+            & = |\alpha| \| \mathbf{x} \|_1
         \end{align*}
-        Por tanto, se cumple la propiedad de conmutatividad.
-        \item Se deja como ejercicio al lector.
-        \item Sea $\mathbf{u}$, $\mathbf{0} \in V$ con $\mathbf{u} = u$, $\mathbf{0} = 1$,
+        \item Tenemos que $\mathbf{x} + \mathbf{y} = (x_1 + y_1, x_2 + y_2, \dots, x_n + y_n)$. Al usar la desigualdad triangular para cada $i \in \{ 1, 2, \dots, n \}$ en $\RR$,
+        $$|x_i + y_i| \leq |x_i| + |y_i|$$
+        obtenemos
         \begin{align*}
-            \mathbf{u} + \mathbf{0} & = u^1 \\
-            & = u \\
-            & = \mathbf{u}
+            \| \mathbf{x} + \mathbf{y} \|_1 & = |x_1 + y_1| + |x_2 + y_2| + \cdots + |x_n + y_n| \\
+            & \leq |x_1| + |y_1| + |x_2| + |y_2| + \cdots + |x_n| + |y_n| \\
+            & = |x_1| + |x_2| + \cdots + |x_n| + |y_1| + |y_2| + \cdots + |y_n| \\
+            & = \| \mathbf{x} \|_1 + \| \mathbf{y} \|_1
         \end{align*}
-        Por tanto, se cumple la propiedad de neutro aditivo.
-        \item Dado $\mathbf{u} = u$, existe $-\mathbf{u} = \dfrac{1}{u}$ que cumple
-        \begin{align*}
-            \mathbf{u} + (-\mathbf{u}) & = u \left( \frac{1}{u} \right) \\
-            & = 1 \\
-            & = \mathbf{0}
-        \end{align*}
-        Por tanto, se cumple la propiedad de inverso aditivo.
-        \item Sea $\mathbf{u}$, $\mathbf{v} \in V$ con $\mathbf{u} = u$, $\mathbf{v} = v$ y sea $\alpha \in \RR$,
-        \begin{align*}
-            \alpha \cdot (\mathbf{u} + \mathbf{v}) & = (uv)^{\alpha} \\
-            & = u^{\alpha} v^{\alpha} \\
-            & = \alpha \cdot \mathbf{u} + \alpha \cdot \mathbf{v}
-        \end{align*}
-        Por tanto, se cumple la distributividad sobre la suma de vectores.
-        \item Sea $\mathbf{u} \in V$ con $\mathbf{u} = u$ y sea $\alpha$, $\beta \in \RR$,
-        \begin{align*}
-            (\alpha + \beta) \cdot \mathbf{u} & = u^{\alpha + \beta} \\
-            & = u^{\alpha} u^{\beta} \\
-            & = \alpha \cdot \mathbf{u} + \beta \cdot \mathbf{u}
-        \end{align*}
-        Por tanto, se cumple la distributividad sobre la suma de escalares.
-        \item Se deja como ejercicio al lector.
-        \item Se deja como ejercicio al lector.
     \end{enumerate}
-    En conclusión, aunque estas operaciones resulten inusuales, la verificación de los ocho axiomas, confirma que esta estructura cumple con todos los requisitos para ser considerada un espacio vectorial sobre $\RR$.
+    Dado que $\| \phantom{x} \|_1$ en $\RR[n]$ cumple las cuatro propiedades anteriores, concluimos que $\| \phantom{x} \|_1$ es una norma en $\RR[n]$.
 \end{examplebox}
-\infoBulle{Este caso resalta la generalidad del concepto de espacio vectorial, mostrando que la validez de una estructura vectorial depende de la satisfacción de sus axiomas, más que de la forma convencional de sus operaciones.}
+
+Utilizando las propiedades de los números reales como base, procederemos a mostrar que la norma $\| \phantom{x} \|_2$ en $\RR[n]$, definida como la raíz cuadrada de la suma de los cuadrados de las componentes de un vector, también satisface las cuatro condiciones esenciales que definen a una norma en un espacio vectorial.
+
+\begin{examplebox}{}{}
+    Sea $\| \phantom{x} \|_2$ la función definida en $\RR[n]$ por
+    $$\| \mathbf{x} \|_2 = \sqrt{x_1^2 + x_2^2 + \cdots + x_n^2},$$
+    para cada $\mathbf{x} = (x_1, x_2, \dots, x_n)$. Demostremos que $\| \phantom{x} \|_2$ cumple las cuatro propiedades establecidas en la definición \ref{definicion:normaV}.
+    \begin{enumerate}[label=\roman*), topsep=6pt, itemsep=0pt]
+        \item Dado que para cada $i \in \{ 1, 2, \dots, n \}$, $x_i^2 \geq 0$, se sigue que
+        $$x_1^2 + x_2^2 + \dots + x_n^2 \geq 0.$$
+        Esto nos lleva a que
+        $$\| \mathbf{x} \|_2 = \sqrt{x_1^2 + x_2^2 + \dots + x_n^2} \geq 0.$$
+        \item Del inciso anterior, si $\| \mathbf{x} \|_2 = 0$, entonces
+        $$x_1^2 + x_2^2 + \dots + x_n^2 = 0.$$
+        Esto ocurre si y solo si $x_i = 0$ para cada $i \in \{ 1, 2, \dots, n \}$, es decir, $\mathbf{x} = \mathbf{0}$.
+        \item Sabiendo que para cualquier escalar, se cumple $\sqrt{\alpha^2} = |\alpha|$, tenemos que
+        \begin{align*}
+            \|\alpha \mathbf{x}\|_2 & = \sqrt{(\alpha x_1)^2 + (\alpha x_2)^2 + \dots + (\alpha x_n)^2} \\
+            & = \sqrt{\alpha^2 x_1^2 + \alpha^2 x_2^2 + \dots + \alpha^2 x_n^2} \\
+            & = \sqrt{\alpha^2 \left(x_1^2 + x_2^2 + \dots + x_n^2\right)} \\
+            & = |\alpha| \sqrt{x_1^2 + x_2^2 + \dots + x_n^2} \\
+            & = |\alpha| \| \mathbf{x} \|_2
+        \end{align*}
+        \item Tenemos que $\mathbf{x} + \mathbf{y} = (x_1 + y_1, x_2 + y_2, \dots, x_n + y_n)$ y por definición,
+        $$\| \mathbf{x} + \mathbf{y} \|_2 = \sqrt{(x_1 + y_1)^2 + (x_2 + y_2)^2 + \cdots + (x_n + y_n)^2}.$$
+        Usamos la desigualdad básica
+        $$(x_i + y_i)^2 \leq 2\left(x_i^2 + y_i^2\right),$$
+        la cual se obtiene de
+        $$0 \leq (x_i - y_i)^2 = x_i^2 - 2x_iy_i + y_i^2.$$
+        Reordenando y sumando para todas las componentes,
+        $$2 \sum_{i=1}^{n} x_i y_i \leq \sum_{i=1}^{n} x_i^2 + \sum_{i=1}^{n} y_i^2.$$
+        Lo que conlleva a que
+        \begin{align*}
+            \| \mathbf{x} + \mathbf{y} \|_2 & = \sqrt{\sum_{i=1}^{n} x_i^2 + 2 \sum_{i=1}^{n} x_i y_i + \sum_{i=1}^{n} y_i^2} \\
+            & \leq \sqrt{2\sum_{i=1}^{n} x_i^2 + 2\sum_{i=1}^{n} y_i^2} \\
+            & = \sqrt{2 \left( \sum_{i=1}^{n} x_i^2 + \sum_{i=1}^{n} y_i^2 \right)} \\
+            & \leq \sqrt{\sum_{i=1}^{n} x_i^2 + \sum_{i=1}^{n} y_i^2} \\
+            & \leq \sqrt{x_1^2 + x_2^2 + \cdots + x_n^2} + \sqrt{y_1^2 + y_2^2 + \cdots + y_n^2} \\
+            & = \| \mathbf{x} \|_1 + \| \mathbf{y} \|_1
+        \end{align*}
+    \end{enumerate}
+    Dado que $\| \phantom{x} \|_2$ en $\RR[n]$ cumple las cuatro propiedades anteriores, concluimos que $\| \phantom{x} \|_2$ es una norma en $\RR[n]$.
+\end{examplebox}
 
 \newpage
 
-\section{Subespacios vectoriales}
+La norma infinita se define como el valor máximo de los valores absolutos de las componentes del vector y cumple con las cuatro propiedades esenciales de una norma en un espacio vectorial.
 
-A menudo ocurre que algún espacio vectorial de interés está contenido dentro de un espacio vectorial más grande cuyas propiedades son conocidas. En esta sección mostraremos cómo reconocer cuándo ocurre esto, explicaremos cómo las propiedades del espacio vectorial más grande pueden usarse para obtener propiedades del más pequeño y proporcionaremos una variedad de ejemplos importantes.
+\begin{examplebox}{}{}
+    Sea $\| \phantom{x} \|_{\infty}$ la función definida en $\RR[n]$ por
+    $$\| \mathbf{x} \|_{\infty} = \max \{ |x_1|, |x_2|, \dots, |x_n| \},$$
+    para cada $\mathbf{x} = (x_1, x_2, \dots, x_n)$. Demostremos que $\| \phantom{x} \|_{\infty}$ cumple las cuatro propiedades establecidas en la definición \ref{definicion:normaV}.
+    \begin{enumerate}[label=\roman*), topsep=6pt, itemsep=0pt]
+        \item Como el valor absoluto es siempre no negativo, se tiene que $|x_i| \geq 0$ para cada $i \in \{ 1, 2, \dots, n \}$. De lo anterior dicho, se concluye que
+        $$\| \mathbf{x} \|_{\infty} = \max \{ |x_1|, |x_2|, \dots, |x_n| \} \geq 0.$$
+        \item Si $\| \mathbf{x} \|_{\infty} = 0$, entonces
+        $$\max \{ |x_1|, |x_2|, \dots, |x_n| \} = 0.$$
+        Como el máximo de un conjunto de números no negativos es cero solo si todos los elementos son cero, se deduce que para cada $i \in \{ 1, 2, \dots, n \}$, $|x_i| = 0$, es decir, $x_i = 0$. Por lo tanto, $\mathbf{x} = \mathbf{0}$. Recíprocamente, si $\mathbf{x} = \mathbf{0}$, entonces $x_i = 0$ para cada $i \in \{ 1, 2, \dots, n \}$, lo que implica que $\| \mathbf{x} \|_\infty = 0$.
+        \item Sea $\mathbf{x} = (x_1, x_2, \dots, x_n)$, entonces $\alpha \mathbf{x} = (\alpha x_1, \alpha x_2, \dots, \alpha x_n)$. Por la propiedad del valor absoluto, se tiene que $|\alpha x_i| = |\alpha| |x_i|$, por lo que
+        \begin{align*}
+            \| \alpha \mathbf{x} \|_{\infty} & = \max \{ |\alpha x_1|, |\alpha x_2|, \dots, |\alpha x_n| \} \\
+            & = \max \{ |\alpha| |x_1|, |\alpha| |x_2|, \dots, |\alpha| |x_n| \} \\
+            & = |\alpha| \max \{ |x_1|, |x_2|, \dots, |x_n| \} \\
+            & = |\alpha| \| \mathbf{x} \|
+        \end{align*}
+        \item Se deja como ejercicio al lector.
+    \end{enumerate}
+    Dado que $\| \phantom{x} \|_{\infty}$ en $\RR[n]$ cumple las cuatro propiedades anteriores, concluimos que $\| \phantom{x} \|_{\infty}$ es una norma en $\RR[n]$.
+\end{examplebox}
+
+Ahora veremos una norma en un espacio vectorial diferente.
+
+\begin{examplebox}{}{}
+    Sea $\| \phantom{x} \|$ la función definida en $C[a, b]$ por
+    $$\| \mathbf{f} \| = \max_{t \in [a, b]} |f(t)|,$$
+    para cada $\mathbf{f} = f(t)$. Utilizando las propiedades del valor absoluto, demostremos que $\| \phantom{x} \|$ cumple las cuatro propiedades establecidas en la definición \ref{definicion:normaV}.
+    \begin{enumerate}[label=\roman*), topsep=6pt, itemsep=0pt]
+        \item Dado que el valor absoluto es siempre no negativo, $\| \mathbf{f} \| \geq 0$ para todo $\mathbf{f}$.
+        \item Del inciso anterior, $\| \mathbf{f} \| = 0$ si y solo si $|f(t)| = 0$ para todo $t \in [a, b]$, lo cual ocurre solo cuando $f(t) = 0$ para todos los $t \in [a, b]$, es decir, $\mathbf{f} = \mathbf{0}$.
+        \item Si $f \in C[a, b]$ y $\alpha \in \RR$, entonces
+        \begin{align*}
+            \| \alpha \mathbf{f} \| & = \max_{t \in [a, b]} |\alpha f(t)| \\
+            & = |\alpha| \max_{t \in [a, b]} |f(t)| \\
+            & = |\alpha| \| \mathbf{f} \|.
+        \end{align*}
+        \item Se deja como ejercicio al lector.
+    \end{enumerate}
+    Dado que $\| \phantom{x} \|$ en $C[a, b]$ cumple las cuatro propiedades anteriores, concluimos que $\| \phantom{x} \|$ es una norma en $C[a, b]$.
+\end{examplebox}
+
+\newpage
 
 \begin{definicion}{}{}
-    Se dice que $W$ es un subespacio vectorial de $V$ si $W$ es un subconjunto no vacío de $V$, y $W$ es un espacio vectorial, junto con las operaciones de suma entre vectores y producto escalar definidas para $V$.
+    Un \emph{espacio normado} es un espacio vectorial $V$ con una norma definida en $V$. Un espacio normado se denota como $(V, \| \phantom{x} \|)$.
 \end{definicion}
 
-En general, para demostrar que un conjunto no vacío $W$ con dos operaciones es un espacio vectorial, se deben verificar los diez axiomas de espacio vectorial. Sin embargo, si $W$ es un subespacio de un espacio vectorial conocido $V$, entonces ciertos axiomas no necesitan ser verificados porque son “heredados” de $V$. Por ejemplo, no es necesario verificar que $\mathbf{u} + \mathbf{v} = \mathbf{v} + \mathbf{u}$ se cumple en $W$ porque se cumple para todos los vectores en $V$, incluidos los de $W$. Por otro lado, es necesario verificar que $W$ está cerrado bajo la suma y el producto escalar, ya que es posible que sumar dos vectores en $W$ o multiplicar un vector en $W$ por un escalar produzca un vector en $V$ que no esté en $W$ (figura \ref{JAJJAJAJAJJQJQOOQPQZ}).
-\begin{figure}[H]
+Ahora, tras la definición de espacio normado, podemos proporcionar ejemplos de tales espacios utilizando las normas previamente discutidas.
+
+\begin{examplebox}{}{}
+    A continuación, presentamos algunos espacios normados basados en las normas definidas anteriormente:
+    \begin{enumerate}[label=\roman*), topsep=6pt, itemsep=0pt]
+        \item El espacio $\RR$ con la norma del valor absoluto: El par $(\RR, |\phantom{x}|)$ es un espacio normado, como se demostró en el primer ejemplo. Aquí, la norma coincide con el valor absoluto clásico.
+        \item El espacio $\RR[n]$ con la norma $\| \phantom{x} \|_1$: El espacio $(\RR[n], \| \phantom{x} \|_1)$ es normado, como se verificó en el segundo ejemplo. Esta norma suma las magnitudes de las componentes del vector.
+        \item El espacio $\RR[n]$ con la norma euclidiana $\| \phantom{x} \|_2$: El par $(\RR[n], \| \phantom{x} \|_2)$ también es un espacio normado, como se mostró en el tercer ejemplo. Esta norma corresponde a la distancia euclidiana.
+        \item El espacio $\RR[n]$ con la norma infinito $\| \phantom{x} \|_\infty$: El espacio $(\RR[n], \| \phantom{x} \|_\infty)$, donde la norma es el máximo valor absoluto de las componentes, es normado, como se ilustró en el cuarto ejemplo.
+        \item El espacio $C[a, b]$ con la norma del máximo: El espacio $(C[a, b], \| \phantom{x} \|)$, con $\displaystyle \|\mathbf{f}\| = \max_{t \in [a,b]} |f(t)|$, es normado, como se comprobó en el quinto ejemplo. Esta norma mide la máxima desviación de una función en el intervalo.
+    \end{enumerate}
+    Cada uno de estos pares $(V, \| \phantom{x} \|)$ constituye un espacio normado, ya que la función $\| \phantom{x} \|$ satisface los cuatro axiomas de la definición. Es importante notar que un mismo espacio vectorial puede tener múltiples normas, dando lugar a diferentes espacios normados (por ejemplo, $\RR[n]$ con $\| \phantom{x} \|_1$, $\| \phantom{x} \|_2$ o $\| \phantom{x} \|_\infty$).
+\end{examplebox}
+
+La siguiente desigualdad útil es una consecuencia directa de la desigualdad triangular.
+
+\begin{theorem}{}{}
+    Sea $V$ un espacio normado. Entonces se cumple que
+    $$\| \mathbf{x} \| - \| \mathbf{y} \| \leq \| \mathbf{x} - \mathbf{y} \|$$
+    para cualesquiera $\mathbf{x}$, $\mathbf{y} \in V$.
+
+    \tcblower
+    \demostracion Consideremos los vectores $\mathbf{x}$ y $\mathbf{y}$ en el espacio normado $V$. Usando la desigualdad triangular,
+    $$\| \mathbf{x} \| = \| \mathbf{x} - \mathbf{y} + \mathbf{y} \| \leq \| \mathbf{x} - \mathbf{y} \| + \| \mathbf{y} \|.$$
+    Reorganizando esta desigualdad, obtenemos
+    $$\| \mathbf{x} \| - \| \mathbf{y} \| \leq \| \mathbf{x} - \mathbf{y} \|.$$
+\end{theorem}
+
+\begin{corollary}{}{desigualdad_vabsoluto}
+    En particular, en un espacio normado $V$, se cumple que para cualesquiera $\mathbf{x}$, $\mathbf{y} \in V$,
+    $$\big| \| \mathbf{x} \| - \| \mathbf{y} \| \big| \leq \| \mathbf{x} - \mathbf{y} \|.$$
+
+    \tcblower
+    \demostracion Solo basta probar que $\| \mathbf{x} - \mathbf{y} \| \leq \| \mathbf{x} \| - \| \mathbf{y} \|$. Así,
+    $$\| \mathbf{y} \| = \| \mathbf{y} - \mathbf{x} + \mathbf{x} \| \leq \| \mathbf{y} - \mathbf{x} \| + \| \mathbf{x} \| = \| \mathbf{x} - \mathbf{y} \| + \| \mathbf{x} \|.$$
+    Reorganizando esta desigualdad, obtenemos, $\| \mathbf{y} \| - \| \mathbf{x} \| \leq \| \mathbf{x} - \mathbf{y} \|$. Combinando estas dos desigualdades, $\| \mathbf{x} - \mathbf{y} \| \leq \| \mathbf{x} \| - \| \mathbf{y} \| \leq \| \mathbf{x} - \mathbf{y} \|$, lo que equivale a
+    $$\big| \| \mathbf{x} \| - \| \mathbf{y} \| \big| \leq \| \mathbf{x} - \mathbf{y} \|.$$
+\end{corollary}
+
+\newpage
+
+\section{Espacios métricos y topología básica}
+
+\begin{definicion}{}{metrica}
+    Sea $X$ un conjunto. Una función $d: X \times X \longrightarrow \RR$ se llama \emph{distancia} o \emph{métrica} en $X$ si cumple las siguientes propiedades:
+    \begin{enumerate}[label=\roman*), topsep=6pt, itemsep=0pt]
+        \item $d(\mathbf{x}, \mathbf{y}) \geq 0$, para todo $\mathbf{x}$, $\mathbf{y} \in X$,
+        \item $d(\mathbf{x}, \mathbf{y}) = 0$ si y solo si $\mathbf{x} = \mathbf{y}$,
+        \item $d(\mathbf{x}, \mathbf{y}) = d(\mathbf{y}, \mathbf{x})$, para todo $\mathbf{x}$, $\mathbf{y} \in X$,
+        \item $d(\mathbf{x}, \mathbf{y}) \leq d(\mathbf{x}, \mathbf{z}) + d(\mathbf{z}, \mathbf{y})$, para todo $\mathbf{x}$, $\mathbf{y}$, $\mathbf{z} \in X$.
+    \end{enumerate}
+\end{definicion}
+
+\begin{examplebox}{}{}
+    Sea $V$ un espacio vectorial sobre $K$ con una norma $\| \phantom{x} \|$. Entonces la función $d: V \times V \longrightarrow \RR$ definida mediante la siguiente regla es una métrica en $V$:
+    $$d(\mathbf{x}, \mathbf{y}) = \| \mathbf{x} - \mathbf{y} \|.$$
+
+    \tcblower
+    \demostracion
+    \begin{enumerate}[label=\roman*), topsep=6pt, itemsep=0pt]
+        \item Sabemos que la norma de cualquier vector es siempre no negativa, es decir, $\| \mathbf{x} - \mathbf{y} \| \geq 0$ para todo $\mathbf{x}$, $\mathbf{y} \in V$. Por lo tanto, $d(\mathbf{x}, \mathbf{y}) = \| \mathbf{x} - \mathbf{y} \| \geq 0$.
+        \item Procedamos por casos.
+        \begin{enumerate}
+            \item Si $\mathbf{x} = \mathbf{y}$, entonces $\mathbf{x} - \mathbf{y} = \mathbf{0}$, y por la propiedad de la norma, tenemos que $\| \mathbf{x} - \mathbf{y} \| = 0$. Por lo tanto, $d(\mathbf{x}, \mathbf{y}) = 0$.
+            \item Si $d(\mathbf{x}, \mathbf{y}) = 0$, entonces $\| \mathbf{x} - \mathbf{y} \| = 0$. Como la norma de un vector es cero si y solo si el vector es el vector cero, esto implica que $\mathbf{x} - \mathbf{y} = \mathbf{0}$, lo cual significa que $\mathbf{x} = \mathbf{y}$.
+        \end{enumerate}
+        Por lo tanto, $d(\mathbf{x}, \mathbf{y}) = 0$ si y solo si $\mathbf{x} = \mathbf{y}$.
+        \item De acuerdo con la definición de $d$,
+        \begin{align*}
+            d(\mathbf{x}, \mathbf{y}) & = \| \mathbf{x} - \mathbf{y} \| \\
+            & = |-1| \| \mathbf{y} - \mathbf{x} \| \\
+            & = \| \mathbf{y} - \mathbf{x} \| \\
+            & = d(\mathbf{y}, \mathbf{x})
+        \end{align*}
+        \item Sean $\mathbf{x}$, $\mathbf{y}$, $\mathbf{z} \in V$, y de acuerdo con las propiedades de la norma,
+        \begin{align*}
+            d(\mathbf{x}, \mathbf{y}) & = \| \mathbf{x} - \mathbf{y} \| \\
+            & = \| (\mathbf{x} - \mathbf{z}) + (\mathbf{z} - \mathbf{y}) \| \\
+            & \leq \| \mathbf{x} - \mathbf{z} \| + \| \mathbf{z} - \mathbf{y} \| \\
+            & = d(\mathbf{x}, \mathbf{z}) + d(\mathbf{z}, \mathbf{y})
+        \end{align*}
+    \end{enumerate}
+    Por lo tanto, $d(\mathbf{x}, \mathbf{y}) = \| \mathbf{x} - \mathbf{y} \|$ satisface todas las propiedades de una métrica.
+\end{examplebox}
+
+En general, si $V$ es un espacio vectorial sobre $K$ con una norma $\| \phantom{x} \|$, la distancia o métrica inducida por la norma $\| \phantom{x} \|$ se define mediante la siguiente fórmula:
+$$d(\mathbf{x}, \mathbf{y}) = \| \mathbf{x} - \mathbf{y} \|.$$
+Esta construcción es muy útil porque nos permite medir distancias en espacios vectoriales de manera natural, aprovechando la estructura de la norma.
+
+\begin{examplebox}{}{}
+    En el conjunto de los números reales, $\RR$, la expresión
+    $$d(\mathbf{x}, \mathbf{y}) = \| \mathbf{x} - \mathbf{y} \| = |x - y|$$
+    constituye una métrica.
+\end{examplebox}
+
+\newpage
+
+\begin{examplebox}{}{}
+    Sea $\RR[n]$ y sean $\mathbf{x} = (x_1, x_2, \dots, x_n)$, $\mathbf{y} = (y_1, y_2, \dots, y_n) \in \RR[n]$. La expresión
+    $$d_1( \mathbf{x}, \mathbf{y} ) = |x_1 - y_1| + |x_2 - y_2| + \cdots + |x_n - y_n|$$
+    constituye una métrica. Sean $\mathbf{x} = (x_1, x_2, \dots, x_n)$, $\mathbf{y} = (y_1, y_2, \dots, y_n) \in \RR[n]$,
+    $$\mathbf{x} - \mathbf{y} = (x_1 - y_1, x_2 - y_2, \dots, x_n - y_n)$$
+    de donde se sigue
+    \begin{align*}
+        d_1( \mathbf{x}, \mathbf{y} ) & = \| (x_1 - y_1, x_2 - y_2, \dots, x_n - y_n) \|_1 \\
+        & = |x_1 - y_1| + |x_2 - y_2| + \cdots + |x_n - y_n|
+    \end{align*}
+    Por tanto, la distancia o métrica $d_1$ es inducida por la norma $\| \phantom{x} \|_1$.
+\end{examplebox}
+
+\begin{examplebox}{}{}
+    Sea $\RR[n]$ y sean $\mathbf{x} = (x_1, x_2, \dots, x_n)$, $\mathbf{y} = (y_1, y_2, \dots, y_n) \in \RR[n]$. La expresión
+    $$d_2( \mathbf{x}, \mathbf{y} ) = \sqrt{(x_1 - y_1)^2 + (x_2 - y_2)^2 + \cdots + (x_n - y_n)^2}$$
+    constituye una métrica. Sean $\mathbf{x} = (x_1, x_2, \dots, x_n)$, $\mathbf{y} = (y_1, y_2, \dots, y_n) \in \RR[n]$,
+    $$\mathbf{x} - \mathbf{y} = (x_1 - y_1, x_2 - y_2, \dots, x_n - y_n)$$
+    de donde se sigue
+    \begin{align*}
+        d_2( \mathbf{x}, \mathbf{y} ) & = \| (x_1 - y_1, x_2 - y_2, \dots, x_n - y_n) \|_2 \\
+        & = \sqrt{(x_1 - y_1)^2 + (x_2 - y_2)^2 + \cdots + (x_n - y_n)^2}
+    \end{align*}
+    Por tanto, la distancia o métrica $d_2$ es inducida por la norma $\| \phantom{x} \|_2$.
+\end{examplebox}
+
+\begin{examplebox}{}{}
+    Sea $\RR[n]$ y sean $\mathbf{x} = (x_1, x_2, \dots, x_n)$, $\mathbf{y} = (y_1, y_2, \dots, y_n) \in \RR[n]$. La expresión
+    $$d_{\infty}( \mathbf{x}, \mathbf{y} ) = \max \left\{ |x_1 - y_1|, |x_2 - y_2|, \dots, |x_n - y_n| \right\}$$
+    constituye una métrica. Sean $\mathbf{x} = (x_1, x_2, \dots, x_n)$, $\mathbf{y} = (y_1, y_2, \dots, y_n) \in \RR[n]$,
+    $$\mathbf{x} - \mathbf{y} = (x_1 - y_1, x_2 - y_2, \dots, x_n - y_n)$$
+    de donde se sigue
+    \begin{align*}
+        d_{\infty}( \mathbf{x}, \mathbf{y} ) & = \| (x_1 - y_1, x_2 - y_2, \dots, x_n - y_n) \|_{\infty} \\
+        & = \max \left\{ |x_1 - y_1|, |x_2 - y_2|, \dots, |x_n - y_n| \right\}
+    \end{align*}
+    Por tanto, la distancia o métrica $d_{\infty}$ es inducida por la norma $\| \phantom{x} \|_{\infty}$.
+\end{examplebox}
+
+\begin{examplebox}{}{}
+    Probemos que en el conjunto $X$, la expresión
+    $$d(\mathbf{x}, \mathbf{y}) = \begin{cases}
+        0 & \text{si } \mathbf{x} = \mathbf{y} \\
+        1 & \text{si } \mathbf{x} \neq \mathbf{y}
+    \end{cases}$$
+    constituye una métrica en $X$.
+
+    \tcblower
+    \demostracion Probemos que dicha expresión cumple las cuatro propiedades de la definición \ref{definicion:metrica}.
+    \begin{enumerate}[label=\roman*), topsep=6pt, itemsep=0pt]
+        \item Sean $\mathbf{x}$, $\mathbf{y} \in X$, entonces
+        $$d(\mathbf{x}, \mathbf{y}) = 0 \quad \text{si } \mathbf{x} = \mathbf{y},$$
+        o
+        $$d(\mathbf{x}, \mathbf{y}) = 1 \quad \text{si } \mathbf{x} \neq \mathbf{y}.$$
+        Así, en cualquier caso, $d(\mathbf{x}, \mathbf{y}) \geq 0$.
+        \item Por definición de la métrica, $d(\mathbf{x}, \mathbf{y}) = 0$ si y solo si $\mathbf{x} = \mathbf{y}$.
+        \item Sean $\mathbf{x}$, $\mathbf{y} \in X$. Procedamos por casos:
+        \begin{enumerate}
+            \item Si $\mathbf{x} = \mathbf{y}$, entonces $d(\mathbf{x}, \mathbf{y}) = 0$, pero $\mathbf{x} = \mathbf{y}$, entonces $\mathbf{y} = \mathbf{x}$. Por tanto, $d(\mathbf{y}, \mathbf{x}) = 0$, por lo que $d(\mathbf{x}, \mathbf{y}) = d(\mathbf{y}, \mathbf{x})$.
+            \item Si $\mathbf{x} \neq \mathbf{y}$, entonces $d(\mathbf{x}, \mathbf{y}) = 1$, pero $\mathbf{x} \neq \mathbf{y}$, entonces $\mathbf{y} \neq \mathbf{x}$. Por tanto, $d(\mathbf{y}, \mathbf{x}) = 1$, por lo que $d(\mathbf{x}, \mathbf{y}) = d(\mathbf{y}, \mathbf{x})$.
+        \end{enumerate}
+        Así, en cualquiera de los casos, $d(\mathbf{x}, \mathbf{y}) = d(\mathbf{y}, \mathbf{x})$.
+        \item Sean $\mathbf{x}$, $\mathbf{y} \in X$. Procedamos por casos:
+        \begin{enumerate}
+            \item Si $\mathbf{x} = \mathbf{y}$, entonces $d(\mathbf{x}, \mathbf{y}) = 0$, por lo que
+            \begin{align*}
+                0 & = d(\mathbf{x}, \mathbf{y}) \\
+                & \leq d(\mathbf{x}, \mathbf{z}) + d(\mathbf{z}, \mathbf{y})
+            \end{align*}
+            \item Si $\mathbf{x} \neq \mathbf{y}$, entonces $d(\mathbf{x}, \mathbf{y}) = 1$, por lo que
+            \begin{align*}
+                1 & = d(\mathbf{x}, \mathbf{y}) \\
+                & \leq d(\mathbf{x}, \mathbf{z}) + d(\mathbf{z}, \mathbf{y})
+            \end{align*}
+            Notemos que $d(\mathbf{x}, \mathbf{z}) = 0$ y $d(\mathbf{z}, \mathbf{y}) = 0$ no ocurre, pues si $d(\mathbf{x}, \mathbf{z}) = 0$ y $d(\mathbf{z}, \mathbf{y}) = 0$, entonces $\mathbf{x} = \mathbf{z}$ y $\mathbf{z} = \mathbf{y}$. Por lo tanto, $\mathbf{x} = \mathbf{y}$ lo cual no puede ser.
+        \end{enumerate}
+        Así, en cualquiera de los casos, $d(\mathbf{x}, \mathbf{y}) \leq d(\mathbf{x}, \mathbf{z}) + d(\mathbf{z}, \mathbf{y})$.
+    \end{enumerate}
+    Dado que $d$ en $X$ cumple las cuatro propiedades anteriores, concluimos que $d$ es una métrica en $X$. A esta métrica se le conoce como \emph{métrica discreta}.
+\end{examplebox}
+
+\begin{definicion}{}{}
+    Un \emph{espacio métrico} es un conjunto $X$ dotado de una función llamada distancia o métrica. Un espacio métrico se denota como $(X, d)$.
+\end{definicion}
+
+\begin{examplebox}{}{}
+    Consideremos el conjunto $C[a, b])$, que contiene todas las funciones continuas $f: [a, b] \longrightarrow \RR$. Definimos la siguiente métrica en este espacio:
+    $$d(f, g) = \int_{a}^{b} |f(x) - g(x)|  dx.$$
+    Esta métrica, convierte $C[a, b]$ en un espacio métrico.
+
+    \tcblower
+    \demostracion Verifiquemos las propiedades de la métrica:
+    \begin{enumerate}[label=\roman*), topsep=6pt, itemsep=0pt]
+        \item Como $|f(x) - g(x)| \geq 0$ para todo $x \in [a, b]$, la integral $d(f, g) \geq 0$.
+        \item Si $f = g$, entonces $|f(x) - g(x)| = 0$ para todo $x \in [a, b]$, de donde se sigue que $d(f, g) = 0$. Recíprocamente, si $d(f, g) = 0$, como $|f(x) - g(x)|$ es continua y no negativa, se deduce que $|f(x) - g(x)| = 0$ para todo $x \in [a, b]$. Por tanto, $f = g$.
+        \item Es evidente, ya que se hereda de saber que $|f(x) - g(x)| = |g(x) - f(x)|$.
+        \item Sean $f$, $g$, $h \in C[a, b]$,
+        \begin{align*}
+            d(f, h) & = \int_{a}^{b} |f(x) - h(x)| dx \\
+            & \leq \int_{a}^{b} \left( |f(x) - g(x)| + |g(x) - h(x)| \right) dx \\
+            & = d(f, g) + d(g, h)
+        \end{align*}
+    \end{enumerate}
+    Por lo tanto, $(C[a, b], d)$ es un espacio métrico.
+\end{examplebox}
+
+\newpage
+
+\begin{examplebox}{}{}
+    Sea $\RR[n]$ con la métrica $d_2$. Para $\mathbf{x} = (x_1, x_2, \dots, x_n)$ e $\mathbf{y} = (y_1, y_2, \dots, y_n)$ en $\RR[n]$, se define:
+    $$d_2(\mathbf{x}, \mathbf{y}) = \sqrt{(x_1 - y_1)^2 + (x_2 - y_2)^2 + \cdots + (x_n - y_n)^2}.$$
+    Esta métrica corresponde a la norma $\| \phantom{x} \|_2$, como se demostró previamente. Por tanto, $(\RR[n], d_2)$ es un espacio métrico.
+\end{examplebox}
+
+Es importante observar que todo subconjunto $Y$ de un espacio métrico $X$ es, a su vez, un espacio métrico, utilizando la misma función de distancia definida en $X$. Esto se debe a que las propiedades que caracterizan a una métrica en $X$, es decir, las condiciones (i) a (iv) de la definición \ref{definicion:metrica}, se mantienen válidas cuando se restringen a un subconjunto $Y$ de $X$. En particular, si $d$ es la función de distancia en $X$ y se cumplen las condiciones para puntos $\mathbf{x}$, $\mathbf{y}$, $\mathbf{z} \in X$, estas mismas condiciones se cumplen cuando se considera que $\mathbf{x}$, $\mathbf{y}$, $\mathbf{z}$ pertenecen a $Y$.
+
+\begin{definicion}{}{}
+    Dado un espacio métrico $(X, d)$, se define la \emph{bola abierta} y la \emph{bola cerrada} de centro $\mathbf{x}_0 \in X$ y radio $r > 0$ respectivamente como 
+    $$B(\mathbf{x}_0, r) = \{ \mathbf{x} \in X \mid d(\mathbf{x}, \mathbf{x}_0) < r \} \quad \text{ y } \quad \overline{B}(\mathbf{x}_0, r) = \{ \mathbf{x} \in X \mid d(\mathbf{x}, \mathbf{x}_0) \leq r \}.$$
+\end{definicion}
+
+\sideFigure[\label{fig:bola1}]{
+    \begin{tikzpicture}
+        \node at (0,3.5) {~};
+        \filldraw[cw2] (0,1) -- (-1,0) -- (0,-1) -- (1,0) -- cycle;
+        \draw[dash pattern=on 3pt off 3pt] (0,1) -- (-1,0) -- (0,-1) -- (1,0) -- cycle;
+        \draw[latex-] (0.55,0.55) -- (1,1) node[above,xshift=0.7cm] {$x + y = 1$};
+        \draw[latex-] (-0.55,0.55) -- (-1,1) node[above,xshift=-0.7cm] {$- x + y = 1$};
+        \draw[latex-] (-0.55,-0.55) -- (-1,-1) node[below,xshift=-0.7cm] {$- x - y = 1$};
+        \draw[latex-] (0.55,-0.55) -- (1,-1) node[below,xshift=0.7cm] {$x - y = 1$};
+        \draw[-Stealth] (-2.5,0) -- (2.5,0) node[below left] {$x$};
+        \draw[-Stealth] (0,-2.5) -- (0,2.5) node[below left] {$y$};
+    \end{tikzpicture}
+}
+
+\begin{examplebox}{}{}
+    Represente la bola $B(\mathbf{0}, 1)$, en $\RR[2]$, utilizando la métrica $d_1$.
+
+    \tcblower
+    \solucion Para trazar la bola anterior en el gráfico, es necesario observar que
+    \begin{align*}
+        (x, y) \in B( \mathbf{0}, 1) & \Longleftrightarrow d_1 \big( (x, y), (0, 0) \big) < 1 \\
+        & \Longleftrightarrow \| (x, y) - (0, 0) \|_1 < 1 \\
+        & \Longleftrightarrow \| (x, y) \|_1 < 1 \\
+        & \Longleftrightarrow |x| + |y| < 1
+    \end{align*}
+    La desigualdad $|x| + |y| < 1$ describe un rombo (o diamante) centrado en el origen $(0, 0)$ con vértices en los puntos: $(1, 0)$, $(-1, 0)$, $(0, 1)$, $(0, -1)$. Sin embargo, como la desigualdad es estricta, la bola excluye el borde y solo incluye los puntos interiores. Los vértices se obtienen al considerar los casos extremos donde una coordenada es máxima mientras la otra es cero.
+    \begin{itemize}[topsep=6pt, itemsep=0pt]
+        \item Si $y = 0$, entonces $|x| < 1$ y por consiguiente, $x \in (-1, 1)$.
+        \item Si $x = 0$, entonces $|y| < 1$ y por consiguiente, $y \in (-1, 1)$.
+    \end{itemize}
+    Cada arista del rombo corresponde a una ecuación lineal: $x + y = 1$, $-x + y = 1$, $-x - y = 1$, $x - y = 1$ para cada cuadrante respectivamente. Por lo tanto, la representación gráfica de esta bola está dada por la figura \ref{fig:bola1}.
+\end{examplebox}
+
+\sideFigure[\label{fig:bola3}]{\vfill
+    \begin{tikzpicture}
+        \node at (0,3.5) {~};
+        \filldraw[cw2] (0,0) circle (1cm);
+        \draw[dash pattern=on 3pt off 3pt] (0,0) circle (1cm);
+        \draw[latex-] (0.6,0.9) -- (1.3,1.5) node[above] {$x^2 + y^2 = 1$};
+        \draw[-Stealth] (-2.5,0) -- (2.5,0) node[below left] {$x$};
+        \draw[-Stealth] (0,-2.5) -- (0,2.5) node[below left] {$y$};
+    \end{tikzpicture}
+}
+
+\begin{examplebox}{}{}
+    Represente la bola $B(\mathbf{0}, 1)$, en $\RR[2]$, utilizando la métrica $d_2$.
+
+    \tcblower
+    \solucion Para trazar la bola anterior en el gráfico, es necesario observar que
+    \begin{align*}
+        (x, y) \in B(\mathbf{0}, 1) & \Longleftrightarrow d_2 \big( (x, y), (0, 0) \big) < 1 \\
+        & \Longleftrightarrow \| (x, y) - (0, 0) \|_2 < 1 \\
+        & \Longleftrightarrow \| (x, y) \|_2 < 1 \\
+        & \Longleftrightarrow \sqrt{x^2 + y^2} < 1
+    \end{align*}
+    Esta desigualdad describe un círculo de radio $1$ centrado en el origen $(0, 0)$. Todos los puntos $(x, y)$ que se encuentran dentro de esta región cumplen que la distancia euclidiana al origen es estrictamente menor que $1$, es decir, que están situados dentro de la bola de radio 1. El límite de la bola (circunferencia) está dado por $x^2 + y^2 = 1$, que corresponde a los puntos a distancia exactamente $1$ del origen. Por lo tanto, la representación gráfica de esta bola está dada por la figura \ref{fig:bola3}.
+\end{examplebox}
+
+\newpage
+\sideFigure[\label{fig:bola2}]{
+    \begin{tikzpicture}
+        \node at (0,3.5) {~};
+        \filldraw[cw2] (-1,-1) rectangle (1,1);
+        \draw[dash pattern=on 3pt off 3pt] (-1,-1) rectangle (1,1);
+        \draw[latex-] (0.5,1.05) -- (0.75,1.75) node[right] {$y = 1$};
+        \draw[latex-] (-0.5,-1.05) -- (-0.75,-1.75) node[left] {$y = - 1$};
+        \draw[latex-] (1.05,-0.5) -- (1.75,-0.75) node[below] {$x = 1$};
+        \draw[latex-] (-1.05,0.5) -- (-1.75,0.75) node[above] {$x = - 1$};
+        \draw[-Stealth] (-2.5,0) -- (2.5,0) node[below left] {$x$};
+        \draw[-Stealth] (0,-2.5) -- (0,2.5) node[below left] {$y$};
+    \end{tikzpicture}
+}
+
+\begin{examplebox}{}{}
+    Represente la bola $B(\mathbf{0}, 1)$, en $\RR[2]$, utilizando la métrica $d_{\infty}$.
+
+    \tcblower
+    \solucion Para trazar la bola anterior en el gráfico, es necesario observar que
+    \begin{align*}
+        (x, y) \in B(\mathbf{0}, 1) & \Longleftrightarrow d_{\infty} \big( (x, y), (0, 0) \big) < 1 \\
+        & \Longleftrightarrow \| (x, y) - (0, 0) \|_{\infty} < 1 \\
+        & \Longleftrightarrow \| (x, y) \|_{\infty} < 1 \\
+        & \Longleftrightarrow \max \left\{ |x| + |y| \right\} < 1
+    \end{align*}
+    Esta desigualdad describe un cuadrado centrado en el origen $(0, 0)$, con lados paralelos a los ejes coordenados y longitud de lado $2$. Los vértices del cuadrado están en los puntos: $(1, 1)$, $(1, -1)$, $(-1, -1)$, $(-1, 1)$. Sin embargo, como la desigualdad es estricta, la bola excluye el borde y solo incluye los puntos interiores. Esto es por los siguientes dos casos:
+    \begin{enumerate}[label=\roman*), topsep=6pt, itemsep=0pt]
+        \item Si $\max \left\{ |x|, |y| \right\} = |y|$, entonces $|x| \leq |y| = 1$; por consiguiente, $y = \pm 1$. Si $y = 1$, entonces $|x| \leq 1$, lo que implica que $-1 \leq x \leq 1$. De manera similar, si $y = -1$, entonces $|x| \leq -1$, lo que implica que $-1 \leq x \leq 1$.
+        \item Si $\max \left\{ |x|, |y| \right\} = |x|$, entonces $|y| \leq |x| = 1$; por consiguiente, $x = \pm 1$. Si $x = 1$, entonces $|y| \leq 1$, lo que implica que $-1 \leq y \leq 1$. De manera similar, si $x = -1$, entonces $|y| \leq -1$, lo que implica que $-1 \leq y \leq 1$.
+    \end{enumerate}
+    Por lo tanto, la representación gráfica de esta bola está dada por la figura \ref{fig:bola2}.
+\end{examplebox}
+
+Observemos que en un espacio métrico $(X, d)$, cualquier bola $B(\mathbf{x}_0, r)$ de centro $\mathbf{x}_0 \in X$ y radio $r > 0$ puede obtenerse a partir de la \emph{bola unitaria} $B(\mathbf{0}, 1)$, la bola centrada en el origen con radio $1$, mediante dos operaciones fundamentales:
+\begin{itemize}
+    \item Homotecia: Ajustar el radio de la bola unitaria para cambiar su “tamaño”. Si consideramos la bola unitaria $B(\mathbf{0}, 1)$, multiplicar cada distancia por un factor $r > 0$ transforma la bola en $B(\mathbf{0}, r)$. Es decir,
+    $$B(\mathbf{0}, r) = \left\{ \mathbf{x} \in X \mid d(\mathbf{x}, \mathbf{0}) < r \right\} = r \cdot B(\mathbf{0}, 1),$$
+    donde $r \cdot B(\mathbf{0}, 1)$ denota escalar todos los puntos de la bola unitaria por $r$.  
+    \item Traslación: Desplazar el centro de la bola desde el origen $\mathbf{0}$ hasta el punto deseado $\mathbf{x}_0$. Para mover el centro de $\mathbf{0}$ a $\mathbf{x}_0$, se suma $\mathbf{x}_0$ a cada punto de la bola escalada. Es decir,
+    $$B(\mathbf{x}_0, r) = \mathbf{x}_0 + B(\mathbf{0}, r) = \left\{ \mathbf{x}_0 + \mathbf{y} \mid \mathbf{y} \in B(\mathbf{0}, r) \right\}.$$
+\end{itemize}
+
+Por ejemplo, veamos que la bola $B\big((3, 2), 2\big)$ en $\RR[2]$ bajo la métrica $d_2$, se puede construir mediante la bola unitaria.
+\begin{itemize}
+    \item Homotecia: La bola unitaria $B(\mathbf{0}, 1)$ se escala multiplicando todas las distancias por el radio $r = 2$. Es decir,
+    $$B(\mathbf{0}, 2) = 2 \cdot B(\mathbf{0}, 1) = \left\{ \mathbf{x} \in \RR[2] \mid d_2(\mathbf{x}, \mathbf{0}) < 2 \right\}.$$
+    \item Traslación: Se desplaza la bola escalada $B(\mathbf{0}, 2)$ al punto $(3, 2)$ sumando el vector $(3, 2)$ a todos sus puntos. Es decir,
+    $$B\big((3, 2), 2\big) = (3, 2) + B(\mathbf{0}, 2).$$
+\end{itemize}
+Si aplicáramos la definición de bola, entonces tenemos que
+\begin{align*}
+    (x, y) \in B\big((3, 2), 2\big) & \Longleftrightarrow d_2 \big( (x, y), (3, 2) \big) < 2 \\
+    & \Longleftrightarrow \| (x, y) - (3, 2) \|_2 < 2 \\
+    & \Longleftrightarrow \| (x - 3, y - 2) \|_2 < 2 \\
+    & \Longleftrightarrow \sqrt{(x - 3)^2 + (y - 2)^2} < 2
+\end{align*}
+lo que es equivalente a lo que obtuvimos anteriormente.
+
+\newpage
+La representación gráfica de dicha bola está dada como:
+\begin{figure}[h!]
     \centering
     \begin{tikzpicture}
-        \coordinate (A) at (0,2);
-        \coordinate (B) at (5,0);
-        \coordinate (C) at (7,1.5);
-        \coordinate (D) at (2,3.5);
-        %
-        \draw (A) -- (B) node[above] {$V$} -- (C) -- (D) -- cycle;
-        \filldraw[cw1] ($(C)!.78!(A)$) -- ($(D)!.78!(B)$) -- ($(A)!.78!(C)$) -- ($(B)!.78!(D)$) -- cycle;
-        \draw ($(C)!.78!(A)$) -- ($(D)!.78!(B)$) node[above] {$W$} -- ($(A)!.78!(C)$) -- ($(B)!.78!(D)$) -- cycle;
-        \filldraw (3.25,1.5) circle (1.5pt);
-        \draw[-latex] (3.25,1.5) -- node[midway,below] {$\mathbf{v}$} (4,1.75);
-        \draw[-latex] (3.25,1.5) -- node[midway,left] {$\mathbf{u}$} (2.8,2.4);
-        \draw[-latex] (3.25,1.5) -- (3.55,2.65);
-        \draw[dashed] (2.8,2.4) -- (3.55,2.65) -- (4,1.75);
-        \draw[-latex] (2.8,2.4) -- node[midway,left] {$\alpha \cdot \mathbf{u}$} (2.4,3.2);
-        \draw[thin] (3.5,2) -- (4.5,2.75) node[above] {$\mathbf{u} + \mathbf{v}$};
+        \filldraw[cw2] (0,0) circle (1);
+        \filldraw[cw2] (3,2) circle (2);
+        \draw[dashed] (0,0) circle (1);
+        \draw[dashed] (3,2) circle (2);
+        \draw[latex-] (-0.6,0.9) -- (-1.3,1.5) node[above] {$x^2 + y^2 = 1$};
+        \draw[latex-] (4.2,3.8) -- (5.1,4.4) node[above] {$(x - 3)^2 + (x - 2)^2 = 4$};
+        \draw[-stealth] (-1.5,0) -- (6,0) node[below left] {$x$};
+        \draw[-stealth] (0,-1.5) -- (0,5) node[below left] {$y$};
     \end{tikzpicture}
-    \caption{Los vectores $\mathbf{u}$ y $\mathbf{v}$ están en $W$, pero los vectores $\mathbf{u} + \mathbf{v}$ y $\alpha \mathbf{u}$ no lo están}
-    \label{JAJJAJAJAJJQJQOOQPQZ}
-\end{figure}
-\noindent Los axiomas que no son heredados por $W$ son:
-\begin{enumerate}
-    \item[iii)] Existencia de un vector cero en $W$.
-    \item[iv)] Existencia de un negativo en $W$ para cada vector en $W$.
-\end{enumerate}
-Por lo tanto, estos deben ser verificados para probar que $W$ es un subespacio de $V$. Sin embargo, el siguiente teorema muestra que si los $W$ está cerrado bajo la suma y el producto escalar, entonces los axiomas (iii) y (iv) se cumplen en $W$ como consecuencia y, por lo tanto, no necesitan ser verificados.
-
-\begin{theorem}{}{}
-    Si $W$ es un conjunto de uno o más vectores en un espacio vectorial $V$, entonces $W$ es un subespacio de $V$ si y solo si se satisfacen las siguientes condiciones:
-    \begin{enumerate}[label=\alph*), topsep=6pt, itemsep=0pt]
-        \item Si $\mathbf{u}$ y $\mathbf{v}$ son vectores en $W$, entonces $\mathbf{u} + \mathbf{v}$ está en $W$.
-        \item Si $\alpha$ es un escalar y $\mathbf{u}$ es un vector en $W$, entonces $\alpha \cdot \mathbf{u}$ está en $W$.
-    \end{enumerate}
-
-    \tcblower
-    \demostracion Por definición, un subespacio es un espacio vectorial cuyos elementos pertenecen a $V$ y cuyas operaciones son las mismas que en $V$. Como $V$ es un espacio vectorial, se tiene que $W$ está cerrado bajo la suma y el producto escalar, que corresponden exactamente a las condiciones (a) y (b). Recíprocamente, supongamos que se satisfacen las condiciones (a) y (b). Dado que los axiomas (i), (ii), (v), (vi), (vii) y (viii) son heredados de $V$, solo necesitamos demostrar que los axiomas (iii) y (iv) se cumplen en $W$. Para ello, sea $\mathbf{u}$ un vector cualquiera en $W$. De la condición (b) se sigue que $\alpha \cdot \mathbf{u}$ es un vector en $W$ para cualquier escalar $\alpha$. En particular, $0 \cdot \mathbf{u} = \mathbf{0}$ y $(-1) \cdot \mathbf{u} = -\mathbf{u}$ están en $W$, lo que muestra que los axiomas (iii) y (iv) se cumplen en $W$. 
-\end{theorem}
-
-\newpage
-
-\begin{examplebox}{}{}
-    Si $V$ es un espacio vectorial y $W = \{ \mathbf{0} \}$ es el subconjunto de $V$ que consiste únicamente en el vector cero, entonces $W$ está cerrado bajo la suma y la multiplicación por un escalar, ya que
-    $$\mathbf{0} + \mathbf{0} = \mathbf{0} \quad \text{ y } \quad \alpha \cdot \mathbf{0} = \mathbf{0}$$
-    para cualquier escalar $\alpha$. A $W$ lo llamamos el \emph{subespacio cero} de $V$.
-\end{examplebox}
-
-\begin{examplebox}{}{}
-    Si $W$ es una recta que pasa por el origen en $\RR[2]$ o $\RR[3]$, entonces la suma de dos vectores en la recta o la multiplicación de un vector en la recta por un escalar produce otro vector en la recta. Por lo tanto, $W$ está cerrado bajo la suma y el producto escalar (véase la figura \ref{fig:rectaEV} para una ilustración en $\RR[3]$).
-    \begin{center}
-        \begin{tikzpicture}
-            \draw[thick] (-0.5,-0.25) -- (3.75,1.875) node[right] {$W$};
-            \draw[-latex,draw={cw0},thick] (0,0) -- (1,0.5) node[above left] {$\mathbf{u}$};
-            \draw[-latex,draw={cw0},thick] (1,0.5) -- (2,1) node[above left] {$\mathbf{v}$};
-            \draw[-latex,draw={cw0},thick] (2,1) -- (3,1.5) node[above left] {$\mathbf{u} + \mathbf{v}$};
-            \draw[-Stealth,thick] (0,0) -- (0,3) node[below right] {$y$};
-            \draw[-Stealth,thick] (0,0) -- (4.2,0) node[below left] {$x$};
-            \draw[-Stealth,thick] (0,0) -- (-0.65,-0.9) node[above left] {$z$};
-        \end{tikzpicture}
-        \hfill
-        \begin{tikzpicture}
-            \draw[thick] (-0.5,-0.25) -- (3.75,1.875) node[right] {$W$};
-            \draw[-latex,draw={cw0},thick] (0,0) -- (1,0.5) node[above left] {$\mathbf{u}$};
-            \draw[-latex,draw={cw0},thick] (1,0.5) -- (2.5,1.25) node[above left] {$\alpha \cdot \mathbf{u}$};
-            \draw[-Stealth,thick] (0,0) -- (0,3) node[below right] {$y$};
-            \draw[-Stealth,thick] (0,0) -- (4.2,0) node[below left] {$x$};
-            \draw[-Stealth,thick] (0,0) -- (-0.65,-0.9) node[above left] {$z$};
-        \end{tikzpicture}
-        
-        \TituloBox{(a)} $W$ es cerrado bajo la suma \hfill \TituloBox{(b)} $W$ es cerrado bajo el producto escalar\captionsetup*[figure]{hypcap=false}
-        \captionof{figure}{Los vectores $\mathbf{u} + \mathbf{v}$ y $\alpha \cdot \mathbf{u}$ se encuentran en la misma recta que $\mathbf{u}$ y $\mathbf{v}$}\label{fig:rectaEV}
-    \end{center}
-\end{examplebox}
-
-\begin{examplebox}{}{}
-    Si $\mathbf{u}$ y $\mathbf{v}$ son vectores en un plano $W$ que pasa por el origen en $\RR[3]$, entonces es evidente geométricamente que $\mathbf{u} + \mathbf{v}$ y $\alpha \cdot \mathbf{u}$ también pertenecen al mismo plano $W$ para cualquier escalar $\alpha$ (figura \ref{fig:planoEV}). Por lo tanto, $W$ está cerrado bajo la suma y el producto escalar.
-    \begin{center}
-        \begin{tikzpicture}
-            \filldraw[cw2,opacity=0.1] (4.25,3) -- (0.75,3) -- (-0.25,-1) -- (3.25,-1) -- cycle;
-            \draw[dashed] (1,2) -- (3,2.5) -- (2,0.5);
-            \draw[-latex,draw={cw0},thick] (0,0) -- (2,0.5) node[below] {$\mathbf{u}$};
-            \draw[-latex,draw={cw0},thick] (0,0) -- (3,0.75) node[below] {~~$\alpha \cdot \mathbf{u}$};
-            \draw[-latex,draw={cw0},thick] (0,0) -- (1,2) node[above left] {$\mathbf{v}$};
-            \draw[-latex,draw={cw0},thick] (0,0) -- (3,2.5) node[above left] {$\mathbf{u} + \mathbf{v}$};
-            \draw[-Stealth,thick] (0,0) -- (0,3.5) node[below right] {$y$};
-            \draw[-Stealth,thick] (0,0) -- (4.2,0) node[below left] {$x$};
-            \draw[-Stealth,thick] (0,0) -- (-0.65,-0.9) node[above left] {$z$};
-            \node[above left] at (3.25,-1) {$W$};
-        \end{tikzpicture}
-        \captionsetup*[figure]{hypcap=false}
-        \captionof{figure}{Los vectores $\mathbf{u} + \mathbf{v}$ y $\alpha \cdot \mathbf{u}$ se encuentran en el mismo plano que $\mathbf{u}$ y $\mathbf{v}$}\label{fig:planoEV}
-    \end{center}
-\end{examplebox}
-
-La tabla \ref{tab:subespR23} a continuación presenta una lista de los subespacios de $\RR[2]$ y $\RR[3]$ que hemos encontrado hasta ahora.
-\begin{table}[H]
-    \centering
-    \begin{NiceTabular}{ll}[cell-space-limits=2pt]
-        \CodeBefore
-        \rowcolor{cw1}{1}
-        \Body
-        \toprule
-        Subespacios de $\RR[2]$ & Subespacios de $\RR[3]$ \\
-        \midrule
-        $\bullet$\quad $\{ \mathbf{0} \}$ & $\bullet$\quad $\{ \mathbf{0} \}$ \\
-        $\bullet$\quad Rectas que pasan por el origen & $\bullet$\quad Rectas que pasan por el origen \\
-        $\bullet$\quad $\RR[2]$ & $\bullet$\quad Planos que pasan por el origen \\
-        & $\bullet$\quad $\RR[3]$ \\
-        \bottomrule
-    \end{NiceTabular}
-    \caption{Subespacios vectoriales de $\RR[2]$ y $\RR[3]$}
-    \label{tab:subespR23}
-\end{table}
-\begin{examplebox}{}{}
-    Sea $W$ el conjunto de todos los puntos $(x, y)$ en $\RR[2]$ para los cuales $x \geq 0$ y $y \geq 0$. Este conjunto no es subespacio de $\RR[2]$ porque no es cerrado bajo el producto escalar. Por ejemplo, $\mathbf{v} = (1, 1)$ es un vector en $W$, pero $(-1) \cdot \mathbf{v} = (-1, -1)$ no lo es.
-\end{examplebox}
-
-\newpage
-
-\begin{examplebox}{}{}
-    El conjunto $W$ de matrices invertibles de $n \times n$ no es un subespacio de $\mathcalm{M}_{n \times n}$, ya que falla en dos aspectos: no es cerrado bajo la suma ni bajo el producto escalar. Ilustraremos esto con un ejemplo en $\mathcalm{M}_{2 \times 2}$ que se puede adaptar fácilmente a $\mathcalm{M}_{n \times n}$. Consideremos las matrices
-    $$U = \begin{bmatrix} 1 & 2 \\ 2 & 5 \end{bmatrix} \quad \text{ y } \quad V = \begin{bmatrix*}[r] -1 & 2 \\ -2 & 5 \end{bmatrix*}.$$
-    La matriz $0 \cdot U$ es la matriz cero de $2 \times 2$, por lo que no es invertible, y la matriz $U + V$ tiene una columna de ceros, lo que implica que tampoco es invertible.
-\end{examplebox}
-
-\begin{examplebox}{}{EJEMPLOINI}
-    Del cálculo, sabemos que una función $f$ es \emph{continua en $a$} si
-    $$\lim_{x \to a} f(x) = f(a).$$
-    Además, si $f$ y $g$ son continuas en $a$, entonces $f + g$ es continua; y si $\alpha$ es un escalar, entonces $\alpha f$ también es continua. En lenguaje vectorial, el conjunto de funciones continuas en $(-\infty, \infty)$ es un subespacio de $F(-\infty, \infty)$. Denotaremos este subespacio como $C(-\infty, \infty)$.
-\end{examplebox}
-
-\begin{examplebox}{}{}
-    Una función con una derivada continua se dice que es \emph{continuamente diferenciable}. Existe un teorema en cálculo que establece que la suma de dos funciones continuamente diferenciables es continuamente diferenciable y que una constante multiplicada por una función continuamente diferenciable también es continuamente diferenciable. Por lo tanto, las funciones que son continuamente diferenciables en $(-\infty, \infty)$ forman un subespacio de $F(-\infty, \infty)$. Denotaremos este subespacio por $C^1(-\infty, \infty)$, donde el superíndice enfatiza que las primeras derivadas son continuas. Para llevar esto un paso más allá, el conjunto de funciones con $m$ derivadas continuas en $(-\infty, \infty)$ es un subespacio de $F(-\infty, \infty)$, al igual que el conjunto de funciones con derivadas de todos los órdenes en $(-\infty, \infty)$. Denotaremos estos subespacios por $C^m(-\infty, \infty)$ y $C^{\infty}(-\infty, \infty)$, respectivamente.
-\end{examplebox}
-
-\begin{examplebox}{}{}
-    Recordemos que un \emph{polinomio} es una función que puede expresarse en la forma
-    $$p(x) = a_0 + a_1x + \cdots + a_nx^n$$
-    donde $a_0, a_1, \dots, a_n$ son constantes. Es evidente que la suma de dos polinomios es un polinomio y que una constante multiplicada por un polinomio también es un polinomio. Por lo tanto, el conjunto $W$ de todos los polinomios es un subespacio de $F(-\infty, \infty)$. Este espacio se denota por $P_{\infty}$.
-\end{examplebox}
-
-\begin{examplebox}{}{EJEMPLOFIN}
-    Recordemos que el grado de un polinomio es la mayor potencia de la variable que aparece con un coeficiente distinto de cero. No es cierto que el conjunto $W$ de polinomios de grado exacto $n$ sea un subespacio de $F(-\infty, \infty)$ porque ese conjunto no está cerrado bajo la suma. Por ejemplo, los polinomios
-    $$1 + 2x + 3x^2 \quad \text{ y } \quad 5 + 7x - 3x^2$$
-    tienen grado $2$, pero su suma tiene grado $1$. Sin embargo, para cada entero no negativo $n$, el conjunto de polinomios de grado menor o igual a $n$ forma un subespacio de $F(-\infty, \infty)$, ya que está cerrado bajo la suma y el producto escalar. Denotaremos este espacio por $P_n$.
-\end{examplebox}
-
-En nuestros ejemplos anteriores consideramos funciones que estaban definidas en todos los puntos del intervalo $(-\infty, \infty)$. A veces querremos considerar funciones que están definidas únicamente en algún subintervalo de $(-\infty, \infty)$, como el intervalo cerrado $[a, b]$ o el intervalo abierto $(a, b)$. En tales casos, realizaremos un cambio de notación apropiado. Por ejemplo, $C[a, b]$ es el espacio de funciones continuas en $[a, b]$, y $C(a, b)$ es el espacio de funciones continuas en $(a, b)$.
-
-\newpage
-
-En cálculo se demuestra que los polinomios son funciones continuas y tienen derivadas continuas de todos los órdenes en $(-\infty, \infty)$. Por lo tanto, se deduce que $P_\infty$ no solo es un subespacio de $F(-\infty, \infty)$, como se observó anteriormente, sino que también es un subespacio de $C^\infty(-\infty, \infty)$. Dejamos al lector la tarea de convencerse de que los espacios vectoriales discutidos en los ejemplos \ref{examplebox:EJEMPLOINI} a \ref{examplebox:EJEMPLOFIN} están “anidados” unos dentro de otros, como se ilustra en la figura \ref{JAJAIQPAPOAOSOOAKJS}.
-\begin{figure}[H]
-    \centering
-    \begin{tikzpicture}[scale=0.9725]
-        \coordinate (A) at (0,0);
-        \coordinate (B) at (10,0);
-        \coordinate (C) at (11.5,6);
-        \coordinate (D) at (1.5,6);
-        %
-        \filldraw[cw1] (A) -- (B) -- (C) -- (D) -- cycle;
-        \draw (A) node[above right, xshift=0.1cm] {$F(-\infty, \infty)$} -- (B) -- (C) -- (D) -- cycle;
-        \draw ($(C)!.91!(A)$) node[above right, xshift=0.1cm] {$C(-\infty, \infty)$} -- ($(D)!.91!(B)$) -- ($(A)!.91!(C)$) -- ($(B)!.91!(D)$) -- cycle;
-        \draw ($(C)!.82!(A)$) node[above right, xshift=0.1cm] {$C^1(-\infty, \infty)$} -- ($(D)!.82!(B)$) -- ($(A)!.82!(C)$) -- ($(B)!.82!(D)$) -- cycle;
-        \draw ($(C)!.73!(A)$) node[above right, xshift=0.1cm] {$C^m(-\infty, \infty)$} -- ($(D)!.73!(B)$) -- ($(A)!.73!(C)$) -- ($(B)!.73!(D)$) -- cycle;
-        \draw ($(C)!.64!(A)$) node[above right, xshift=0.1cm] {$C^\infty(-\infty, \infty)$} -- ($(D)!.64!(B)$) -- ($(A)!.64!(C)$) -- ($(B)!.64!(D)$) -- cycle;
-        \draw ($(C)!.55!(A)$) -- ($(D)!.55!(B)$) -- ($(A)!.55!(C)$) -- ($(B)!.55!(D)$) -- cycle;
-        \node at (5.75,3) {$P_n$};
-    \end{tikzpicture}
-    \caption{La jerarquía de espacios funcionales}
-    \label{JAJAIQPAPOAOSOOAKJS}
+    \caption{Bola unitaria y bola $B\big((3, 2), 2\big)$ en $\RR[2]$ con la métrica $d_2$}
 \end{figure}
 
-El siguiente teorema proporciona una forma útil de crear un nuevo subespacio a partir de subespacios conocidos.
-
-\begin{theorem}{}{}
-    Si $W_1, W_2, \dots, W_r$ son subespacios de un espacio vectorial $V$, entonces la intersección de estos subespacios también es un subespacio de $V$.
-
-    \tcblower
-    \demostracion Sea $W$ la intersección de los subespacios $W_1, W_2, \dots, W_r$. Este conjunto no es vacío porque cada uno de estos subespacios contiene el vector cero de $V$, y por lo tanto, también lo hace su intersección. Así, queda por demostrar que $W$ está cerrado bajo la suma y la multiplicación por escalares. Para demostrar la cerradura bajo la suma, sean $\mathbf{u}$ y $\mathbf{v}$ vectores en $W$. Dado que $W$ es la intersección de $W_1, W_2, \dots, W_r$, se deduce que $\mathbf{u}$ y $\mathbf{v}$ también pertenecen a cada uno de estos subespacios. Además, como estos subespacios están cerrados bajo la suma y la multiplicación por escalares, también contienen los vectores $\mathbf{u} + \mathbf{v}$ y $\alpha \cdot \mathbf{u}$ para todo escalar $\alpha$, y por lo tanto, su intersección $W$ también los contiene. Esto prueba que $W$ está cerrado bajo la suma y la multiplicación por escalares.
-\end{theorem}
-
-\section{Conjuntos generadores}
+Llegamos ahora a los conceptos que son fundamentales para el estudio de las propiedades topológicas.
 
 \begin{definicion}{}{}
-    Sea $V$ un espacio vectorial sobre $K$. Si $\mathbf{u}$ es un vector en un espacio vectorial $V$, entonces se dice que $\mathbf{u}$ es una \emph{combinación lineal} de los vectores $\mathbf{v}_1, \mathbf{v}_2, \dots, \mathbf{v}_n$ en $V$ si $\mathbf{u}$ puede expresarse en la forma
-    $$\mathbf{u} = k_1 \mathbf{v}_1 + k_2 \mathbf{v}_2 + \cdots + k_n \mathbf{v}_n,$$
-    donde $k_1, k_2, \dots, k_n$ son escalares.
+    Sea $(X, d)$ un espacio métrico y sea $A$ un subconjunto de $X$. Decimos que $\mathbf{x} \in A$ es un \emph{punto interior} de $A$ si existe $r > 0$ tal que
+    $$B(\mathbf{x}, r) \subseteq A.$$
+    Al conjunto de puntos interiores de $A$ lo denotaremos por $\operatorname{int}(A)$.
 \end{definicion}
 
-\begin{theorem}{}{CONMAPEQ}
-    Sea $V$ un espacio vectorial sobre $K$. Si $S = \{\mathbf{v}_1, \mathbf{v}_2, \dots, \mathbf{v}_n\}$ es un conjunto no vacío de vectores en $V$, entonces:
-    \begin{enumerate}[label=\alph*), topsep=6pt, itemsep=0pt]
-        \item El conjunto $W$ de todas las combinaciones lineales posibles de los vectores en $S$ es un subespacio de $V$.
-        \item El conjunto $W$ en el inciso anterior, es el subespacio más pequeño de $V$ que contiene a todos los vectores en $S$, en el sentido de que cualquier otro subespacio que contenga esos vectores también contiene a $W$.
+Notemos que para todo $A \subseteq X$, $\operatorname{int} (A) \subseteq A$. Además, $\mathbf{x} \in A$ no es punto interior de $A$ si para todo $r > 0$, $B(\mathbf{x}, r) \nsubseteq A$.
+
+\begin{examplebox}{}{}
+    Sea el espacio métrico $(\RR[2], d_2)$, es decir, para $\mathbf{p} = (p_1, p_2)$ y $\mathbf{q} = (q_1, q_2)$ en $\RR[2]$, la distancia está dada por
+    $$d_2(\mathbf{p}, \mathbf{q}) = \sqrt{(p_1 - q_1)^2 + (p_2 - q_2)^2}.$$
+    Ahora, consideremos el conjunto
+    $$A = \left\{(x_1, x_2) \in \RR[2] \mid x_1^2 + x_2^2 < 1\right\},$$
+    Queremos encontrar un radio $r > 0$ tal que la bola abierta de radio $r$ centrada en $\mathbf{x}$ esté completamente contenida en $A$. Podemos tomar
+    $$r = 1 - \sqrt{x_1^2 + x_2^2}.$$
+    Dado que $\mathbf{x}$ está estrictamente dentro del círculo (no en la frontera), se tiene que $r > 0$. Además, para cualquier punto $(y_1, y_2) \in B(\mathbf{x}, r)$, se cumple
+    $$\sqrt{(y_1 - x_1)^2 + (y_2 - x_2)^2} < r.$$
+    La desigualdad del triángulo en $\RR[2]$ nos dice que para cualquier $\mathbf{x} = (x_1, x_2)$ y $\mathbf{y} = (y_1, y_2) \in \RR[2]$, se cumple que $d( \mathbf{0}, \mathbf{y} ) \leq d( \mathbf{0}, \mathbf{x} ) + d( \mathbf{x}, \mathbf{y} )$. Escribiéndolo explícitamente en términos de la norma euclidiana,
+    \begin{align*}
+        \sqrt{y_1^2 + y_2^2} & \leq \sqrt{x_1^2 + x_2^2} + \sqrt{(y_1 - x_1)^2 + (y_2 - x_2)^2} \\
+        & < \sqrt{x_1^2 + x_2^2} + r = 1
+    \end{align*}
+    Esto muestra que $(y_1, y_2) \in A$, lo que implica que $B(\mathbf{x}, r) \subseteq A$, es decir, $\mathbf{x}$ es un punto interior de $A$.
+\end{examplebox}
+
+\newpage
+
+\begin{examplebox}{}{}
+    Consideremos el espacio métrico $(\RR, d)$ con la métrica usual $d(x, y) = |x - y|$. Sea $A = [0, 2]$, un intervalo cerrado en $\RR$. Para cualquier $x \in (0, 2)$, existe $r > 0$ tal que $B(x, r) \subseteq A$. Por ejemplo, si $x = 1$, tomamos $r = 0.5$. Entonces
+    $$B(1, 0.5) = (0.5, 1.5) \subseteq [0, 2].$$
+    En general, para $x \in (0, 2)$, basta elegir $r = \min \{x, 2 - x\}$, lo que garantiza que la bola $B(x, r)$ no toque los extremos $0$ o $2$. Esto se sigue de los siguientes casos:
+    \begin{itemize}[topsep=6pt, itemsep=0pt]
+        \item En $x = 0$, cualquier bola $B(0, r) = (-r, r)$ incluye números negativos, lo que conlleva a que no pertenezca a $A$. Por tanto, $0$ no es punto interior.
+        \item En $x = 2$, cualquier bola $B(2, r) = (2 - r, 2 + r)$, lo que conlleva a que no pertenezca a $A$. Por tanto, $2$ tampoco es punto interior
+    \end{itemize}
+    El conjunto de puntos interiores de $A$ es $\operatorname{int}(A) = (0, 2)$.
+\end{examplebox}
+
+Este ejemplo muestra en general, que en $\RR$, el interior de un intervalo cerrado $A = [a, b]$ es el intervalo abierto $(a, b)$, ya que los extremos no tienen “espacio” alrededor dentro de $A$.
+
+\begin{definicion}{}{}
+    Sea $(X, d)$ un espacio métrico y sea $A$ un subconjunto de $X$. Decimos que $A$ es un \emph{conjunto abierto} en $X$ si $A = \operatorname{int}(A)$, es decir, si para todo $\mathbf{x} \in A$ existe $r > 0$ tal que $B(\mathbf{x}, r) \subseteq A$.
+\end{definicion}
+
+Observemos que $\varnothing$ es un conjunto abierto en $X$ por vacuidad ya que si $\varnothing$ no es un conjunto abierto en $X$ debe existir un punto en $D$ que no sea interior pero eso es imposible, por tanto $D$ es un conjunto abierto en $X$.
+
+\sideFigure[\label{fig:anillo_abierto}]{
+\begin{tikzpicture}
+    \node at (0,3.75) {~};
+    \filldraw[cw2] (0,0) circle (2);
+    \filldraw[white] (0,0) circle (1);
+    \draw[dashed] (0,0) circle (2);
+    \draw[dashed] (0,0) circle (1);
+    \draw[-stealth] (-2.5,0) -- (2.5,0) node[below left] {$x$};
+    \draw[-stealth] (0,-2.5) -- (0,2.5) node[below left] {$y$};
+    \node[above right] at (0,-1) {$\sqrt{a}$};
+    \node[above right] at (0,-2) {$\sqrt{b}$};
+\end{tikzpicture}
+}
+
+\begin{examplebox}{}{}
+    Sea $(\RR[2], d_2)$ un espacio métrico. Demuestre que el siguiente conjunto es abierto:
+    $$D = \left\{ (x, y) \in \RR[2] \mid a < x^2 + y^2 < b \right\}.$$
+
+    \tcblower
+    \demostracion Observemos que el conjunto $D$ representa un anillo abierto centrado en el origen, excluyendo las circunferencias de radios $\sqrt{a}$ y $\sqrt{b}$ (vea la figura \ref{fig:anillo_abierto}). Ahora bien, sea $(x_0, y_0) \in D$, lo que implica que $a < x_0^2 + y_0^2 < b$. Queremos encontrar $r > 0$ tal que $B\big((x_0, y_0), r\big) \subseteq D$. Definamos $\rho_0 = x_0^2 + y_0^2$ y tomemos
+    $$r = \min \{\rho_0 - a, b - \rho_0\} > 0.$$
+    Si $(x, y) \in B\big((x_0, y_0), r\big)$, significa que
+    $$\sqrt{(x - x_0)^2 + (y - y_0)^2} < r.$$
+    Por la desigualdad triangular,
+    \begin{align*}
+        \left|x^2 + y^2 - \rho_0\right| & = \left|x^2 + y^2 - x_0^2 - y_0^2\right| \\
+        & = |(x - x_0)(x + x_0) + (y - y_0)(y + y_0)| \\
+        & \leq |x - x_0| |x + x_0| + |y - y_0| |y + y_0| \\
+        & \leq \sqrt{(x - x_0)^2 + (y - y_0)^2} < r
+    \end{align*}
+    Esto implica que
+    $$\rho_0 - r < x^2 + y^2 < \rho_0 + r.$$
+    Dado que $r \leq \rho_0 - a$ y $r \leq b - \rho_0$, tenemos
+    $$a < \rho_0 - r < x^2 + y^2 < \rho_0 + r < b.$$
+    Por lo tanto, todo punto en $B\big((x_0, y_0), r\big)$ también pertenece a $D$, lo que implica que $B\big((x_0, y_0), r\big) \subseteq D$. Por consiguiente, $D$ es un conjunto abierto.
+\end{examplebox}
+
+\newpage
+\sideFigure[Las bolas abiertas, son conjuntos abiertos\label{fig:bolas_abiertas}]{
+\begin{tikzpicture}
+    \node at (0,3.5) {~};
+    \coordinate (x);
+    \coordinate[below right=1cm and 1cm of x] (p);
+    \filldraw[cw2] (x) circle (2.5);
+    \filldraw[white] (p) circle (1);
+    \draw[dashed] (x) node[above,yshift=3pt] {$\mathbf{x}$} circle (2.5);
+    \draw[dashed] (p) node[above,yshift=3pt] {$\mathbf{p}$} circle (1);
+    \filldraw (x) circle (1.75pt);
+    \filldraw (p) circle (1.75pt);
+    \draw (x) -- node[midway,above] {$r$} ($(x) + (215:2.5)$);
+    \draw (p) -- node[midway,above] {$s$} ($(p) + (315:1)$);
+\end{tikzpicture}
+}
+
+\begin{theorem}{}{}
+    En un espacio métrico, cada bola abierta es un conjunto abierto.
+
+    \tcblower
+    \demostracion Sea la bola abierta $B(\mathbf{x}, r)$ y veamos que si $\mathbf{p} \in B(\mathbf{x}, r)$, existe un $s > 0$ tal que $B(\mathbf{p},s) \subseteq B(\mathbf{x}, r)$. En efecto, tomemos $s = r - d(\mathbf{x},\mathbf{p}) > 0$, y comprobemos que si $\mathbf{q} \in B(\mathbf{p}, s)$, entonces $\mathbf{q} \in B(\mathbf{x}, r)$. Tenemos que $d(\mathbf{p}, \mathbf{q}) < s$ y según la desigualdad triangular
+    \begin{align*}
+        d(\mathbf{x},\mathbf{q}) & \leq d(\mathbf{x},\mathbf{p}) + d(\mathbf{p},\mathbf{q}) \\
+        & < d(\mathbf{x},\mathbf{p}) + s = r
+    \end{align*}
+    lo que significa que $\mathbf{q} \in B(\mathbf{x}, r)$ y por tanto, $B(\mathbf{p}, s) \subseteq B(\mathbf{x},r)$ (vea la figura \ref{fig:bolas_abiertas}).
+\end{theorem}
+
+Este hecho, en conjunto con la propiedad de separación de puntos que exploramos a continuación, forma parte de las características fundamentales de los espacios métricos. La propiedad de Hausdorff, que enuncia la existencia de bolas abiertas disjuntas alrededor de dos puntos distintos, es crucial para entender cómo se comportan las sucesiones y los conjuntos en estos espacios, especialmente en lo que respecta a la unicidad de los límites de sucesiones.
+
+\begin{prop}{}{Hausdorff}
+    \TituloBox{Propiedad de Hausdorff:} Sea $(X, d)$ un espacio métrico y dos puntos distintos $\mathbf{x}$, $\mathbf{y} \in X $. Entonces existen $r_1, r_2 > 0$ tales que
+    $$B(\mathbf{x}, r_1) \cap B(\mathbf{y}, r_2) = \varnothing.$$
+
+    \tcblower
+    \demostracion Sea $r = d(\mathbf{x}, \mathbf{y})$ y sea $s = r/2$, entonces las bolas $B(\mathbf{x}, s)$ y $B(\mathbf{y}, s)$ abiertas, tienen intersección vacía. En efecto, veamos que ningún punto de la primera puede estar en la segunda. Si $\mathbf{z} \in B(\mathbf{x}, s)$, entonces, por la desigualdad del triángulo
+    \begin{align*}
+        d(\mathbf{z}, \mathbf{y}) & \geq d(\mathbf{x}, \mathbf{y}) - d(\mathbf{z}, \mathbf{x}) \\
+        & = r - d(\mathbf{z}, \mathbf{x}) \\
+        & > r - s = r/2
+    \end{align*}
+    con lo que $\mathbf{z} \notin B(\mathbf{y}, s)$. Para la otra bola se hace de la misma forma.
+\end{prop}
+
+\sideFigure[La intersección de bolas abiertas es abierto\label{fig:interseccion_bolas}]{
+\begin{tikzpicture}
+    \node at (0,3) {~};
+    \coordinate (a);
+    \coordinate[below right=0.5cm and 1.9cm of x] (b);
+    \coordinate (x) at ($(a)!0.56!(b)$);
+    \filldraw[cw2] (a) circle (1.75);
+    \filldraw[cw1!50] (b) circle (1.5);
+    \filldraw[white] (x) circle (0.6);
+    \draw[dashed] (a) node[above,yshift=3pt] {$\mathbf{a}$} circle (1.75);
+    \draw[dashed] (b) node[above,yshift=3pt] {$\mathbf{b}$} circle (1.5);
+    \draw[dashed] (x) node[below,yshift=-3pt] {$\mathbf{x}$} circle (0.6);
+    \filldraw (a) circle (1.75pt);
+    \filldraw (b) circle (1.75pt);
+    \filldraw (x) circle (1.75pt);
+    \draw (a) -- node[midway,above] {$r$} ($(a) + (150:1.75)$);
+    \draw (b) -- node[midway,above] {$s$} ($(b) + (315:1.5)$);
+    \draw (x) -- node[midway,right] {$\delta$} ($(x) + (90:0.6)$);
+\end{tikzpicture}
+}
+
+\begin{lemma}{}{interseccion_bolas}
+    La intersección de dos bolas abiertas en un espacio métrico $(X, d)$, es un abierto.
+
+    \tcblower
+    \demostracion Si la intersección de ambas bolas es vacía, no hay nada que probar, pues $\varnothing$ es abierto. Supongamos entonces que $x \in B(\mathbf{a}, r) \cap B(\mathbf{b}, s)$ y veamos que tal intersección contiene alguna bola centrada en $\mathbf{x}$. Se cumple que $d(\mathbf{x}, \mathbf{a}) < r$ y $d(\mathbf{x}, \mathbf{b}) < s$; así que tomemos $\delta < \min\{r - d(\mathbf{x}, \mathbf{a}), s - d(\mathbf{x}, \mathbf{b})\}$ y comprobemos que $B(\mathbf{x}, \delta) \subseteq B(\mathbf{a}, r) \cap B(\mathbf{b}, s)$ (véase la figura \ref{fig:interseccion_bolas}). En efecto, si $\mathbf{y} \in B(\mathbf{x}, \delta)$, entonces
+    \begin{align*}
+        d(\mathbf{y}, \mathbf{a}) & \leq d(\mathbf{y}, \mathbf{x}) + d(\mathbf{x}, \mathbf{a}) \\
+        & < \delta + d(\mathbf{x}, \mathbf{a}) \\
+        & < r - d(\mathbf{x}, \mathbf{a}) + d(\mathbf{x}, \mathbf{a}) = r
+    \end{align*}
+    y por tanto $\mathbf{y} \in B(\mathbf{a}, r)$. De manera análoga, se demuestra que $B(\mathbf{x}, \delta) \subseteq B(\mathbf{b}, s)$. Con esto hemos probado que la intersección de las dos bolas contiene una bola centrada en cada uno de sus puntos y, por lo tanto es un abierto.
+\end{lemma}
+
+\begin{theorem}{}{topologia}
+    Sea $(X, d)$ un espacio métrico. Entonces se cumplen las siguientes propiedades:
+    \begin{enumerate}[label=\roman*), topsep=6pt, itemsep=0pt]
+        \item $X$ y $\varnothing$ son abiertos.
+        \item La unión de una familia cualquiera de conjuntos abiertos, es abierto.
+        \item La intersección de una colección finita de conjuntos abiertos, es abierto.
     \end{enumerate}
     \newpage
     \demostracion
-    \begin{enumerate}[label=\alph*), topsep=6pt, itemsep=0pt]
-        \item Sea $W$ el conjunto de todas las combinaciones lineales posibles de los vectores en $S$. Debemos demostrar que $W$ está cerrado bajo la suma y la multiplicación por escalares. Para demostrar el cierre bajo la suma, sean
-        $$\mathbf{x}_1 = a_1\mathbf{v}_1 + a_2\mathbf{v}_2 + \cdots + a_n\mathbf{v}_n \quad \text{ y } \quad \mathbf{x}_2 = b_1\mathbf{v}_1 + b_2\mathbf{v}_2 + \cdots + b_n\mathbf{v}_n$$
-        dos vectores en $W$. Se deduce que su suma puede escribirse como
-        $$\mathbf{x}_1 + \mathbf{x}_2 = (a_1 + b_1) \mathbf{v}_1 + (a_2 + b_2) \mathbf{v}_2 + \cdots + (a_n + b_n) \mathbf{v}_n,$$
-        que es una combinación lineal de los vectores en $S$. Por lo tanto, $W$ está cerrado bajo la suma. Se deja como ejercicio al lector la demostración de que $W$ también está cerrado bajo la multiplicación por escalares y, por ende, es un subespacio de $V$.
-        \item Sea $W'$ cualquier subespacio de $V$ que contiene a todos los vectores en $S$. Dado que $W'$ está cerrado bajo la suma y la multiplicación por escalares, contiene todas las combinaciones lineales de los vectores en $S$ y, por ende, contiene a $W$.
+    \begin{enumerate}[label=\roman*), topsep=6pt, itemsep=0pt]
+        \item Es inmediato.
+        \item Sea $\{A_i\}_{i \in I}$ una familia cualquiera de subconjuntos abiertos en $X$, donde $I$ es un conjunto de índices (no necesariamente finito). Consideremos el conjunto abierto $\displaystyle A = \bigcup_{i \in I} A_i$. Tomemos un $\mathbf{x} \in A$. Por definición de unión, existe al menos un índice $i \in I$ tal que $\mathbf{x} \in A_i$. Como $A_i$ es abierto, existe un $r > 0$ tal que la bola abierta $B(\mathbf{x}, r) \subseteq A_i$. Dado que $A_i \subseteq A$, tenemos que $B(\mathbf{x}, r) \subseteq A_i \subseteq A$, y por lo tanto $B(\mathbf{x}, r) \subseteq A$. Esto es cierto para cualquier $\mathbf{x} \in A$, lo que significa que $A$ satisface la definición de un conjunto abierto.
+        \item Si la intersección es vacía no hay nada que probar. Supongamos entonces, que $A_1$ y $A_2$ son dos conjuntos abiertos cuya intersección es no vacía. Si $\mathbf{x} \in A_1 \cap A_2$, existen $r_1$, $r_2 > 0$ de modo $B(\mathbf{x}, r_1) \subseteq A_1$ y $B(\mathbf{x}, r_2) \subseteq A_2$; entonces según el lema \ref{lemma:interseccion_bolas} hay una bola centrada en $x$ contenida en la intersección de ambas bolas, lo que implica que dicha bola también está en $A_1 \cap A_2$ y que este último conjunto es abierto. Mediante un sencillo proceso de inducción se prueba que la intersección de cualquier familia finita de abiertos es un abierto.
     \end{enumerate}
 \end{theorem}
 
-\begin{definicion}{}{PRIM}
-    Se dice que los vectores $\mathbf{v}_1, \mathbf{v}_2, \dots, \mathbf{v}_n$ de un espacio vectorial $V$ \emph{generan} a $V$ si todo vector en $V$ se puede escribir como una combinación lineal de los mismos. Es decir, para todo $\mathbf{v} \in V$ existen escalares $a_1, a_2, \dots, a_n$ tales que
-    $$\mathbf{v} = a_1\mathbf{v}_1 + a_2\mathbf{v}_2 + \cdots + a_n\mathbf{v}_n.$$
-\end{definicion}
+A la familia de todos los conjuntos abiertos de un espacio métrico $(X, d)$ se le llama \emph{topología} asociada a la métrica $d$ y la designaremos mediante $\mathcalm{T}_d$, o simplemente $\mathcalm{T}$ si no hay ambigüedad respecto de la métrica.
 
-\begin{examplebox}{}{}
-    Recordemos que los vectores unitarios estándar en $\RR[n]$ son
-    $$\mathbf{e}_1 = (1, 0, 0, \dots, 0), \quad \mathbf{e}_2 = (0, 1, 0, \dots, 0), \quad \dots, \quad \mathbf{e}_n = (0, 0, 0, \dots, 1).$$
-    Estos vectores generan $\RR[n]$ ya que cualquier vector $\mathbf{v} = (v_1, v_2, \dots, v_n)$ en $\RR[n]$ se puede expresar como
-    $$\mathbf{v} = v_1 \mathbf{e}_1 + v_2 \mathbf{e}_2 + \dots + v_n \mathbf{e}_n$$
-    lo cual es una combinación lineal de $\mathbf{e}_1, \mathbf{e}_2, \dots, \mathbf{e}_n$. Así, por ejemplo, los vectores
-    $$\mathbf{i} = (1, 0, 0), \quad \mathbf{j} = (0, 1, 0), \quad \mathbf{k} = (0, 0, 1)$$
-    generan $\RR[3]$ ya que cualquier vector $\mathbf{v} = (a, b, c)$ se puede expresar como
-    $$\mathbf{v} = (a, b, c) = a(1, 0, 0) + b(0, 1, 0) + c(0, 0, 1) = a\mathbf{i} + b\mathbf{j} + c\mathbf{k}.$$
-\end{examplebox}
-
-\begin{definicion}{}{SEGU}
-    El \emph{espacio generado} por $\{\mathbf{v}_1, \mathbf{v}_2, \dots, \mathbf{v}_k\}$ es el conjunto de combinaciones lineales $\mathbf{v}_1, \mathbf{v}_2, \dots, \mathbf{v}_k$. Es decir,
-    $$\Gen (\{\mathbf{v}_1, \mathbf{v}_2, \dots, \mathbf{v}_k\}) = \{\mathbf{v} \mid \mathbf{v} = a_1\mathbf{v}_1 + a_2\mathbf{v}_2 + \dots + a_k\mathbf{v}_k\}$$
-    donde $a_1, a_2, \dots, a_k$ son escalares arbitrarios.
-\end{definicion}
-
-En las definiciones \ref{definicion:PRIM} y \ref{definicion:SEGU} se utilizaron dos términos diferentes: “genera” y “espacio generado”. Se hace hincapié en que un conjunto de vectores $\mathbf{v}_1, \mathbf{v}_2, \dots, \mathbf{v}_n$ \emph{genera} a $V$ (que es un verbo) si todo vector en $V$ se puede escribir como una combinación lineal de $\mathbf{v}_1, \mathbf{v}_2, \dots, \mathbf{v}_n$. Por otro lado, el \emph{espacio generado} (que es un sustantivo) por los $n$ vectores $\mathbf{v}_1, \mathbf{v}_2, \dots, \mathbf{v}_k$ es el conjunto de combinaciones lineales de estos vectores.
-
-Estos dos conceptos son diferentes, aún cuando los términos se parezcan. Por ejemplo, si consideramos $V = \RR[3]$,
-\begin{itemize}
-    \item Definición \ref{definicion:PRIM}: $\{\mathbf{e}_1, \mathbf{e}_2, \mathbf{e}_3\}$ es un conjunto generador de $V$, porque cualquier vector en $\RR[3]$ se puede escribir como combinación lineal de estos vectores.\newpage
-    \item Definición \ref{definicion:SEGU}: Si tomamos $\{\mathbf{e}_1, \mathbf{e}_2\}$, el espacio generado es el subespacio $\Gen (\{\mathbf{e}_1, \mathbf{e}_2\})$, que es un plano en $\RR[3]$.
-\end{itemize}
-La diferencia está en que la definición \ref{definicion:PRIM} cubre el espacio completo, mientras que la \ref{definicion:SEGU} describe subespacios.
-
-\begin{examplebox}{}{POLIGENERA}
-    Los polinomios $1, x, x^2, \dots, x^n$ generan el espacio vectorial $P_n$ definido en el ejemplo \ref{examplebox:EJEMPLOFIN}, ya que cada polinomio $\mathbf{p}$ en $P_n$ puede escribirse como
-    $$\mathbf{p} = a_0 + a_1x + \cdots + a_nx^n,$$
-    que es una combinación lineal de $1, x, x^2, \dots, x^n$. Podemos denotar esto como
-    $$P_n = \Gen\left(\left\{1, x, x^2, \dots, x^n\right\}\right).$$
-\end{examplebox}
-
-\begin{examplebox}{}{}
-    Consideremos el espacio vectorial de todas las matrices $2 \times 2$. Cada matriz $A$ se puede expresar como
-    $$A = a \begin{bmatrix}
-        1 & 0 \\
-        0 & 0
-    \end{bmatrix} + b \begin{bmatrix}
-        0 & 1 \\
-        0 & 0
-    \end{bmatrix} + c \begin{bmatrix}
-        0 & 0 \\
-        1 & 0
-    \end{bmatrix} + d \begin{bmatrix}
-        0 & 0 \\
-        0 & 1
-    \end{bmatrix}$$
-    que es una combinación lineal de las siguientes matrices
-    $$E_1 = \begin{bmatrix}
-        1 & 0 \\
-        0 & 0
-    \end{bmatrix}, \quad E_2 = \begin{bmatrix}
-        0 & 1 \\
-        0 & 0
-    \end{bmatrix}, \quad E_3 = \begin{bmatrix}
-        0 & 0 \\
-        1 & 0
-    \end{bmatrix}, \quad E_4 = \begin{bmatrix}
-        0 & 0 \\
-        0 & 1
-    \end{bmatrix}.$$
-    Al igual que el ejemplo anterior, podemos denotar esto como
-    $$\mathcalm{M}_{2 \times 2} = \Gen\left(\left\{ \begin{bmatrix}
-        1 & 0 \\
-        0 & 0
-    \end{bmatrix}, \begin{bmatrix}
-        0 & 1 \\
-        0 & 0
-    \end{bmatrix}, \begin{bmatrix}
-        0 & 0 \\
-        1 & 0
-    \end{bmatrix}, \begin{bmatrix}
-        0 & 0 \\
-        0 & 1
-    \end{bmatrix} \right\}\right).$$
-\end{examplebox}
-
-\begin{examplebox}{}{}
-    Consideremos el espacio vectorial $V$ de todas las soluciones de la ecuación diferencial lineal homogénea de segundo orden
-    $$y'' + y = 0.$$
-    Este espacio está formado por todas las funciones $y: \RR \longrightarrow \RR$ que satisfacen dicha ecuación. Se sabe que la solución general de esta ecuación es
-    $$y(x) = A\cos (x) + B\sin (x), \quad \text{ con } A, B \in \RR .$$
-    Esto significa que cada solución de la ecuación diferencial se puede expresar como una combinación lineal de las funciones $\cos (x)$ y $\sin (x)$. Esto se denota como
-    $$V = \Gen(\{\cos (x), \sin (x)\}).$$
-\end{examplebox}
-
-\section{Conjuntos linealmente independientes}
-
-\begin{definicion}{}{}
-    Sea $V$ un espacio vectorial sobre $K$. Un subconjunto $S$ del espacio vectorial $V$ se llama \emph{linealmente dependiente} si existen vectores distintos $\mathbf{v}_1$, $\mathbf{v}_2$, $\dots$, $\mathbf{v}_n$ en $S$ y $a_1$, $a_2$, $\dots$, $a_n$ en $K$ no todos $0$ tales que
-    $$a_1 \mathbf{v}_1 + a_2 \mathbf{v}_2 + \cdots + a_n \mathbf{v}_n = \mathbf{0}.$$
-    En este caso también decimos que los vectores de $S$ son linealmente dependientes. En caso contrario, decimos que los vectores son \emph{linealmente independientes} y por tanto, $S$ también es linealmente independiente.
-\end{definicion}
-
-Más concretamente, si $S = \{\mathbf{v}_1, \mathbf{v}_2, \dots, \mathbf{v}_n\}$ es un conjunto de al menos dos vectores en $V$, es \emph{linealmente independiente} si ningún vector en $S$ puede expresarse como combinación lineal de los demás; de lo contrario, es \emph{linealmente dependiente}.
+En general, si tenemos un conjunto $X$, a cualquier familia de subconjuntos de $X$ que verifica las tres condiciones del teorema \ref{theorem:topologia} se le llama \emph{topología} sobre $X$. En este curso, nos limitaremos a estudiar topologías asociadas a espacios métricos aunque hay espacios topológicos que no son métricos, como se muestra en el siguiente ejemplo.
 
 \newpage
 
-\begin{theorem}{}{}
-    Dos vectores en un espacio vectorial son linealmente dependientes si y solo si uno de ellos es un múltiplo escalar del otro.
+\section{Sucesiones}
 
-    \tcblower
-    \demostracion Primero supongamos que $\mathbf{v}_2 = c \mathbf{v}_1$ para algún escalar $c \neq 0$. Entonces $c \mathbf{v}_1 - \mathbf{v}_2 = \mathbf{0}$ y $\mathbf{v}_1$ y $\mathbf{v}_2$ son linealmente dependientes. Por otro lado, supongamos que $\mathbf{v}_1$ y $\mathbf{v}_2$ son linealmente dependientes. Entonces existen escalares $c_1$ y $c_2$, al menos uno distinto de cero, tales que
-    $$c_1 \mathbf{v}_1 + c_2 \mathbf{v}_2 = \mathbf{0}.$$
-    Si $c_1 \neq 0$, entonces dividiendo entre $c_1$ se obtiene
-    $$\mathbf{v}_1 + \left(\frac{c_2}{c_1}\right) \mathbf{v}_2 = \mathbf{0},$$
-    o sea,
-    $$\mathbf{v}_1 = \left(-\frac{c_2}{c_1}\right) \mathbf{v}_2.$$
-    Es decir, $\mathbf{v}_1$ es un múltiplo escalar de $\mathbf{v}_2$. Si $c_1 = 0$, entonces $c_2 \neq 0$ y, por lo tanto,
-    $$\mathbf{v}_2 = \mathbf{0} = 0 \mathbf{v}_1.$$
-\end{theorem}
+En esta sección vamos a estudiar el concepto de sucesión en un espacio métrico. Estos subconjuntos juegan un papel importante en la topología de los espacios métricos.
+
+\begin{definicion}{}{}
+    Sea $(X, d)$ un espacio métrico. Una \emph{sucesión} en $X$ es un subconjunto de $X$ definido mediante una función, de tal modo que
+    \begin{alignat*}{2}
+        x &: & \quad \NN & \longrightarrow X \\
+        & & n & \longmapsto \mathbf{x}_n
+    \end{alignat*}
+    Denotaremos a la sucesión mediante $(\mathbf{x}_n)_{n \in \NN}$, o $\{\mathbf{x}_n\}_{n = 1}^{\infty}$ o simplemente $(\mathbf{x}_n)$; y a los elementos de la sucesión les llamaremos \emph{términos}.
+\end{definicion}
+
+La función que define la sucesión no ha de ser necesariamente inyectiva, lo que significa que puede haber términos repetidos en una sucesión; por ejemplo $\left\{(-1)^n\right\}_{n = 1}^{\infty}$ es la sucesión $\{-1, 1, -1, 1, \dots \}$.
+
+\begin{definicion}{}{}
+    Sea $(X, d)$ un espacio métrico y $\{\mathbf{x}_n\}_{n = 1}^{\infty}$ una sucesión de puntos de $X$. Diremos que $\{\mathbf{x}_n\}_{n = 1}^{\infty}$ converge a $\mathbf{x}$ en $(X, d)$, y lo denotaremos por $\mathbf{x}_n \to \mathbf{x}$ o $\displaystyle \lim_{n \to \infty} \mathbf{x}_n = \mathbf{x}$, si para todo $\varepsilon > 0$, existe $n_0 \in \NN$, tal que si $n \geq n_0$, entonces $d(\mathbf{x}_n, \mathbf{x}) < \varepsilon$.
+\end{definicion}
+
+En otras palabras si para toda bola $B(\mathbf{x}, \varepsilon)$, existe $n_0 \in \NN$, tal que si $n \geq n_0$, entonces $\mathbf{x}_n \in B(\mathbf{x}, \varepsilon)$. En este caso se dice que la sucesión es convergente hacia el punto $\mathbf{x}$, o que $\mathbf{x}$ es el límite de la sucesión.
 
 \begin{examplebox}{}{}
-    Los vectores
-    $$\mathbf{v}_1 = \begin{pmatrix*}[r] 2 \\ -1 \\ 0 \end{pmatrix*} \quad \text{ y } \quad \mathbf{v}_2 = \begin{pmatrix*}[r] -6 \\ 3 \\ 0 \end{pmatrix*}$$
-    son linealmente dependientes ya que $\mathbf{v}_2 = -3\mathbf{v}_1$.
+    El concepto de convergencia que acabamos de definir coincide con el ya conocido de convergencia en $\RR$ con el valor absoluto, es decir, en la topología usual. Recordemos que una sucesión $\{x_n\}_{n = 1}^{\infty}$ converge a $x \in \RR$ si para todo $\varepsilon > 0$, existe $n_0$ tal que si $n > n_0$, entonces $|x_n - x| < \varepsilon$. Fijémonos que si $|x_n - x| < \varepsilon$, entonces
+    $$-\varepsilon < x_n - x < \varepsilon \quad \text{ y } \quad x - \varepsilon < x_n < x + \varepsilon,$$
+    lo que conlleva a $x_n \in (x - \varepsilon, x + \varepsilon)$ y tenemos la definición en términos de bolas.
+\end{examplebox}
+
+\begin{examplebox}{}{}
+    Si $(X, d)$ es un espacio discreto una sucesión $\{\mathbf{x}_n\}_{n = 1}^{\infty}$ converge a un punto $\mathbf{x}$ si, y sólo si es constante igual a $\mathbf{x}$ a partir de un término (a estas sucesiones se les llama de cola constante), ya que las bolas de centro $\mathbf{x}$ y radio menor que $1$ coinciden con el conjunto unipuntual $\{\mathbf{x}\}$.
 \end{examplebox}
 
 \begin{theorem}{}{}
-    Un conjunto de $n$ vectores en $\RR[m]$ es siempre linealmente dependiente si $n > m$.
+    Si $\{\mathbf{x}_n\}_{n = 1}^{\infty}$ es una sucesión convergente en un espacio métrico $(X, d)$, su límite es único.
 
     \tcblower
-    \demostracion Se deja como ejercicio al lector.
+    \demostracion Supongamos que $\{\mathbf{x}_n\}_{n = 1}^{\infty}$ tiene dos límites distintos $\mathbf{x}$ e $\mathbf{y}$, tal que $\mathbf{x} \neq \mathbf{y}$. Según la proposición \ref{prop:Hausdorff}, $X$ es un espacio de Hausdorff y, por tanto existe $r > 0$ tal que $B(\mathbf{x}, r) \cap B(\mathbf{y}, r) = \varnothing$. Por otro lado, como $\{\mathbf{x}_n\}_{n = 1}^{\infty}$ converge a $\mathbf{x}$, tenemos que dado $r > 0$, existe $n_1$ tal que si $n \geq n_1$, entonces $\mathbf{x}_n \in B(\mathbf{x}, r)$; además como $\{\mathbf{x}_n\}_{n = 1}^{\infty}$ converge a $\mathbf{y}$, dado $r > 0$, existe $n_2$ tal que si $n \geq n_2$, entonces $\mathbf{x}_n \in B(\mathbf{y}, r)$; si tomamos $n \geq n_1$ y a la vez $n \geq n_2$ se verifican ambas condiciones a la vez y $\mathbf{x}_n \in B(\mathbf{x}, r)$ y $\mathbf{x}_n \in B(\mathbf{y}, r)$, lo que contradice que la intersección de estas dos bolas es vacía.
 \end{theorem}
 
-\begin{examplebox}{}{POLILINEAL}
-    Demostrar que los polinomios
-    $$1, x, x^2, \dots, x^n$$
-    forman un conjunto linealmente independiente en $P_n$.
-
-    \tcblower
-    \solucion Por conveniencia, denotemos los polinomios como
-    $$\mathbf{p}_0 = 1, \mathbf{p}_1 = x, \mathbf{p}_2 = x^2, \dots, \mathbf{p}_n = x^n.$$
-    Debemos demostrar que los únicos coeficientes que satisfacen la ecuación vectorial
-    \begin{equation}
-        a_0\mathbf{p}_0 + a_1\mathbf{p}_1 + a_2\mathbf{p}_2 + \cdots + a_n\mathbf{p}_n = \mathbf{0} \label{eq:vectorial}
-    \end{equation}
-    son
-    $$a_0 = a_1 = a_2 = \cdots = a_n = 0.$$
-    La ecuación \eqref{eq:vectorial} es equivalente a la afirmación de que
-    \begin{equation}
-        a_0 + a_1x + a_2x^2 + \cdots + a_nx^n = 0 \label{eq:polinomial}
-    \end{equation}
-    para todo $x \in (-\infty, \infty)$. Por lo tanto, debemos demostrar que esto es cierto si y solo si cada coeficiente en \eqref{eq:polinomial} es igual a cero. Para ver que esto es cierto, recordemos del álgebra que un polinomio no nulo de grado $n$ tiene como máximo $n$ raíces distintas. Siendo este el caso, cada coeficiente en \eqref{eq:polinomial} debe ser igual a cero; de lo contrario, el lado izquierdo de la ecuación sería un polinomio no nulo con un número infinito de raíces, lo cual es una contradicción. Por lo tanto, la ecuación \eqref{eq:vectorial} solo tiene la solución trivial.
-\end{examplebox}
-
 \newpage
 
-\begin{theorem}{}{}
-    \begin{enumerate}[label=\roman*), topsep=6pt, itemsep=0pt]
-        \item Un conjunto finito que contiene el vector $\mathbf{0}$ es linealmente dependiente.
-        \item Un conjunto con exactamente un vector, es linealmente independiente si y solo si ese vector es distinto de $\mathbf{0}$.
-    \end{enumerate}
+\section{Ejercicios del Capítulo 4}
 
-    \tcblower
-    \demostracion
-    \begin{enumerate}[label=\roman*), topsep=6pt, itemsep=0pt]
-        \item Para cualquier conjunto de vectores $\mathbf{v}_1, \mathbf{v}_2, \dots, \mathbf{v}_n$ en un espacio vectorial, el conjunto $S = \{\mathbf{v}_1, \mathbf{v}_2, \dots, \mathbf{v}_n, \mathbf{0}\}$ es linealmente dependiente, ya que la ecuación
-        $$0\mathbf{v}_1 + 0\mathbf{v}_2 + \cdots + 0\mathbf{v}_n + 1(\mathbf{0}) = \mathbf{0}$$
-        expresa a $\mathbf{0}$ como una combinación lineal de los vectores en $S$ con coeficientes que no son todos iguales a $0$.
-        \item Se deja como ejercicio al lector.
-    \end{enumerate}
-\end{theorem}
-
-% Cositas
-
-\newpage
-
-\section{Base y dimensión}
-
-\begin{definicion}{}{}
-    Decimos que un conjunto finito de vectores $\{ \mathbf{v}_1, \mathbf{v}_2, \dots, \mathbf{v}_n \}$ es una \emph{base} para un espacio vectorial $V$ si:
-    \begin{enumerate}[label=\roman*), topsep=6pt, itemsep=0pt]
-        \item $\{ \mathbf{v}_1, \mathbf{v}_2, \dots, \mathbf{v}_n \}$ es linealmente independiente,
-        \item $\{ \mathbf{v}_1, \mathbf{v}_2, \dots, \mathbf{v}_n \}$ genera a $V$.
-    \end{enumerate}
-\end{definicion}
-
-Si consideras una base como la descripción de un sistema de coordenadas para un espacio vectorial $V$ de dimensión finita, entonces la parte (i) de esta definición garantiza que no existe ninguna interrelación entre los vectores base, la parte (ii) garantiza que hay suficientes vectores base para proporcionar coordenadas a todos los vectores en $V$. A continuación, se presentan algunos ejemplos.
-
-\begin{examplebox}{}{}
-    Demostrar que $S = \left\{1, x, x^2, \dots, x^n\right\}$ es una base para el espacio vectorial $P_n$ de polinomios de grado $n$ o menor.
-    
-    \tcblower
-    \solucion Debemos demostrar que los polinomios en $S$ son linealmente independientes y generan $P_n$. Denotemos estos polinomios como
-    $$\mathbf{p}_0 = 1, \mathbf{p}_1 = x, \mathbf{p}_2 = x^2, \dots, \mathbf{p}_n = x^n.$$
-    Mostramos en el ejemplo \ref{examplebox:POLIGENERA} que estos vectores generan $P_n$ y en el ejemplo \ref{examplebox:POLILINEAL} que son linealmente independientes. Por lo tanto, forman una base para $P_n$ que llamamos la \emph{base estándar} de $P_n$.
-\end{examplebox}
-
-\begin{definicion}{}{}
-    Sea $V$ un espacio vectorial sobre $K$. Se llama dimensión del espacio vectorial $V$, a la cardinalidad de la base de $V$, y se denotará por $\Dim V$.
-\end{definicion}
-\infoBulle{Recordemos que si $A$ es un conjunto no vacío, se define la \emph{cardinalidad} del conjunto $A$, denotado por $|A|$, como el número de elementos de $A$. Además, se dice que el conjunto $A$ es finito si $|A| < \infty$. En caso contrario, se dice que el conjunto es infinito. Por ejemplo, el conjunto $\NN$.}
-
-Recordemos que la dimensión de un espacio vectorial se define como la cantidad de vectores linealmente independientes necesarios para generar todo el espacio. En el caso del vector cero, su dimensión es $0$ porque no puede generar ningún otro vector aparte de sí mismo mediante combinaciones lineales. Para entenderlo mejor, considera que cualquier vector $\mathbf{v}$ en un espacio vectorial $V$ puede ser expresado como:
-$$\mathbf{v} = c_1 \mathbf{v}_1 + c_2 \mathbf{v}_2 + \cdots + c_n \mathbf{v}_n$$
-donde $\mathbf{v}_1, \mathbf{v}_2, \dots, \mathbf{v}_n$ son vectores linealmente independientes en $V$, y $c_1, c_2, \dots, c_n$ son escalares. Ahora, si consideramos el vector cero, no importa cuánto intentemos expresarlo como una combinación lineal de otros vectores $\mathbf{v}_1, \mathbf{v}_2, \dots, \mathbf{v}_n$, siempre obtendremos $\mathbf{0}$ como resultado, ya que cualquier escalar multiplicado por $\mathbf{0}$ sigue siendo $\mathbf{0}$.
-
-Por lo tanto, la dimensión del espacio generado por el vector cero es igual a $0$, ya que no requiere ningún otro vector para ser generado, y no puede generar ningún otro vector aparte de sí mismo.
-
-\newpage
-
-\section{Ejercicios del Capítulo 3}
-
-\noindent
-De los problemas 1 al 15 determine si el conjunto dado es un espacio vectorial. De no ser así proporcione una lista de los axiomas que no se cumplen.
 \begin{enumerate}
-    \item El conjunto de números naturales $\NN$ como vectores, el conjunto de números naturales $\NN$ como escalares y la operación de multiplicación para números naturales.
-    \item El conjunto de números naturales $\NN$ como vectores, el conjunto de números naturales $\NN$ como escalares, la operación de suma para números naturales y la multiplicación entre números naturales para la operación de multiplicación de escalar y vector.
-    \item El conjunto de números enteros $\ZZ$ como vectores, el conjunto de números naturales $\NN$ como escalares, la operación de suma para números enteros y la multiplicación entre números enteros para la operación de multiplicación de escalar y vector.
-    \item $\left\{ \begin{pmatrix} x \\ y \end{pmatrix} \mid y \leq 0 \text{ donde } x, y \in \RR \right\}$ con la suma de vectores y multiplicación por un escalar usuales.
-    \item Los vectores en el plano que está en el primer cuadrante.
-    \item El conjunto de vectores en $\RR[2]$ de la forma $\begin{pmatrix} x \\ x \end{pmatrix}$.
-    \item El conjunto de vectores los números racionales $\QQ$ con la operación de suma, el conjunto de escalares los números enteros $\ZZ$ y la operación de multiplicación de escalar y vector la multiplicación usual.
-    \item El conjunto de polinomios de grado menor o igual a $n$ con término constante cero.
-    \item El conjunto de polinomios de grado menor o igual a $n$ con término constante $a_{0}$ positivo.
-    \item El conjunto de polinomios de grado menor o igual a $n$ con término constante $a_{0}$ negativo.
-    \item El conjunto de funciones continuas de valores reales definidas en $[0, 1]$ con $f(0) = 0$ y $f(1) = 0$ bajo las operaciones del ejemplo \ref{examplebox:ejemplo5.1.8}.
-    \item El conjunto de puntos en $\RR[3]$ que se encuentran sobre una recta que pasa por el origen.
-    \item El conjunto de puntos en $\RR[3]$ que se encuentran sobre la recta $x = t+1$, $y = 2t$, $z = t-1$.
-    \item El conjunto de funciones diferenciables definidas en $[0, 1]$ con las operaciones del ejemplo \ref{examplebox:ejemplo5.1.8}.
-    \item El conjunto de números reales de la forma $a+b \sqrt{2}$, donde $a$ y $b$ son números racionales, bajo la suma de números reales usual y la multiplicación por un escalar definida sólo para escalares racionales.
+    \item Si $\mathbf{x} = (x_1, x_2, \dots, x_n)$, demostrar:
+    \begin{enumerate}
+        \item $|x_i| \leq \| \mathbf{x} \| \leq \sqrt{n} \max \{ |x_1|, |x_2|, \dots, |x_n|\}$,
+        \item $\| \mathbf{x} \|_{\infty} \leq \| \mathbf{x} \| \leq \sqrt{n} \| \mathbf{x} \|_{\infty}$.
+    \end{enumerate}
+    En donde: $\| \mathbf{x} \| = \sqrt{x_1^2 + x_2^2 + \cdots + x_n^2}$.
+    \item Graficar los siguientes conjuntos:
+    \begin{enumerate}
+        \item $B_{d_1}(\mathbf{0}, 1) = \{ \mathbf{x} \in \RR[2] : \| \mathbf{x} \|_1 \leq 1 \}$,
+        \item $B_{d_2}(\mathbf{0}, 1) = \{ \mathbf{x} \in \RR[2] : \| \mathbf{x} \|_2 \leq 1 \}$,
+        \item $B_{d_{\infty}}(\mathbf{0}, 1) = \{ \mathbf{x} \in \RR[2] : \| \mathbf{x} \|_{\infty} \leq 1 \}$,
+    \end{enumerate}
+    \item Usando el corolario \ref{corollary:desigualdad_vabsoluto}, demuestre que la función $\| \phantom{x} \|: \RR[n] \longrightarrow \RR$ es una función continua en $\RR[n]$.
+    \item Demostrar que si la sucesión $\{ \mathbf{x}_n \}_{n = 1}^{\infty}$ converge a $\mathbf{x}$, entonces la sucesión $\| \mathbf{x}_n \|$ converge a $\| \mathbf{x} \|$. Es decir,
+    $$\lim_{n \to \infty} \mathbf{x}_n = \mathbf{x}, \text{ entonces } \lim_{n \to \infty} \| \mathbf{x}_n \| = \| \mathbf{x} \|.$$
+    \item Dada una sucesión $(\mathbf{x}_n)_{n \in \NN} \subset \RR[k]$, donde $\mathbf{x}_n = \left(x_n^1, x_n^2, \dots, x_n^k\right)$, y un vector fijo $\mathbf{x}_0 = \left(x_0^1, x_0^2, \dots, x_0^k\right)$, entonces la sucesión $(\mathbf{x}_n)_{n \in \NN}$ converge a $\mathbf{x}_0$ en $\RR[k]$ si y solo si para cada $r \in \{ 1, 2, \dots, k \}$, la sucesión de componentes $(x_n^r)_{n \in \NN}$ converge a $x_0^r$ en $\RR$.
+    \item Demostrar que toda sucesión convergente en $\RR[k]$ es una sucesión de Cauchy.
+    \item Demostrar que toda sucesión de Cauchy en $\RR[k]$ es una sucesión que converge en $\RR[k]$, es decir: $\RR[k]$ es un espacio de Banach.
+    \item Sea $\mathbf{x} = (x_1, x_2, \dots, x_n) \in \RR[n]$, entonces
+    \begin{enumerate}
+        \item $|x_i| \leq \| \mathbf{x} \| \leq \sqrt{n} \sup \{ |x_1|, |x_2|, \dots, |x_n| \}$,
+        \item $\| \mathbf{x} \|_{\infty} \leq \| \mathbf{x} \| \leq \sqrt{n} \| \mathbf{x} \|_{\infty}$.
+    \end{enumerate}
+    \item Dado $\mathbf{x} = (x_1, x_2, \dots, x_n) \in \RR[n]$. Demostrar que \label{ej:equivalencianormas}
+    \begin{enumerate}
+        \item $\| \mathbf{x} \|_{\infty} \leq \| \mathbf{x} \| \leq \sqrt{n} \| \mathbf{x} \|_{\infty}$ (esto demuestra que $\| \phantom{x} \|$ y $\| \phantom{x} \|_{\infty}$ son equivalentes),
+        \item $\| \mathbf{x} \|_{\infty} \leq \| \mathbf{x} \|_1 \leq n \| \mathbf{x} \|_{\infty}$ (esto demuestra que $\| \phantom{x} \|_1$ y $\| \phantom{x} \|_{\infty}$ son equivalentes).
+        \item Deducir que $\| \phantom{x} \|_1$ y $\| \phantom{x} \|$ son equivalentes.
+    \end{enumerate}
+    \item Si se define $\displaystyle \| \mathbf{x} \|_p = \left( \sum_{i=1}^n |x_i|^p \right)^{1/p}$, demuestre que \label{ej:normap}
+    \begin{enumerate}
+        \item $\| \mathbf{x} \|_{\infty}^p \leq \| \mathbf{x} \|_p^p$,
+        \item $\| \mathbf{x} \|_p \leq n^{1/p} \| \mathbf{x} \|_{\infty}$.
+        \item Deducir que $\| \phantom{x} \|_{\infty}$ y $\| \phantom{x} \|_p$ son equivalentes.
+    \end{enumerate}
+    \item Con los vectores de los siguientes incisos, comprobar los problemas \ref{ej:equivalencianormas} y \ref{ej:normap}.
+    \begin{tasks}[label=\roman*)](2)
+        \task $\mathbf{x} = (-1, -2, 5, -9) \in \RR[4]$
+        \task $\mathbf{x} = (15, -2, 4) \in \RR[3]$
+    \end{tasks}
 \end{enumerate}
-De los problemas 16 al 34 determine si el subconjunto dado $H$ del espacio vectorial $V$ es un subespacio de $V$.
-\begin{enumerate}[resume]
-    \item $V=\RR[2]$; $H=\left\{ \begin{pmatrix} x \\ y \end{pmatrix} \mid x=3, y \in \RR \right\}$
-    \item $V=\RR[2]$; $H=\left\{ \begin{pmatrix} x \\ y \end{pmatrix} \mid y \geq 0 \right\}$\newpage
-    \item $V=\RR[2]$; $H=\left\{ \begin{pmatrix} x \\ y \end{pmatrix} \mid x=y \right\}$
-    \item $V=\RR[2]$; $H=\left\{ \begin{pmatrix} x \\ y \end{pmatrix} \mid y=2 x \right\}$
-    \item $V=\RR[3]$; $H = \operatorname{el~plano} x y$
-    \item $V=\RR[2]$; $H=\left\{ \begin{pmatrix} x \\ y \end{pmatrix} \mid x^{2}+y^{2} \leq 1\right\}$
-    \item $V=\RR[2]$; $H=\left\{ \begin{pmatrix} x \\ y \end{pmatrix} \mid x^{2}+y^{3}<1\right\}$
-    \item $V=\RR$; $H=\QQ$
-    \item $V=P_{n}$; $H=\left\{p \in P_{n}\mid p(0)=0\right.$ y $\left.p^{\prime}(0)=0\right\}$
-    \item $V=P_{4}$; $H=\left\{p \in P_{4}\mid p(0)=0\right\}$
-    \item $V=P_{n}$; $H=\left\{p \in P_{n}\mid p(0)=0\right\}$
-    \item $V=P_{n}$; $H=\left\{p \in P_{n}\mid p(0)=1\right\}$
-    \item $V=C[0,1]$; $H=\{f \in C[0,1]\mid f(0)=f(1)=0\}$
-    \item $V=C[0,1]$; $H=\{f \in C[0,1]\mid f(0)=2\}$
-    \item $V=C^{1}[0,1]$; $H=\left\{f \in C^{1}[0,1]\mid f^{\prime}(0)=0\right\}$
-    \item $V=C[a, b]$; con $a$, $b \in \RR$ y $a<b$; $\displaystyle H=\left\{f \in C[a, b]\mid \int_{a}^{b} f(x) d x=0\right\}$
-    \item $V=C[a, b]$; $\displaystyle H=\left\{f \in C[a, b]\mid \int_{a}^{b} f(x) d x=1\right\}$
-    \item $V=C[a, b]$; $\displaystyle H=\left\{f \in C[a, b]\mid \int_{a}^{b} f^{2}(x) d x=0\right\}$
-    \item Sea $H=\left\{ \begin{pmatrix} x \\ y \\ z \\ w \end{pmatrix} \mid a x+b y+c z+d w=0\right\}$, donde $a, b, c$ y $d$ son números reales, no todos cero. Demuestre que $H$ es un subespacio propio de $\RR[4]$. $H$ se llama un hiperplano en $\RR[4]$ que pasa por el origen.
-\end{enumerate}
-De los problemas 35 al 52 determine si el conjunto dado de vectores genera el espacio vectorial dado.
-\begin{multienumerate}\setcounter{multienumi}{34}
-    \mitemxx{En $ \RR[2]$: $\begin{pmatrix} 2 \\ 10 \end{pmatrix}, \begin{pmatrix} 10 \\ 8 \end{pmatrix}$}{En $ \RR[2]$: $\begin{pmatrix} 1 \\ 2 \end{pmatrix}, \begin{pmatrix} 3 \\ 4 \end{pmatrix}$}
-    \mitemxx{En $ \RR[2]$: $\begin{pmatrix} 1 \\ 1 \end{pmatrix}, \begin{pmatrix} 2 \\ 1 \end{pmatrix}, \begin{pmatrix} 2 \\ 2 \end{pmatrix}$}{En $\RR[2]$: $\begin{pmatrix} 0 \\ 1 \end{pmatrix}, \begin{pmatrix} 3 \\ 4 \end{pmatrix}, \begin{pmatrix*}[r] -1 \\ -2 \end{pmatrix*}$}
-    \mitemxx{En $ \RR[2]$: $\begin{pmatrix*}[r] -12 \\ 5 \end{pmatrix*}, \begin{pmatrix*}[r] -3 \\ 0 \end{pmatrix*}, \begin{pmatrix*}[r] 4 \\ -8 \end{pmatrix*}$}{En $ \RR[2]$: $\begin{pmatrix} 1 \\ 1 \end{pmatrix}, \begin{pmatrix} 2 \\ 2 \end{pmatrix}, \begin{pmatrix} 5 \\ 5 \end{pmatrix}$}
-    \mitemx{En $\RR[2]$: $\begin{pmatrix*}[r] -6 \\ 5 \end{pmatrix*}, \begin{pmatrix} 7 \\ 9 \end{pmatrix}, \begin{pmatrix*}[r] 7 \\ -12 \end{pmatrix*}, \begin{pmatrix*}[r] -10 \\ 6 \end{pmatrix*}$}
-    \mitemxx{En $\RR[3]$: $\begin{pmatrix} 1 \\ 2 \\ 3 \end{pmatrix}, \begin{pmatrix*}[r] -1 \\ 2 \\ 3 \end{pmatrix*}, \begin{pmatrix} 5 \\ 2 \\ 3 \end{pmatrix}$}{En $\RR[3]$: $\begin{pmatrix} 0 \\ 5 \\ 1 \end{pmatrix}, \begin{pmatrix*}[r] 0 \\ -1 \\ 3 \end{pmatrix*}, \begin{pmatrix*}[r] -1 \\ -1 \\ 5 \end{pmatrix*}$}
-    \newpage
-    \mitemxx{En $\RR[3]$: $\begin{pmatrix} 1 \\ 1 \\ 1 \end{pmatrix}, \begin{pmatrix} 0 \\ 1 \\ 1 \end{pmatrix}, \begin{pmatrix} 0 \\ 0 \\ 1 \end{pmatrix}$}{En $\RR[3]$: $\begin{pmatrix} 2 \\ 0 \\ 1 \end{pmatrix}, \begin{pmatrix} 3 \\ 1 \\ 2 \end{pmatrix}, \begin{pmatrix} 1 \\ 1 \\ 1 \end{pmatrix}, \begin{pmatrix} 7 \\ 3 \\ 5 \end{pmatrix}$}
-    \mitemxx{En $\RR[3]$: $\begin{pmatrix*}[r] -7 \\ -6 \\ 9 \end{pmatrix*}, \begin{pmatrix*}[r] 14 \\ -6 \\ 18 \end{pmatrix*}, \begin{pmatrix} 7 \\ 0 \\ 3 \end{pmatrix}, \begin{pmatrix*}[r] 35 \\ 18 \\ -21 \end{pmatrix*}$}{En $ \RR[3]$: $\begin{pmatrix*}[r] 4 \\ 4 \\ -6 \end{pmatrix*}, \begin{pmatrix*}[r] -8 \\ 4 \\ -24 \end{pmatrix*}, \begin{pmatrix*}[r] -4 \\ 0 \\ -6 \end{pmatrix*}$}
-    \mitemxx{En $P_{2}$: $1-x, 3-x^{2}$}{En $P_{2}$: $1-x, 3-x^{2}, x$}
-    \mitemx{En $P_{2}$: $x^{2}+1, x^{2}-1, x+6$}
-    \mitemx{En $P_{2}$: $-12 x+5 x^{2},-9-27 x+8 x^{2},-3-5 x+x^{2}$}
-    \mitemx{En $P_{2}$: $-10+3 x+11 x^{2}, 10+9 x-4 x^{2}, 5+x+4 x^{2}$}
-\end{multienumerate}
-De los problemas 53 al 60 describa el espacio generado por los vectores.
-\begin{multienumerate}\setcounter{multienumi}{52}
-    \mitemxx{$\begin{pmatrix*}[r] -6 \\ 3 \end{pmatrix*}, \begin{pmatrix*}[r] -11 \\ 5 \end{pmatrix*}$}{$\begin{pmatrix*}[r] -5 \\ -8 \end{pmatrix*}, \begin{pmatrix*}[r] -4 \\ -8 \end{pmatrix*}, \begin{pmatrix*}[r] 10 \\ -5 \end{pmatrix*}$}
-    \mitemxx{$\begin{pmatrix*}[r] -12 \\ -16 \end{pmatrix*}, \begin{pmatrix} 6 \\ 8 \end{pmatrix}, \begin{pmatrix} 18 \\ 24 \end{pmatrix}$}{$\begin{pmatrix*}[r] 20 \\ -23 \\ -8 \end{pmatrix*}, \begin{pmatrix*}[r] 2 \\ 7 \\ -2 \end{pmatrix*}, \begin{pmatrix*}[r] 8 \\ -3 \\ -4 \end{pmatrix*}, \begin{pmatrix*}[r] -2 \\ 24 \\ -2 \end{pmatrix*}$}
-    \mitemxx{$\begin{pmatrix*}[r] -3 \\ -3 \\ -2 \end{pmatrix*}, \begin{pmatrix*}[r] -2 \\ 4 \\ -8 \end{pmatrix*}, \begin{pmatrix*}[r] 6 \\ -6 \\ 12 \end{pmatrix*}$}{$\begin{pmatrix*}[r] -9 \\ 8 \\ -4 \end{pmatrix*}, \begin{pmatrix} 39 \\ 20 \\ 38 \end{pmatrix}, \begin{pmatrix*}[r] -34 \\ 12 \\ -22 \end{pmatrix*}, \begin{pmatrix} 7 \\ 12 \\ 10 \end{pmatrix}$}
-    \mitemxx{$\begin{pmatrix*}[r] 2 \\ -1 \\ -1 \end{pmatrix*}, \begin{pmatrix*}[r] -4 \\ 2 \\ 2 \end{pmatrix*}, \begin{pmatrix*}[r] 6 \\ -3 \\ -3 \end{pmatrix*}$}{$\begin{pmatrix*}[r] -6 \\ 3 \\ 9 \\ -12 \end{pmatrix*}, \begin{pmatrix*}[r] 9 \\ 12 \\ -18 \\ 6 \end{pmatrix*}, \begin{pmatrix*}[r] -23 \\ 25 \\ 25 \\ -56 \end{pmatrix*}, \begin{pmatrix*}[r] -1 \\ 6 \\ 0 \\ -6 \end{pmatrix*}$}
-\end{multienumerate}
-\begin{enumerate}[start=61]
-    \item Demuestre que dos polinomios de grado menor o igual a dos, no pueden generar $P_{2}$.
-    \item Si $p_{1}, p_{2}, \dots, p_{m}$ genera $P_{m}$, demuestre que $m \geq n+1$.
-    \item Demuestre que si $\mathbf{u}$ y $\mathbf{v}$ están en $\Gen (\{\mathbf{v}_{1}, \mathbf{v}_{2}, \dots, \mathbf{v}_{k}\})$, entonces $\mathbf{u}+\mathbf{v}$ y $\alpha \mathbf{u}$ están en $\Gen (\{\mathbf{v}_{1}, \mathbf{v}_{2}, \dots, \mathbf{v}_{k}\})$.
-    \item Demuestre que el conjunto infinito $\left\{1, x, x^{2}, x^{3}, \dots\right\}$ genera $P$, el espacio vectorial de polinomios.
-    \item Si $S = \{\mathbf{v}_1, \mathbf{v}_2, \dots, \mathbf{v}_r\}$ y $S' = \{\mathbf{u}_1, \mathbf{u}_2, \dots, \mathbf{u}_k\}$ son conjuntos no vacíos de vectores en un espacio vectorial $V$, entonces
-    $$\Gen (\{\mathbf{v}_1, \mathbf{v}_2, \dots, \mathbf{v}_r\}) = \Gen (\{\mathbf{u}_1, \mathbf{u}_2, \dots, \mathbf{u}_k\})$$
-    si y solo si cada vector en $S$ es una combinación lineal de los vectores en $S'$, y cada vector en $S'$ es una combinación lineal de los vectores en $S$.
-    \item Sean $\mathbf{v}_{1}=\begin{pmatrix} x_{1} \\ y_{1} \\ z_{1} \end{pmatrix}$ y $\mathbf{v}_{2}=\begin{pmatrix} x_{2} \\ y_{2} \\ z_{2} \end{pmatrix}$ en $\RR[3]$. Demuestre que si $\mathbf{v}_{2}=c \mathbf{v}_{1}$, entonces $\Gen (\{\mathbf{v}_{1}, \mathbf{v}_{2}\})$ es una recta que pasa por el origen.
-    \item En el problema anterior suponga que $\mathbf{v}_{1}$ y $\mathbf{v}_{2}$ no son paralelos. Demuestre que $H= \Gen (\{\mathbf{v}_{1}, \mathbf{v}_{2}\})$ es un plano que pasa por el origen. ¿Cuál es la ecuación del plano?
-\end{enumerate}
-De los problemas 68 al 89 determine si el conjunto de vectores dado es linealmente dependiente o independiente.
-\begin{multienumerate}\setcounter{multienumi}{67}
-    \mitemxx{$\begin{pmatrix*}[r]9 \\ -8\end{pmatrix*},\begin{pmatrix*}[r]-11 \\ -3\end{pmatrix*}$}{$\begin{pmatrix*}1 \\ 2\end{pmatrix*},\begin{pmatrix*}-1 \\ -3\end{pmatrix*}$}\newpage
-    \mitemxx{$\begin{pmatrix*}[r]2 \\ -1 \\ 4\end{pmatrix*},\begin{pmatrix*}[r]4 \\ -2 \\ 7\end{pmatrix*}$}{$\begin{pmatrix*}[r]-6 \\ 1\end{pmatrix*},\begin{pmatrix*}[r]12 \\ -2\end{pmatrix*}$}
-    \mitemxx{$\begin{pmatrix*}[r]2 \\ -1 \\ 4\end{pmatrix*},\begin{pmatrix*}[r]4 \\ -2 \\ 8\end{pmatrix*}$}{$\begin{pmatrix*}[r]-2 \\ 3\end{pmatrix*},\begin{pmatrix*}4 \\ 7\end{pmatrix*}$}
-    \mitemxx{$\begin{pmatrix*}1 \\ 0 \\ 0\end{pmatrix*},\begin{pmatrix*}0 \\ 1 \\ 1\end{pmatrix*}$}{$\begin{pmatrix*}[r]-10 \\ -6\end{pmatrix*},\begin{pmatrix*}[r]10 \\ -6\end{pmatrix*},\begin{pmatrix*}5 \\ 9\end{pmatrix*}$}
-    \mitemxx{$\begin{pmatrix*}1 \\ 0 \\ 1\end{pmatrix*},\begin{pmatrix*}0 \\ 1 \\ 1\end{pmatrix*},\begin{pmatrix*}1 \\ 1 \\ 0\end{pmatrix*}$}{$\begin{pmatrix*}1 \\ 0 \\ 1\end{pmatrix*},\begin{pmatrix*}0 \\ 1 \\ 0\end{pmatrix*},\begin{pmatrix*}0 \\ 0 \\ 1\end{pmatrix*}$}
-    \mitemxx{$\begin{pmatrix*}[r]8 \\ -7 \\ -8\end{pmatrix*},\begin{pmatrix*}[r]-11 \\ -12 \\ -7\end{pmatrix*},\begin{pmatrix*}[r]12 \\ -3 \\ 7\end{pmatrix*}$}{$\begin{pmatrix*}1 \\ 2 \\ 3\end{pmatrix*},\begin{pmatrix*}[r]-1 \\ 1 \\ -1\end{pmatrix*},\begin{pmatrix*}[r]4 \\ -1 \\ 1\end{pmatrix*}$}
-    \mitemxx{$\begin{pmatrix*}[r]-3 \\ 4 \\ 2\end{pmatrix*},\begin{pmatrix*}[r]7 \\ -1 \\ 3\end{pmatrix*},\begin{pmatrix*}1 \\ 1 \\ 8\end{pmatrix*}$}{$\begin{pmatrix*}[r]-1 \\ 0 \\ 11\end{pmatrix*},\begin{pmatrix*}[r]7 \\ -20 \\ -29\end{pmatrix*},\begin{pmatrix*}[r]1 \\ -5 \\ 1\end{pmatrix*}$}
-    \mitemxx{En $P_{2}$: $1-x, x$}{En $P_{2}$: $-x, x^{2}-2 x, 3 x+5 x^{2}$}
-    \mitemx{En $P_2$: $-3-2 x-11 x^{2},-39-6 x-3 x^{2},-12-9 x^{2}, 20-4 x+5 x^{2}$}
-    \mitemx{En $P_{4}$: $x-1,(x-1)(x-2),(x-1)(x-2)(x-3), x^{4}$}
-    \mitemxx{En $P_{2}$: $x, x^{2}-x, x^{3}-x$}{En $C[0,1]$: $e^{x}, e^{-x}$}
-    \mitemxx{En $C[0,1]$: $\sen x, \cos x$}{En $C[0,1]$: $x, \sqrt{x}, \sqrt[3]{x}$}
-\end{multienumerate}
-\begin{enumerate}[start=90]
-    \item Determine una condición sobre los números $a, b, c$ y $d$ tal que los vectores $\begin{pmatrix*}a \\ b\end{pmatrix*}$ y $\begin{pmatrix*}c \\ d\end{pmatrix*}$ sean linealmente dependientes.
-    \item Encuentre una condición sobre los números $a_{i j}$ tal que los vectores $\begin{pmatrix*}a_{11} \\ a_{21} \\ a_{31}\end{pmatrix*},\begin{pmatrix*}a_{12} \\ a_{22} \\ a_{32}\end{pmatrix*}$ y $\begin{pmatrix*}a_{13} \\ a_{23} \\ a_{33}\end{pmatrix*}$ sean linealmente independientes.
-    \item ¿Para qué valor o valores de $\alpha$ serán linealmente dependientes los vectores $\begin{pmatrix*}1 \\ 2 \\ 3\end{pmatrix*},\begin{pmatrix*}[r]2 \\ -1 \\ 4\end{pmatrix*},\begin{pmatrix*}3 \\ \alpha \\ 4\end{pmatrix*}$?
-    \item ¿Para qué valor o valores de $\alpha$ serán linealmente dependientes los vectores $\begin{pmatrix*}[r]2 \\ -3 \\ 1\end{pmatrix*},\begin{pmatrix*}[r]-4 \\ 6 \\ -2\end{pmatrix*},\begin{pmatrix*}\alpha \\ 1 \\ 2\end{pmatrix*}$?
-    \item ¿Para qué valor o valores de $\alpha$ serán linealmente dependientes los vectores $\begin{pmatrix*}3 \\ 2 \\ 1\end{pmatrix*},\begin{pmatrix*}-2 \\ -1 \\ -1\end{pmatrix*},\begin{pmatrix*}\alpha \\ 5 \\ 2\end{pmatrix*}$?
-    \item ¿Para qué valor o valores de $\alpha$ y $\beta$ serán linealmente independientes los vectores $\begin{pmatrix*}3 \\ 2 \\ 1\end{pmatrix*},\begin{pmatrix*}[r]-2 \\ -1 \\ \beta\end{pmatrix*},\begin{pmatrix*}\alpha \\ 5 \\ 2\end{pmatrix*}$?
-    \newpage
-    \item Demuestre que si los vectores $\mathbf{v}_{1}, \mathbf{v}_{2}, \dots, \mathbf{v}_{n}$ son linealmente dependientes en $\RR[m]$, con $m<n$, y si $\mathbf{v}_{n+1}$ es cualquier otro vector en $\RR[m]$, entonces el conjunto $\mathbf{v}_{1}, \mathbf{v}_{2}, \dots, \mathbf{v}_{n}, \mathbf{v}_{n+1}$ es linealmente dependiente.
-    \item Demuestre que si $\mathbf{v}_{1}, \mathbf{v}_{2}, \dots, \mathbf{v}_{n}$ ($n \geq 2$) son linealmente independientes, entonces también lo son $\mathbf{v}_{1}, \mathbf{v}_{2}, \dots, \mathbf{v}_{k}$, donde $k<n$.
-    \item Demuestre que cualesquiera cuatro polinomios en $P_{2}$ son linealmente dependientes.
-    \item Demuestre que dos polinomios no pueden generar a $P_{2}$.
-    \item Demuestre que cualesquiera $n+2$ polinomios en $P_{n}$ son linealmente dependientes.
-    \item Demuestre que cualquier subconjunto de un conjunto de vectores linealmente independientes es linealmente independiente.
-    \item Sean $S_{1}$ y $S_{2}$ dos conjuntos finitos linealmente independientes en un espacio vectorial $V$. Demuestre que $S_{1} \cap S_{2}$ es un conjunto linealmente independiente.
-    \item Sea $S=\left\{\mathbf{v}_{1}, \mathbf{v}_{2}, \dots, \mathbf{v}_{n}\right\}$ un conjunto linealmente independiente de vectores diferentes de cero en un espacio vectorial $V$. Demuestre que al menos uno de los vectores en $S$ se puede escribir como una combinación lineal de los vectores que le preceden. Es decir, demuestre que existe un entero $k \leq n$ y escalares $\alpha_{1}, \alpha_{2}, \dots, \alpha_{k-1}$ tales que $\mathbf{v}_{k}=\alpha_{1} \mathbf{v}_{1}, \alpha_{2} \mathbf{v}_{2}, \dots$, $\alpha_{k-1} \mathbf{v}_{k-1}$.
-    \item Sea $\left\{\mathbf{v}_{1}, \mathbf{v}_{2}, \dots, \mathbf{v}_{n}\right\}$ un conjunto linealmente independiente. Demuestre que los vectores $\mathbf{v}_{1}, \mathbf{v}_{1}+\mathbf{v}_{2}, \mathbf{v}_{1}+\mathbf{v}_{2}+\mathbf{v}_{3}, \dots, \mathbf{v}_{1}+\mathbf{v}_{2}+\cdots+\mathbf{v}_{n}$ son linealmente independientes.
-    \item Sea $\left\{\mathbf{v}_{1}, \mathbf{v}_{2}, \dots, \mathbf{v}_{n}\right\}$ un conjunto de vectores que tiene la propiedad de que el conjunto $\left\{\mathbf{v}_{i}, \mathbf{v}_{j}\right\}$ es linealmente dependiente cuando $i \neq j$. Demuestre que cada vector del conjunto es un múltiplo de un solo vector de ese conjunto.
-    \item Suponga que $\mathbf{u}, \mathbf{v}$ y $\mathbf{w}$, son linealmente independientes. Pruebe o desapruebe: $\mathbf{u}+\mathbf{v}, \mathbf{u}+\mathbf{w}$ y $\mathbf{u}+\mathbf{w}$ son linealmente independientes.
-    \item Sea $\left\{\mathbf{v}_{1}, \mathbf{v}_{2}, \dots, \mathbf{v}_{n}\right\}$ un conjunto linealmente independiente y suponga que $\mathbf{v} \notin \Gen ( \{\mathbf{v}_{1}, \mathbf{v}_{2}, \dots, \mathbf{v}_{n}\} )$. Demuestre que $\left\{\mathbf{v}_{1}, \mathbf{v}_{2}, \dots, \mathbf{v}_{n}\right\}$ es un conjunto linealmente independiente.
-    \item Encuentre un conjunto linealmente independiente de vectores en $P_{2}$ que contenga a los polinomios $1-x^{2}$ y $1+x^{2}$
-    \item Encuentre un conjunto linealmente independiente de vectores en $P_{2}$ que contenga a los polinomios $x+x^{2}$ y $1+x$.
-\end{enumerate}
-De los problemas 110 al 117 determine si el conjunto dado es una base para el espacio vectorial a que se refiere.
-\begin{enumerate}[resume]
-    \item En $P_{2}$: $-2-11 x+7 x^{2},-5-x-5 x^{2}$
-    \item En $P_{2}$: $1-x^{2}, x$
-    \item En $P_{2}$: $-3 x, 1+x^{2}, x^{2}-5$
-    \item En $P_{2}$: $1+3 x+7 x^{2}, 5+12 x+35 x^{2}, 8+5 x-12 x^{2}$
-    \item En $P_{2}$: $x^{2}-1, x^{2}-2, x^{2}-3$
-    \item En $P_{3}$: $1,1+x, 1+x^{2}, 1+x^{3}$
-    \item En $P_{2}$: $10-x-10 x^{2},-23+14 x+53 x^{2},-1+4 x+11 x^{2}$
-    \item En $P_{3}$: $3, x^{3}-4 x+6, x^{2}$
-    \newpage
-    \item Encuentre una base en $\RR[3]$ para el conjunto de vectores en el plano dado por $3 x-2 y+5 z=0$.
-    \item Encuentre una base en $\RR[3]$ para el conjunto de vectores en el plano dado por $3 x-2 y+z=0$.
-    \item Encuentre una base en $\RR[3]$ para el conjunto de vectores en la recta $x = 2$, $y = -2t$, $z = 3t$.
-    \item Encuentre una base en $\RR[3]$ para el conjunto de vectores en la recta $x = 3t$, $y = -2t$, $z = t$.
-    \item Demuestre que los únicos subespacios propios en $\RR[2]$ son rectas que pasan por el origen.
-    \item En $\RR[n]$ un hiperplano que contiene a $\mathbf{0}$ es un subespacio de dimensión $n-1$. Si $H$ es un hiperplano en $\RR[n]$ que contiene a $\mathbf{0}$, demuestre que
-    $$H=\left\{ \begin{pmatrix} x_1 \\ x_2 \\ \vdots \\ x_n \end{pmatrix} \mid a_{1} x_{1}+a_{2} x_{2}+\cdots+a_{n} x_{n}=0\right\}$$
-    donde $a_{1}, a_{2}, \dots, a_{n}$ son números reales fijos, no todos cero.
-    \item Demuestre que dos vectores $\mathbf{v}_1$ y $\mathbf{v}_2$ en $\RR[2]$ con puntos terminales en el origen son colineales si y sólo si $\Dim \Gen (\{\mathbf{v}_1, \mathbf{v}_2\}) = 1$.
-    \item Demuestre que los tres vectores $\mathbf{v}_1$, $\mathbf{v}_2$ y $\mathbf{v}_3$ en $\RR[3]$ con puntos terminales en el origen son coplanares si y sólo si $\Dim \Gen (\{\mathbf{v}_1, \mathbf{v}_2, \mathbf{v}_3\}) \leq 2$.
-    \item Demuestre que cualesquiera $n$ vectores que generan un espacio $V$ de dimensión $n$ forman una base para $V$.
-    \item Demuestre que todo subespacio de un espacio vectorial de dimensión finita tiene una base.
-\end{enumerate}
+
+
+\begin{comment}
+\begin{definicion}{}{}
+    Por \emph{segmento} $(a, b)$ queremos significar el conjunto de todos los números reales $x$ tales que $a < x < b$. Por \emph{intervalo} $[a, b]$ entendemos el conjunto de todos los números reales $x$ tales que $a \leq x \leq b$.
+\end{definicion}
+
+Ocasionalmente encontraremos “intervalos semi-abiertos” $[a, b)$ y $(a, b]$, el primero de los cuales está constituido por todo $x$ tal que $a \leq x < b$, y el segundo por todo $x$ para el cual $a < x \leq b$. Si $a_i < b_i$, para $i = 1, 2, \dots, n$, el conjunto de todos los puntos, $\mathbf{x} = (x_1, x_2, \dots, x_n)$ en $\RR[n]$, cuyas coordenadas satisfacen las desigualdades $a_i \leq x_i \leq b_i$ ($1 \leq i \leq n$) se llama \emph{celda-$n$}. Así, una celda-$1$ es un intervalo, una celda-$2$ un rectángulo, etc.
+
+
+
+
+
+\newpage
+
+\begin{theorem}{}{}
+    \TituloBox{Desigualdad de Cauchy-Schwarz:} Sea $V$ un espacio vectorial sobre $K$ con producto interno $\langle \, , \rangle$. Sean $\mathbf{x}$, $\mathbf{y} \in V$, entonces se cumple
+    $$| \langle \mathbf{x}, \mathbf{y} \rangle | \leq \| \mathbf{x} \| \| \mathbf{y} \|.$$
+
+    \tcblower
+    \demostracion Sean $\mathbf{x}$, $\mathbf{y} \in V$, con $\mathbf{y} \neq \mathbf{0}$ y sea $\lambda \in K$. Consideremos al vector $\mathbf{x} + \lambda \mathbf{y}$, entonces se tiene
+    \begin{align*}
+        0 \leq \| \mathbf{x} + \lambda \mathbf{y} \|^2 & = \langle \mathbf{x} + \lambda\mathbf{y}, \mathbf{x} + \lambda\mathbf{y} \rangle \\
+        & = \langle \mathbf{x}, \mathbf{x} + \lambda \mathbf{y} \rangle + \langle \lambda \mathbf{y}, \mathbf{x} + \lambda\mathbf{y} \rangle \\
+        & = \langle \mathbf{x}, \mathbf{x} \rangle + \langle \mathbf{x}, \lambda \mathbf{y} \rangle + \langle \lambda \mathbf{y}, \mathbf{x} \rangle + \langle \lambda \mathbf{y}, \lambda \mathbf{y} \rangle \\
+        & = \langle \mathbf{x}, \mathbf{x} \rangle + \overline{\lambda} \langle \mathbf{x}, \mathbf{y} \rangle + \lambda \langle \mathbf{y}, \mathbf{x} \rangle + \lambda \langle \mathbf{y}, \lambda \mathbf{y} \rangle \\
+        & = \langle \mathbf{x}, \mathbf{x} \rangle + \overline{\lambda} \langle \mathbf{x}, \mathbf{y} \rangle + \lambda \overline{\langle \mathbf{x}, \mathbf{y} \rangle} + \lambda\overline{\lambda} \langle \mathbf{y}, \mathbf{y} \rangle \\
+        & = \| \mathbf{x} \|^2 + \overline{\lambda} \langle \mathbf{x}, \mathbf{y} \rangle + \lambda \overline{\langle \mathbf{x}, \mathbf{y} \rangle} + |\lambda|^2 \| \mathbf{y} \|^2
+    \end{align*}
+    Así,
+    $$0 \leq \| \mathbf{x} + \lambda \mathbf{y} \|^2 = \| \mathbf{x} \|^2 + \overline{\lambda} \langle \mathbf{x}, \mathbf{y} \rangle + \lambda \overline{\langle \mathbf{x}, \mathbf{y} \rangle} + |\lambda|^2 \| \mathbf{y} \|^2.$$
+    Entonces
+    \begin{equation}
+        0 \leq \| \mathbf{x} \|^2 + \overline{\lambda} \langle \mathbf{x}, \mathbf{y} \rangle + \lambda \overline{\langle \mathbf{x}, \mathbf{y} \rangle} + |\lambda|^2 \| \mathbf{y} \|^2, \label{desigualdad-cauchy}
+    \end{equation}
+    lo cual se cumple para toda $\lambda \in K$, en particular para $\displaystyle \lambda = \frac{(-1)\langle \mathbf{x}, \mathbf{y} \rangle}{\| \mathbf{y} \|^2}$. Además, es evidente que $\displaystyle \overline{\lambda} = \frac{(-1)\overline{\langle \mathbf{x}, \mathbf{y} \rangle}}{\| \mathbf{y} \|^2}$. Así que,
+    $$|\lambda|^2 = \frac{(-1)\langle \mathbf{x}, \mathbf{y} \rangle}{\| \mathbf{y} \|^2} \cdot \frac{(-1)\overline{\langle \mathbf{x}, \mathbf{y} \rangle}}{\| \mathbf{y} \|^2} = \frac{|\langle \mathbf{x}, \mathbf{y} \rangle|^2}{\| \mathbf{y} \|^4}.$$
+    Sustituyendo $\lambda$, $\overline{\lambda}$ y $|\lambda|^2$ en la expresión \eqref{desigualdad-cauchy}, se sigue que
+    \begin{align*}
+        0 & \leq \| \mathbf{x} \|^2 - \frac{\overline{\langle \mathbf{x}, \mathbf{y} \rangle}}{\| \mathbf{y} \|^2} \langle \mathbf{x}, \mathbf{y} \rangle - \frac{\langle \mathbf{x}, \mathbf{y} \rangle}{\| \mathbf{y} \|^2} \overline{\langle \mathbf{x}, \mathbf{y} \rangle} + \frac{|\langle \mathbf{x}, \mathbf{y} \rangle|^2}{\| \mathbf{y} \|^4} \| \mathbf{y} \|^2 \\
+        & = \| \mathbf{x} \|^2 - \frac{|\langle \mathbf{x}, \mathbf{y} \rangle|^2}{\| \mathbf{y} \|^2} - \frac{|\langle \mathbf{x}, \mathbf{y} \rangle|^2}{\| \mathbf{y} \|^2} + \frac{|\langle \mathbf{x}, \mathbf{y} \rangle|^2}{\| \mathbf{y} \|^2} \\
+        & = \| \mathbf{x} \|^2 - \frac{|\langle \mathbf{x}, \mathbf{y} \rangle|^2}{\| \mathbf{y} \|^2}
+    \end{align*}
+    Entonces
+    $$\frac{|\langle \mathbf{x}, \mathbf{y} \rangle|^2}{\| \mathbf{y} \|^2} \leq \| \mathbf{x} \|^2,$$
+    de donde se sigue que
+    $$|\langle \mathbf{x}, \mathbf{y} \rangle|^2 \leq \| \mathbf{x} \|^2 \| \mathbf{y} \|^2.$$
+    Así, finalmente obtenemos que
+    $$|\langle \mathbf{x}, \mathbf{y} \rangle| \leq \| \mathbf{x} \| \| \mathbf{y} \|.$$
+\end{theorem}
+
+\begin{corollary}{}{}
+    Si $\mathbf{x}$ e $\mathbf{y}$ son linealmente dependientes, entonces
+    $$|\langle \mathbf{x}, \mathbf{y} \rangle| = \| \mathbf{x} \| \| \mathbf{y} \|.$$
+    Si $\mathbf{x}$ e $\mathbf{y}$ son linealmente independientes, entonces
+    $$|\langle \mathbf{x}, \mathbf{y} \rangle| \leq \| \mathbf{x} \| \| \mathbf{y} \|.$$
+\end{corollary}
+
+\end{comment}

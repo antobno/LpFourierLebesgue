@@ -26,10 +26,9 @@
 \RequirePackage[strict]{changepage}
 
 \RequirePackage[dvipsnames,svgnames,table]{xcolor}
-\definecolor{cw0}{RGB}{22,105,122}
-\definecolor{cw1}{RGB}{200,235,240}
-\definecolor{cw2}{RGB}{80,160,175}
-\definecolor{cw3}{RGB}{40,120,140}
+\definecolor{cw0}{RGB}{24,166,221}
+\definecolor{cw1}{RGB}{134,206,231}
+\definecolor{cw2}{RGB}{227,243,251}
 
 \definecolor{page}{HTML}{FFFFFF} % white
 \definecolor{text}{HTML}{000000} % black
@@ -162,7 +161,7 @@
     boxrule=0pt,
     frame hidden,
     % Colores
-    colback=cw1!30!white,
+    colback=cw2,
     coltitle=cw0,
     % Título
     detach title,
@@ -332,7 +331,7 @@
     frame hidden,
     borderline east={1.5pt}{0pt}{cw0},
     % Colores
-    colback=cw1!30!white,
+    colback=cw2,
     coltitle=cw0,
     % Título
     detach title,
@@ -369,7 +368,14 @@
  {\parskip=5pt\par\nopagebreak\centering}
  {\par\noindent\ignorespacesafterend}
 
-
+\newenvironment{matriz}
+ {\belowdisplayshortskip=-2pt\belowdisplayskip=-0.5pt\vspace{-0.1cm}\begin{equation}}
+ {\end{equation}\noindent\ignorespacesafterend}
+ 
+\newenvironment{matrizn}
+ {\belowdisplayshortskip=-2pt\belowdisplayskip=-0.5pt\vspace{-0.1cm}\begin{equation*}}
+ {\end{equation*}\noindent\ignorespacesafterend}
+ 
 %------------------------------------------------------------------------------
 %	DECLARACIÓN DE FUENTES
 %------------------------------------------------------------------------------
@@ -400,6 +406,10 @@ BoldItalicFont = *-BoldItalic,
       BoldFont = XITSMath-Bold,
 ]
 \setmathfont{Latin Modern Math}[range=\sum]
+
+\DeclareMathSymbol{(}{\mathopen}{operators}{40}
+\DeclareMathSymbol{)}{\mathclose}{operators}{41}
+\setmathfont[range={\mathopen,\mathclose,\mathpunct,\mathord}]{Latin Modern Math}
 
 \newfontfamily\Montserrat[Path=fonts/]{Montserrat-SemiBold.otf}
 
@@ -487,7 +497,7 @@ BoldItalicFont = *-BoldItalic,]{Sansation}
 		asymmetric,
 	    ignorefoot,
 	    ignorehead,
-        left=7.5cm,
+        left=6.25cm,
 	    right=2cm,
 	    top=2.5cm,
 	    bottom=2.5cm,
@@ -521,9 +531,9 @@ BoldItalicFont = *-BoldItalic,]{Sansation}
 \hypersetup{
 	pdfborder={1 1 0},
 	pdfcreator=LuaLaTeX,
-    pdftitle={Ingeniería Matemática: Probabilidad y Teoría de juegos},
+    pdftitle={Análisis Matemático: Optimización mediante métodos vectoriales},
 	pdfauthor={Antonio M. Mendoza},
-    pdfsubject={Este documento proporciona los apuntes de Ingeniería Matemática del periodo 25/1.},
+    pdfsubject={Este documento proporciona los apuntes de Análisis Matemático del periodo 25/2.},
     %pdfpagemode=FullScreen,
     %bookmarks=true,
     bookmarksopen=false,
@@ -589,10 +599,10 @@ BoldItalicFont = *-BoldItalic,]{Sansation}
 {\begin{flushleft}%
 	\begin{tikzpicture}[remember picture, overlay, inner sep=2mm]
 		\node[yshift = 0.5cm, xshift = -0.5cm - \hoffset, left, font=\fontsize{1.2cm}{1.2cm}\selectfont\bfseries] (chapterLabel) {\chaptertitlename};
-        \filldraw[cw0!80] ($(chapterLabel.west)+(-\textwidth,0)$) rectangle (current page.north east);
+        \filldraw[cw0] ($(chapterLabel.west)+(-\textwidth,0)$) rectangle (current page.north east);
         \filldraw[white] (chapterLabel.south west) rectangle (chapterLabel.north east);
-		\draw[cw0!80, ultra thick] (chapterLabel.south west) rectangle (chapterLabel.north east);
-        \node[font=\fontsize{1cm}{1.2cm}\fontencoding{T1}\fontfamily{pag}\selectfont\bfseries\color{cw0!80}] at (chapterLabel) {\chaptertitlename};
+		\draw[cw0, ultra thick] (chapterLabel.south west) rectangle (chapterLabel.north east);
+        \node[font=\fontsize{1cm}{1.2cm}\fontencoding{T1}\fontfamily{pag}\selectfont\bfseries\color{cw0}] at (chapterLabel) {\chaptertitlename};
         \node[white, font=\fontencoding{T1}\fontfamily{phv}\selectfont\bfseries, yshift=2.5cm, above of=chapterLabel] {\scalebox{16}{\thechapter\startcontents}};
 	\end{tikzpicture}
 \end{flushleft}
@@ -657,12 +667,12 @@ BoldItalicFont = *-BoldItalic,]{Sansation}
 \setlist{
   topsep=0mm,
 }
-\setlist[description]{font=\fontencoding{T1}\fontfamily{phv}\selectfont\scshape\color{cw0!80}}
-\setlist[enumerate]{font=\fontencoding{T1}\fontfamily{phv}\selectfont\bfseries\color{cw0!80}}
+\setlist[description]{font=\fontencoding{T1}\fontfamily{phv}\selectfont\scshape\color{cw0}}
+\setlist[enumerate]{font=\fontencoding{T1}\fontfamily{phv}\selectfont\bfseries\color{cw0}}
 \setlist[itemize]{label={$\bullet$}}
 
 \settasks{
-    label-format = \fontencoding{T1}\fontfamily{phv}\selectfont\bfseries\color{cw0!80},
+    label-format = \fontencoding{T1}\fontfamily{phv}\selectfont\bfseries\color{cw0},
     item-indent = 0.94cm,
 }
 
@@ -793,12 +803,12 @@ BoldItalicFont = *-BoldItalic,]{Sansation}
 }
 
 \newcommand{\infoBulle}[1]{
-\marginElement{\justify
+\justify
 {\color{cw0}\vrule width 3pt}\colorbox{white}{
     \parbox[c]{\dimexpr\linewidth-3pt-2\fboxsep-2\fboxrule}{\vspace{1mm}\textbf{\textcolor{cw0}{\fontfamily{lmr}\selectfont\large i}\qquad\fontencoding{T1}\fontfamily{pag}\selectfont\small Nota}\\[1.5mm]
     #1
     }\,\,\,}
-}}
+}
 
 
 %----------------------------------------------------------------------------------------
@@ -897,14 +907,14 @@ BoldItalicFont = *-BoldItalic,]{Sansation}
 {\addvspace{30pt}\selectfont\Lato\bfseries}%
 {
 \begin{tikzpicture}[remember picture, overlay]%
-    \draw[fill=cw0!70, draw=cw0!70] (-4,-.2) rectangle (-0.5,.5);%
+    \draw[fill=cw0, draw=cw0] (-4,-.2) rectangle (-0.5,.5);%
     \node at (-2.25,0.15) {\color{white}\Large\scshape\bfseries \chaptertitlename~\thecontentslabel};%
 \end{tikzpicture}
-\color{cw0!40}\large\scshape\bfseries}
-{\color{cw0!40}\large\scshape\bfseries}
-{\color{cw0!40}\;\titlerule\;\large\scshape\bfseries \thecontentspage
+\color{cw0!70}\large\scshape\bfseries}
+{\color{cw0!70}\large\scshape\bfseries}
+{\color{cw0!70}\;\titlerule\;\large\scshape\bfseries \thecontentspage
 \begin{tikzpicture}[remember picture, overlay]
-    \draw[fill=cw0!25,draw=cw0!20] (2pt,0) rectangle (6,0.1pt);
+    \draw[fill=cw0!70,draw=cw0!70] (2pt,0) rectangle (6,0.1pt);
 \end{tikzpicture}}%
 
 \newcommand\originalappendix{}
@@ -916,7 +926,7 @@ BoldItalicFont = *-BoldItalic,]{Sansation}
 \titlecontents{section}[3pc]
 {\addvspace{1pt}\selectfont\Lato} % Opciones de espaciado y fuente para las secciones
 {\contentslabel[\fontencoding{T1}\fontfamily{phv}\selectfont\thecontentslabel]{1cm}} % Número de sección
-{}
+{\hspace*{-2.85em}\phantom{\contentslabel{2.85em}}}
 {\fontencoding{T1}\fontfamily{phv}\selectfont\normalsize\;\titlerule*[.6pc]{.}\;\thecontentspage} % Número de página
 []
 
@@ -933,9 +943,9 @@ BoldItalicFont = *-BoldItalic,]{Sansation}
 \vspace*{-20\p@}%
 \begin{tikzpicture}[remember picture, overlay]%
 \pgftext[right,x=11.7cm,y=0.1cm]{\selectfont\Lato\color{cw0!20}\bfseries 
-\scalebox{1.23}{\contentsname}};%
-\pgftext[right,x=11.7cm,y=0.2cm]{\selectfont\Lato\color{cw0!70}\bfseries    
-\scalebox{1.23}{\contentsname}};%
+\scalebox{1.3}{\contentsname}};%
+\pgftext[right,x=11.7cm,y=0.2cm]{\selectfont\Lato\color{cw0}\bfseries    
+\scalebox{1.3}{\contentsname}};%
 \end{tikzpicture}}%
 \@starttoc{toc}}
 
@@ -1062,7 +1072,7 @@ BoldItalicFont = *-BoldItalic,]{Sansation}
 % valor esperado
 \newcommand{\EE}{\ensuremath{\mathbbm{E}}}
 
-\newcommand{\Gen}{\mathcalm{L}} % Generador
+\DeclareMathOperator{\Gen}{gen} % Generador
 \DeclareMathOperator{\Dim}{dim} % Dimension
 
 \newcommand{\demostracion}{\noindent\textbf{\fontencoding{T1}\fontfamily{phv}\selectfont\color{cw0}Demostración:\hspace{5pt plus 1pt minus 1pt}}}
