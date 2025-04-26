@@ -1,48 +1,51 @@
 # Análisis Matemático
 
-Este repositorio contiene el material y el código asociado al estudio de **Análisis Matemático**, diseñado para estudiantes de ingeniería matemática y profesionales interesados en espacios normados, espacios de Hilbert, aproximación vectorial e integración en el contexto de análisis funcional.
+Este repositorio contiene el material y el código asociado al estudio de **Análisis Matemático**, diseñado para estudiantes de ingeniería matemática y profesionales interesados en álgebra abstracta, espacios vectoriales, espacios métricos, espacios con producto interno, y métodos de optimización en el contexto de análisis funcional.
 
 ![Portada del libro 1](Images/GitHub/A1.jpeg)
 ![Portada del libro 2](Images/GitHub/A2.jpeg)
 ![Portada del libro 3](Images/GitHub/A3.jpeg)
+![Portada del libro 4](Images/GitHub/A4.jpeg)
+![Portada del libro 5](Images/GitHub/A5.jpeg)
+![Portada del libro 6](Images/GitHub/A6.jpeg)
+![Portada del libro 7](Images/GitHub/A7.jpeg)
+![Portada del libro 8](Images/GitHub/A8.jpeg)
+![Portada del libro 9](Images/GitHub/A9.jpeg)
 
 ## Contenido
 
-### Capítulo 1: Espacios Normados
-1. **Definición de norma**: Concepto y propiedades.
-2. **Ejemplos de normas**: Euclidiana, infinito y p-normas.
-3. **Equivalencia de normas**: Criterios y aplicaciones.
-4. **Subespacios y espacios normados**.
-5. **Espacios normados completos**: Espacios de Banach.
+### Capítulo 1: Grupos, Anillos y Campos
+1. **Definición de grupo**: Propiedades y ejemplos.
+2. **Anillos y campos**: Definición, propiedades y ejemplos.
+3. **El campo de los números reales y complejos**: Estructura y aplicaciones.
+4. **Ejercicios**: Ejercicios prácticos sobre grupos, anillos y campos.
 
-### Capítulo 2: Espacios de Hilbert
-1. **Definición de producto interno** y sus propiedades.
-2. **Ejemplos de productos internos**.
-3. **Teorema de proyección** en espacios de Hilbert.
-4. **Complementos ortogonales y bases ortonormales**.
-5. **Proceso de Gram-Schmidt** para ortonormalización.
+### Capítulo 2: Espacios Vectoriales
+1. **Definición de espacio vectorial**: Axiomas básicos y ejemplos.
+2. **Subespacios vectoriales**: Propiedades y aplicaciones.
+3. **Base y dimensión**: Cálculo y ejemplos.
+4. **Espacios vectoriales reales y complejos**: Definición y ejemplos.
+5. **Ejercicios**: Ejercicios prácticos sobre espacios vectoriales.
 
-### Capítulo 3: Aproximación con Métodos Vectoriales
-1. **Ecuaciones normales y matrices de Gram**.
-2. **Series de Fourier**: Definición y propiedades.
-3. **Desigualdad de Bessel** y su interpretación.
-4. **Sistemas ortonormales completos**.
-5. **Aproximación con series de Fourier**.
-6. **Problema de aproximación dual en optimización**.
-7. **Distancia mínima en conjuntos convexos**.
+### Capítulo 3: Espacios Métricos
+1. **Espacios vectoriales normados**: Definición y ejemplos.
+2. **Espacios métricos y topología básica**: Conceptos fundamentales.
+3. **Sucesiones**: Propiedades y teoremas relevantes.
+4. **Ejercicios**: Ejercicios prácticos sobre espacios métricos.
 
-### Capítulo 4: Integral de Lebesgue
-1. **Construcción de la medida de Lebesgue**.
-2. **Espacios medibles y funciones medibles**.
-3. **Integral de funciones medibles**: Definición y comparación con la integral de Riemann.
-4. **Funciones de clase \( L^2 \)** y normas asociadas.
-5. **Desigualdades de Minkowski y Hölder**.
+### Capítulo 4: Espacios con Producto Interno
+1. **Espacios con producto interno**: Definición y proyecciones.
+2. **Proyecciones ortogonales**: Cálculo y aplicaciones.
+3. **Teorema de proyección**: Teorema fundamental y aplicaciones.
+4. **Bases ortonormales**: Conceptos y técnicas de ortonormalización.
+5. **Ejercicios**: Ejercicios prácticos sobre espacios con producto interno.
 
-### Capítulo 5: Integral de Lebesgue-Stieltjes
-1. **Definición de la integral de Lebesgue-Stieltjes**.
-2. **Propiedades y aplicaciones de la integral**.
-3. **Intercambio entre integración y diferenciación**.
-4. **Diferenciación bajo el signo de integral**.
+### Capítulo 5: Optimización mediante Métodos Vectoriales
+1. **Métodos de aproximación**: Series de Fourier y aplicaciones.
+2. **Métodos de optimización**: Problemas de aproximación dual.
+3. **Distancia mínima en conjuntos convexos**: Conceptos clave y ejemplos.
+4. **Teoremas de optimización**: Aplicaciones en análisis funcional.
+5. **Ejercicios**: Ejercicios prácticos sobre métodos de optimización.
 
 ## Cómo usar
 El material está disponible en formato **LaTeX** para facilitar su consulta y estudio. Puedes clonarlo o descargarlo para compilarlo en **Overleaf** o cualquier otro editor compatible con LaTeX.
